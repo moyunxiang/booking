@@ -30,7 +30,7 @@ uv run python library/scrape.py      # 抓今天起 7 天（--days N / --date YY
 每条预约：`date, area, area_name, room_id, room, start, end, type, status, entry_id`（私有版多 `name`）。
 `type` 是 MRBS 原始类型码；`H` = Unbookable（`status: unbookable`），其余（U/R/T/S/D…）都是 `status: booked`。
 
-## 定时运行（macOS launchd，每天 7/10/13/16/19/22 点）
+## 定时运行（macOS launchd，07:00–23:30 每 30 分钟；每天首次抓 7 天，其余抓今明两天）
 
 ```sh
 cp com.moyunxiang.hkust-booking.plist ~/Library/LaunchAgents/
