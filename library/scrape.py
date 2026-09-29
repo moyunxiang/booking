@@ -23,7 +23,7 @@ from zoneinfo import ZoneInfo
 
 from bs4 import BeautifulSoup
 
-from auth import BASE, browser
+from auth import BASE, browser, silent_login
 
 AREAS = {3: "Group Study Rooms", 8: "LC Study Rooms", 20: "Study Pods"}
 TYPE_STATUS = {"H": "unbookable"}  # 其余类型码 (U/R/T/S/D...) 均为正常预约
@@ -142,12 +142,27 @@ def write_json(path: Path, obj):
 def scrape(days: list[date], areas: list[int]):
     now = datetime.now(HK).isoformat(timespec="seconds")
     with browser() as ctx:
+        relogged = False
+
+        def get(day, area):
+            nonlocal relogged
+            try:
+                return fetch(ctx, day, area)
+            except SessionExpired:
+                # 会话过期：先试一次后台静默登录（需要 Microsoft「保持登录」），成功就重试
+                if relogged or not silent_login(ctx):
+                    raise
+                relogged = True
+                print("会话已过期，已自动重新登录", flush=True)
+                time.sleep(DELAY)
+                return fetch(ctx, day, area)
+
         for i, day in enumerate(days):
             results = []
             for j, area in enumerate(areas):
                 if i or j:
                     time.sleep(DELAY)
-                d = parse_day(fetch(ctx, day, area), day, area)
+                d = parse_day(get(day, area), day, area)
                 print(f"{day} area={area:<3} rooms={len(d['rooms']):<3} bookings={len(d['bookings'])}",
                       flush=True)
                 results.append(d)

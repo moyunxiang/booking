@@ -30,17 +30,37 @@ def browser(headless: bool = True):
             ctx.close()
 
 
+def _wait_logged_in(page, timeout: int) -> bool:
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        if page.url.startswith(BASE) and page.locator("#day_main").count():
+            return True
+        page.wait_for_timeout(1000)
+    return False
+
+
+def silent_login(ctx, timeout: int = 30) -> bool:
+    """会话过期后，靠 Microsoft「保持登录」的 cookie 在后台自动走一遍 SSO；需要人工操作时返回 False。"""
+    page = ctx.new_page()
+    try:
+        page.goto(BASE + "day.php?area=8", wait_until="domcontentloaded")
+        return _wait_logged_in(page, timeout)
+    except Exception:
+        return False
+    finally:
+        page.close()
+
+
 def login(timeout: int = 300) -> bool:
     with browser(headless=False) as ctx:
         page = ctx.pages[0] if ctx.pages else ctx.new_page()
-        page.goto(BASE + "day.php?area=8", wait_until="domcontentloaded")
+        try:
+            page.goto(BASE + "day.php?area=8", wait_until="domcontentloaded", timeout=60_000)
+        except Exception as e:  # 网络慢：窗口留着，手动刷新即可
+            print(f"页面加载失败（{type(e).__name__}），可以在窗口里刷新重试")
         print(f"请在弹出的 Chrome 窗口里完成 HKUST 登录（最多等待 {timeout} 秒）...")
-        deadline = time.time() + timeout
-        while time.time() < deadline:
-            if page.url.startswith(BASE) and page.locator("#day_main").count():
-                return True
-            page.wait_for_timeout(1000)
-    return False
+        print("Microsoft 问「Stay signed in?」时请选 Yes，以后会话过期可以自动重新登录。")
+        return _wait_logged_in(page, timeout)
 
 
 if __name__ == "__main__":
