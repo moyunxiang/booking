@@ -159,10 +159,28 @@ def scrape(days: list[date], areas: list[int]):
                     b.pop("name")
             write_json(PUBLIC_DIR / f"{day}.json", public)
 
-    dates = sorted(p.stem for p in PUBLIC_DIR.glob("????-??-??.json"))
+    write_index(now, areas)
+
+
+def closed_areas(snap: dict) -> list[int]:
+    """全天都是 Unbookable 的 area（公众假期等）。"""
+    out = []
+    for a in snap["areas"]:
+        full = {b["room_id"] for b in a["bookings"]
+                if b["status"] == "unbookable" and b["start"] == a["open"] and b["end"] == a["close"]}
+        if a["rooms"] and full >= {r["id"] for r in a["rooms"]}:
+            out.append(a["area"])
+    return out
+
+
+def write_index(now: str, areas: list[int]):
+    files = sorted(PUBLIC_DIR.glob("????-??-??.json"))
+    dates = [p.stem for p in files]
+    closed = {p.stem: c for p in files if (c := closed_areas(json.loads(p.read_text())))}
     write_json(PUBLIC_DIR / "index.json", {
         "updated_at": now,
         "dates": dates,
+        "closed": closed,
         "areas": [{"id": a, "name": AREAS.get(a, str(a))} for a in areas],
     })
 

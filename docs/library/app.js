@@ -57,7 +57,11 @@ function buildRooms(day) {
     for (const r of a.rooms) {
       const zone = ZONES.find((z) => z.area === a.area && z.test(r.name))
         || { id: "A" + a.area, name: a.area_name, sub: "", h: 90, area: a.area };
-      rooms.push({ ...r, area: a.area, zone, open, close, bks: by.get(r.id).sort((x, y) => x.s - y.s) });
+      const bks = by.get(r.id).sort((x, y) => x.s - y.s);
+      let eo = open, ec = close;  // 实际开放时间：去掉开头/结尾的不可预约段（周末、假期）
+      for (const b of bks) if (b.st === "unbookable" && b.s <= eo && b.e > eo) eo = b.e;
+      for (const b of [...bks].reverse()) if (b.st === "unbookable" && b.e >= ec && b.s < ec) ec = b.s;
+      rooms.push({ ...r, area: a.area, zone, open, close, eo, ec, closed: eo >= ec, bks });
     }
   }
   return rooms;
@@ -109,7 +113,7 @@ function renderMast() {
 function renderControls() {
   const { now, isToday } = ctx();
   $("#c-date").innerHTML = state.index.dates.filter((d) => d >= now.date).map((d) =>
-    `<button data-v="${d}" class="${d === state.date ? "on" : ""}">${dayLabel(d, now.date)}</button>`).join("");
+    `<button data-v="${d}" class="${d === state.date ? "on" : ""}">${dayLabel(d, now.date)}${(state.index.closed?.[d] || []).includes(3) ? ` <span class="cl">闭</span>` : ""}</button>`).join("");
   const open = Math.min(...state.rooms.map((r) => r.open)), close = Math.max(...state.rooms.map((r) => r.close));
   const opts = [];
   if (isToday) opts.push(`<option value="now">现在</option>`);
@@ -131,13 +135,20 @@ function renderStats() {
   const cells = [3, 8, 20].map((a) => {
     const rs = state.rooms.filter((r) => r.area === a && capOK(r));
     const n = rs.filter((r) => isFree(r, S, E)).length;
-    return `<div class="stat"><div class="k">${AREA_SHORT[a]}</div>
+    if (rs.length && rs.every((r) => r.closed))
+      return `<div class="stat"><div class="k">${AREA_SHORT[a]}</div><div class="v zero">闭<small>当天不开放</small></div><div class="s">&nbsp;</div></div>`;
+    const act = rs.filter((r) => !r.closed);
+    const hours = act.length ? `${fmt(Math.min(...act.map((r) => r.eo)))}–${fmt(Math.max(...act.map((r) => r.ec)))}` : "";
+    return `<div class="stat"><div class="k">${AREA_SHORT[a]}${hours && hours !== "00:00–24:00" ? ` · ${hours}` : ""}</div>
       <div class="v ${n ? "" : "zero"}">${n}<small>/ ${rs.length} 间空</small></div><div class="s">${when}</div></div>`;
   });
-  const span = state.rooms.reduce((s, r) => s + r.close - r.open, 0);
-  const used = state.rooms.reduce((s, r) => s + r.bks.reduce((t, b) => t + b.e - b.s, 0), 0);
+  // 占用率：只算开放时段内的真实预约
+  const act = state.rooms.filter((r) => !r.closed);
+  const span = act.reduce((s, r) => s + r.ec - r.eo, 0);
+  const used = act.reduce((s, r) => s + r.bks.filter((b) => b.st !== "unbookable")
+    .reduce((t, b) => t + Math.max(0, Math.min(b.e, r.ec) - Math.max(b.s, r.eo)), 0), 0);
   const nb = state.rooms.reduce((s, r) => s + r.bks.filter((b) => b.st !== "unbookable").length, 0);
-  cells.push(`<div class="stat"><div class="k">全天占用率</div><div class="v">${Math.round(used / span * 100)}<small>%</small></div>
+  cells.push(`<div class="stat"><div class="k">全天占用率</div><div class="v">${span ? Math.round(used / span * 100) : 0}<small>%</small></div>
     <div class="s">共 ${nb} 条预约</div></div>`);
   $("#stats").innerHTML = cells.join("");
 }
@@ -154,23 +165,26 @@ function renderZones() {
   $("#zones").innerHTML = zones.map((z) => {
     const rs = state.rooms.filter((r) => r.zone === z && capOK(r));
     const free = rs.filter((r) => isFree(r, S, E)).map((r) => ({ r, until: freeUntil(r, S) }));
+    const closed = rs.every((r) => r.closed);
     let body;
-    if (free.length) {
+    if (closed) body = `<div class="next">当天不开放</div>`;
+    else if (free.length) {
       body = `<div class="rlist">${free.map(({ r, until }) =>
         `<span class="room ${until - S >= 180 ? "long" : ""}" title="${esc(r.name)}"><b>${esc(r.name)}</b><span>${r.capacity ?? "?"}人 · 至 ${fmt(until)}</span></span>`).join("")}</div>`;
     } else {
-      const open = Math.min(...rs.map((r) => r.open)), close = Math.max(...rs.map((r) => r.close));
+      const act = rs.filter((r) => !r.closed);
+      const open = Math.min(...act.map((r) => r.eo)), close = Math.max(...act.map((r) => r.ec));
       let msg = "";
       for (let t = Math.max(open, Math.ceil((S + 1) / 30) * 30); t + state.dur <= close; t += 30) {
         const ok = rs.filter((r) => isFree(r, t, t + state.dur));
         if (ok.length) { msg = `最早 <em>${fmt(t)}</em> 起：${ok.slice(0, 4).map((r) => esc(r.name)).join("、")}${ok.length > 4 ? ` 等 ${ok.length} 间` : ""}`; break; }
       }
-      msg ||= E > close ? `开放时间 ${fmt(open)}–${fmt(close)}，所选时段已超出` : "当天没有这么长的空档了";
+      msg ||= E > close ? `当天开放 ${fmt(open)}–${fmt(close)}，所选时段已超出` : "当天没有这么长的空档了";
       body = `<div class="next">${msg}</div>`;
     }
     return `<div class="zcard hue ${free.length ? "" : "none"}" style="--h:${z.h}">
       <div class="top"><span class="zn">${esc(z.name)}<small>${esc(z.sub)}</small></span>
-      <span class="cnt"><b>${free.length}</b>/ ${rs.length} 间</span></div>${body}</div>`;
+      <span class="cnt">${closed ? "<b>闭</b>" : `<b>${free.length}</b>/ ${rs.length} 间`}</span></div>${body}</div>`;
   }).join("");
 }
 
