@@ -1,0 +1,16 @@
+// 图书馆空房小组件 · 加载器（整段复制到 Scriptable 新脚本里）
+// 每次运行从网站拉取最新的小组件代码；没网时用上次缓存的版本。
+const SRC = "https://moyunxiang.com/booking/library/widget.js";
+const fm = FileManager.local();
+const path = fm.joinPath(fm.documentsDirectory(), "booking-library-widget.js");
+let code = null;
+try {
+  code = await new Request(SRC + "?t=" + Date.now()).loadString();
+  if (!code.includes("BOOKING_WIDGET")) throw new Error("bad");
+  fm.writeString(path, code);
+} catch (e) {
+  code = fm.fileExists(path) ? fm.readString(path) : null;
+}
+if (!code) throw new Error("第一次运行需要联网");
+const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
+await new AsyncFunction(code)();
