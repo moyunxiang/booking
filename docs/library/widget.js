@@ -142,25 +142,31 @@ function medium(w, cur, nxt, win, fresh) {
     L.addSpacer(2);
   }
   body.addSpacer(16);
-  // 右：各楼层 现在 / 下一段
+  // 右：各楼层表格，两列 = 现在 / 下一个 30 分钟，固定列宽保证上下对齐
   const R = body.addStack(); R.layoutVertically();
+  const COLS = [44, 46];
   const hr = R.addStack(); hr.layoutHorizontally();
-  hr.addSpacer(); txt(hr, `现在  ${win.nextLabel}`, Font.mediumSystemFont(9), C.muted);
+  hr.addSpacer();
+  cell(hr, "现在", COLS[0], Font.mediumSystemFont(9), C.muted);
+  cell(hr, `${win.nextLabel} 起`, COLS[1], Font.mediumSystemFont(9), C.muted);
   R.addSpacer(2);
-  cur.byZone.filter((z) => z.z.name !== "LG5").forEach((zz, i) => {
+  cur.byZone.filter((z) => z.z.name !== "LG5").forEach((zz) => {
+    const n = nxt.byZone.find((y) => y.z === zz.z);
     const r = R.addStack(); r.layoutHorizontally(); r.centerAlignContent();
     const bar = r.addStack(); bar.size = new Size(3, 11); bar.cornerRadius = 1.5; bar.backgroundColor = zc(zz.z.h);
     r.addSpacer(5);
     txt(r, zz.z.name, Font.semiboldSystemFont(11.5), C.ink);
     r.addSpacer();
-    const n = nxt.byZone.find((y) => y.z === zz.z);
-    txt(r, `${countText(zz)}`, Font.boldSystemFont(12), zz.free.length ? C.ink : C.muted);
-    r.addSpacer(4);
-    txt(r, `/ ${zz.total}`, Font.systemFont(9.5), C.muted);
-    r.addSpacer(10);
-    txt(r, countText(n), Font.mediumSystemFont(11), C.ink2);
+    cell(r, `${countText(zz)}/${zz.total}`, COLS[0], Font.boldSystemFont(11.5), zz.free.length ? C.ink : C.muted);
+    cell(r, countText(n), COLS[1], Font.mediumSystemFont(11.5), n.free.length ? C.ink2 : C.muted);
     R.addSpacer(1.5);
   });
+}
+
+// 固定宽度、右对齐的一格
+function cell(stack, s, width, font, color) {
+  const c = stack.addStack(); c.size = new Size(width, 0); c.layoutHorizontally();
+  c.addSpacer(); txt(c, s, font, color);
 }
 
 // ---------- 桌面：大 ----------
@@ -169,21 +175,35 @@ function large(w, slots, fresh) {
   txt(hd, "图书馆空房", serif(17), C.ink);
   hd.addSpacer();
   txt(hd, fresh.text, Font.systemFont(9.5), fresh.stale ? C.red : C.muted);
-  // 每个楼层一行；三段大约各放 5 / 4 / 4 行，放不下的楼层压成一行摘要
-  const QUOTA = [5, 4, 4];
-  slots.forEach((sl, i) => {
+
+  // 版面预算（单位：一行楼层的高度）。每段标题约 1.5 行；前 3 段各要最多 4 行、之后每段 2 行，
+  // 放得下就继续往后加时段，剩下的空间再按顺序分给前面的时段。
+  const BUDGET = 19, HEAD = 1.5;
+  const plan = [];
+  let used = 0;
+  for (const sl of slots) {
+    const zs = sl.sum.byZone.filter((zz) => !zz.shut && zz.free.length)
+      .sort((a, b) => (b.z.area === 8) - (a.z.area === 8));  // LC 永远排第一行
+    const need = Math.max(1, Math.min(zs.length, plan.length < 3 ? 4 : 2));  // 前 3 段细一些，之后的段只要 2 行
+    if (plan.length && used + HEAD + need > BUDGET) break;
+    plan.push({ sl, zs, rows: need });
+    used += HEAD + need;
+  }
+  for (const p of plan) {
+    const extra = Math.min(BUDGET - used, Math.max(0, p.zs.length - p.rows));
+    p.rows += extra; used += extra;
+  }
+
+  plan.forEach(({ sl, zs, rows }, i) => {
     const { sum } = sl;
-    w.addSpacer(i ? 7 : 8);
+    w.addSpacer(i ? 6 : 8);
     const sh = w.addStack(); sh.layoutHorizontally();
     txt(sh, sl.label, Font.boldSystemFont(11), C.muted);
     sh.addSpacer();
     txt(sh, `LC ${countText(sum.byArea.lc)} · Group ${countText(sum.byArea.group)} · Pods ${countText(sum.byArea.pods)}`, Font.boldSystemFont(11), C.ink2);
     w.addSpacer(3);
-    const zs = sum.byZone.filter((zz) => !zz.shut && zz.free.length)
-      .sort((a, b) => (b.z.area === 8) - (a.z.area === 8));  // LC 永远排第一行
     if (!zs.length) { txt(w, "没有空房", Font.systemFont(10.5), C.muted); return; }
-    const quota = QUOTA[i] ?? 3;
-    const shown = zs.length > quota ? zs.slice(0, quota - 1) : zs, rest = zs.slice(shown.length);
+    const shown = zs.length > rows ? zs.slice(0, rows - 1) : zs, rest = zs.slice(shown.length);
     for (const zz of shown) {
       // 空到最晚的排前面，一行放不下的写成 +N
       const items = zz.free.map((x) => ({ x, u: freeUntil(x, sl.s) })).sort((a, b) => b.u - a.u)
@@ -227,9 +247,9 @@ if (!d) {
   const win = { now: now.min, next: cut, label: `现在–${fmt(cut)}`, nextLabel: fmt(cut), next2Label: fmt(cut + 30) };
   const cur = summarize(rooms, now.min, cut);
   const nxt = summarize(rooms, cut, cut + 30);
-  // 大尺寸：现在 + 之后两个 30 分钟（不跨过午夜）
+  // 大尺寸：现在 + 之后若干个 30 分钟（不跨过午夜）
   const slots = [{ s: now.min, e: cut, label: win.label, sum: cur }];
-  for (let t = cut; t < cut + 60 && t < 1440; t += 30)
+  for (let t = cut; t < cut + 240 && t < 1440; t += 30)  // 最多往后 4 小时，实际显示几段由大尺寸版面决定
     slots.push({ s: t, e: t + 30, label: `${fmt(t)}–${fmt(t + 30)}`, sum: t === cut ? nxt : summarize(rooms, t, t + 30) });
   const fresh = freshness(d, offline);
   if (fam === "accessoryInline") {
