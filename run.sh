@@ -15,4 +15,4 @@ git rev-parse --git-dir >/dev/null 2>&1 || exit 0
 git config user.name >/dev/null && git config user.email >/dev/null || { echo "git user.name/email 未配置"; exit 1; }
 git add docs
 git diff --cached --quiet && { echo "no changes"; exit 0; }
-git commit -q -m "data: $(date '+%F %H:%M')" && git push -q && echo "pushed"
+git commit -q -m "data: $(date '+%F %H:%M')" && env -u HTTPS_PROXY -u HTTP_PROXY -u ALL_PROXY git push -q && echo "pushed"
