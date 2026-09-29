@@ -95,15 +95,35 @@ section.sec{margin-top:40px}
 .zcard .zn{font-family:var(--serif);font-size:20px;font-weight:700}
 .zcard .zn small{font-family:var(--sans);font-size:12px;font-weight:500;color:var(--muted);margin-left:6px}
 .zcard .cnt{font-size:12px;color:var(--muted);white-space:nowrap}
-.zcard .cnt b{font-family:var(--serif);font-size:22px;color:var(--c);margin-right:2px}
+.zcard .cnt b{font-family:var(--serif);font-size:22px;color:var(--c);margin:0 2px}
 .zcard.none .cnt b{color:var(--muted)}
 .rlist{display:flex;flex-wrap:wrap;gap:6px}
 .room{display:inline-flex;align-items:baseline;gap:6px;padding:4px 10px;border-radius:8px;background:var(--c-faint);border:1px solid var(--c-soft);font-size:13px;white-space:nowrap}
 .room b{font-weight:700;color:var(--ink)}
 .room span{font-size:11.5px;color:var(--ink-2)}
 .room.long{background:var(--c-soft)}
+.room.part{background:transparent;border:1px dashed var(--c-soft)}
+.room.part b{font-weight:600;color:var(--ink-2)}
+.zcard .sub{font-size:11.5px;color:var(--muted);margin:10px 0 6px;letter-spacing:.04em}
+.zcard .sub:first-of-type{margin-top:0}
 .zcard .next{font-size:13px;color:var(--ink-2);border-top:1px dashed var(--rule);padding-top:8px;margin-top:2px}
 .zcard .next em{font-style:normal;font-weight:700;color:var(--ink)}
+
+/* ——— 现在有空 ——— */
+.nowlist{border-top:1.5px solid var(--ink)}
+.nrow{display:grid;grid-template-columns:92px minmax(0,1fr);gap:12px;padding:12px 0;border-bottom:1px solid var(--rule-2);align-items:start}
+.nrow .zl{font-family:var(--serif);font-size:18px;font-weight:700;color:var(--c);line-height:1.2}
+.nrow .zl small{display:block;font-family:var(--sans);font-size:11.5px;font-weight:500;color:var(--muted);margin-top:2px}
+.nrow .none{font-size:13px;color:var(--muted);padding-top:3px}
+.nrow.empty-row{opacity:.6}
+@media (max-width:560px){
+  .nrow{grid-template-columns:1fr;gap:8px}
+  .nrow .zl{display:flex;align-items:baseline;gap:8px}
+  .nrow .zl small{margin-top:0}
+  .room{padding:3px 8px;font-size:12.5px}
+}
+.legend .l-full::before{background:var(--ink-2)}
+.legend .l-part::before{background:transparent;outline:1px dashed var(--ink-2)}
 
 /* ——— 整段空闲 ——— */
 .lf{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:0 28px}
