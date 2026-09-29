@@ -1,13 +1,13 @@
 """抓取 HKUST Library Booking 每日各房间预约情况。
 
-  uv run python scrape.py              # 从今天起抓 7 天
-  uv run python scrape.py --days 3
-  uv run python scrape.py --date 2026-09-30
+  uv run python library/scrape.py              # 从今天起抓 7 天
+  uv run python library/scrape.py --days 3
+  uv run python library/scrape.py --date 2026-09-30
 
 输出：
-  data/private/YYYY-MM-DD.json   含预约人姓名，仅本地（已 gitignore）
-  docs/data/YYYY-MM-DD.json      去掉姓名，供网页展示
-  docs/data/index.json           可用日期 + 更新时间
+  data/library/YYYY-MM-DD.json   含预约人姓名，仅本地（已 gitignore）
+  docs/library/data/YYYY-MM-DD.json      去掉姓名，供网页展示
+  docs/library/data/index.json           可用日期 + 更新时间
 
 退出码：0 成功；2 登录失效（需运行 auth.py 重新登录）；1 其他错误。
 """
@@ -28,9 +28,9 @@ from auth import BASE, browser
 AREAS = {3: "Group Study Rooms", 8: "LC Study Rooms", 20: "Study Pods"}
 TYPE_STATUS = {"H": "unbookable"}  # 其余类型码 (U/R/T/S/D...) 均为正常预约
 HK = ZoneInfo("Asia/Hong_Kong")
-ROOT = Path(__file__).parent
-PRIVATE_DIR = ROOT / "data" / "private"
-PUBLIC_DIR = ROOT / "docs" / "data"
+ROOT = Path(__file__).parent.parent
+PRIVATE_DIR = ROOT / "data" / "library"
+PUBLIC_DIR = ROOT / "docs" / "library" / "data"
 DELAY = 15  # 秒；服务器有限流，连续快速请求会返回 403
 
 
@@ -179,7 +179,7 @@ def main():
     try:
         scrape(days, [int(a) for a in args.areas.split(",")])
     except SessionExpired:
-        msg = "登录已失效，请运行: uv run python auth.py"
+        msg = "登录已失效，请运行: uv run python library/auth.py"
         print(msg, file=sys.stderr)
         notify(msg)
         sys.exit(2)

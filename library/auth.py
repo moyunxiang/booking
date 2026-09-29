@@ -1,6 +1,6 @@
 """登录状态管理：用一个持久化的 Chrome profile (.auth/chrome-profile) 保存 MRBS 会话。
 
-  uv run python auth.py      # 弹出 Chrome 窗口，手动完成 HKUST 登录
+  uv run python library/auth.py      # 弹出 Chrome 窗口，手动完成 HKUST 登录
 
 爬虫直接在同一个 profile 里用 Playwright 的 request API 发请求
 （导出的 cookie 给 requests 用会被服务器拒绝，所以不导出）。
@@ -12,8 +12,8 @@ from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
-ROOT = Path(__file__).parent
-PROFILE_DIR = ROOT / ".auth" / "chrome-profile"
+ROOT = Path(__file__).parent.parent
+PROFILE_DIR = ROOT / ".auth" / "library-chrome-profile"
 BASE = "https://lbbooking.hkust.edu.hk/calendar/"
 
 

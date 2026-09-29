@@ -1,5 +1,5 @@
 .auth/
 .venv/
 __pycache__/
-data/private/
+/data/
 logs/

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HKUST Library Rooms</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <a class="back" href="../">← Booking</a>
+  <h1>HKUST Library Rooms</h1>
+  <p class="meta" id="updated"></p>
+</header>
+<nav id="dates" class="chips"></nav>
+<nav id="areas" class="tabs"></nav>
+<section id="summary"></section>
+<div class="legend">
+  <span><i class="blk booked"></i>已预约</span>
+  <span><i class="blk unbookable"></i>不可预约</span>
+  <span><i class="blk free"></i>空闲</span>
+</div>
+<main id="grid"></main>
+<script src="app.js"></script>
+</body>
+</html>

@@ -87,16 +87,21 @@ function render() {
         title="${r.name} ${b.start}–${b.end}${b.status === "unbookable" ? " 不可预约" : ""}">${b.start}–${b.end}</div>`;
     }).join("");
     const freeMin = freeRanges(byRoom.get(r.id), open, close).reduce((s, [a, b]) => s + b - a, 0);
-    return `<div class="row"><div class="label">${r.name} <small>${r.capacity ?? ""}人 · 空${(freeMin / 60).toFixed(1)}h</small></div>
+    return `<div class="row"><div class="label" title="${r.name}">${r.name}<small>${r.capacity ?? ""}人 · 空${(freeMin / 60).toFixed(1)}h</small></div>
       <div class="track">${tickHTML(false)}${bks}${nowHTML}</div></div>`;
   }).join("");
-  $("#grid").innerHTML = `<div class="tl"><div class="row axis"><div class="label"></div><div class="track">${tickHTML(true)}</div></div>${rows}</div>`;
+  $("#grid").innerHTML = `<div class="tl" style="min-width:${112 + span / 60 * 44}px"><div class="row axis"><div class="label"></div><div class="track">${tickHTML(true)}</div></div>${rows}</div>`;
+}
+
+function scrollToNow() {
+  const g = $("#grid"), line = g.querySelector(".nowline");
+  g.scrollLeft = line ? Math.max(0, line.offsetLeft - (g.clientWidth - 112) / 3) : 0;
 }
 
 async function loadDay() {
   setURL(); renderNav();
   state.day = await getJSON(`data/${state.date}.json`).catch(() => null);
-  render();
+  render(); scrollToNow();
 }
 
 async function init() {
@@ -109,7 +114,7 @@ async function init() {
     : dates.includes(today) ? today : dates[dates.length - 1];
   state.area = +(params.get("area") || state.index.areas[0].id);
   $("#dates").onclick = (e) => { const d = e.target.dataset.d; if (d) { state.date = d; loadDay(); } };
-  $("#areas").onclick = (e) => { const a = e.target.dataset.a; if (a) { state.area = +a; setURL(); renderNav(); render(); } };
+  $("#areas").onclick = (e) => { const a = e.target.dataset.a; if (a) { state.area = +a; setURL(); renderNav(); render(); scrollToNow(); } };
   await loadDay();
   setInterval(render, 60_000);
 }
