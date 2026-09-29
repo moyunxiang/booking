@@ -110,6 +110,9 @@ section.sec{margin-top:40px}
 .zcard .next em{font-style:normal;font-weight:700;color:var(--ink)}
 
 /* ——— 现在有空 ——— */
+.nowtabs{margin-bottom:12px}
+.chips .n{font-weight:700;margin-left:2px;color:var(--ink)}
+.chips button.on .n{color:inherit}
 .nowlist{border-top:1.5px solid var(--ink)}
 .nrow{display:grid;grid-template-columns:92px minmax(0,1fr);gap:12px;padding:12px 0;border-bottom:1px solid var(--rule-2);align-items:start}
 .nrow .zl{font-family:var(--serif);font-size:18px;font-weight:700;color:var(--c);line-height:1.2}

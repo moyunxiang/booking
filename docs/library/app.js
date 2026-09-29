@@ -134,8 +134,16 @@ function renderNow() {
   $("#now-sec").hidden = !isToday;
   if (!isToday) return;
   const cut = floor30(now.min) + 30;
-  const slots = [[now.min, cut, `现在–${fmt(cut)}`], [cut, cut + 30, `${fmt(cut)}–${fmt(cut + 30)}`]];
-  $("#c-now").innerHTML = slots.map(([, , lbl], i) => `<button data-v="${i}" class="${i === state.nowTab ? "on" : ""}">${lbl}</button>`).join("");
+  // 现在 + 之后 7 个 30 分钟（约 4 小时，不跨过午夜）
+  const slots = [[now.min, cut, `现在–${fmt(cut)}`]];
+  for (let t = cut; slots.length < 8 && t < 1440; t += 30) slots.push([t, t + 30, `${fmt(t)}–${fmt(t + 30)}`]);
+  if (state.nowTab >= slots.length) state.nowTab = 0;
+  const c = $("#c-now"), keep = c.scrollLeft;
+  c.innerHTML = slots.map(([s, e, lbl], i) => {
+    const n = state.rooms.filter((r) => isFree(r, s, e)).length;
+    return `<button data-v="${i}" class="${i === state.nowTab ? "on" : ""}">${lbl} <span class="n">${n}</span></button>`;
+  }).join("");
+  c.scrollLeft = keep;
   const [s, e] = slots[state.nowTab];
   $("#nowlist").innerHTML = zonesOf(state.rooms).map((z) => {
     const rs = state.rooms.filter((r) => r.zone === z);
