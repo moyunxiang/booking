@@ -25,6 +25,7 @@ from fbs import FBS, SessionExpired, courts, timeslots  # noqa: E402
 # 设施类型：key → 系统里的 facility_type id + 显示名
 TYPES = {
     "basketball": {"id": "2", "name": "篮球", "en": "Basketball"},
+    "badminton": {"id": "3", "name": "羽毛球", "en": "Badminton"},
 }
 HK = ZoneInfo("Asia/Hong_Kong")
 ROOT = Path(__file__).parent.parent
@@ -32,8 +33,8 @@ PUBLIC_DIR = ROOT / "docs" / "facilities" / "data"
 DELAY = 2  # 秒；服务器本身就慢（每个请求约 5 秒），再稍微隔开一点
 
 
-def scrape_day(ctx, ftype: str, day: str) -> list[dict]:
-    """某天某类型的所有场地；有空的场地再点进去拿每小时时段。"""
+def scrape_day(ctx, ftype: str, day: str, detail=lambda c: True) -> list[dict]:
+    """某天某类型的所有场地；有空的场地（且 detail(场地) 为真）再点进去拿每小时时段。"""
     # Drupal 表单状态只能用一次：连续搜索 / 连续点场地，从第二次起结果就不对了。
     # 所以每次都重新拿表单令牌：先搜一次拿场地列表，之后每个有空的场地再各自「搜索 → 点进去」。
     f = FBS(ctx)
@@ -41,8 +42,9 @@ def scrape_day(ctx, ftype: str, day: str) -> list[dict]:
     out = []
     first = True
     for c in courts(f.search(ftype, day)):
+        c["indoor"] = "outdoor" not in c["name"].lower()
         slots = None
-        if c["available"]:
+        if c["available"] and detail(c):
             if not first:
                 f = FBS(ctx)
                 time.sleep(DELAY)
@@ -50,7 +52,7 @@ def scrape_day(ctx, ftype: str, day: str) -> list[dict]:
             time.sleep(DELAY)
             slots = timeslots(f.select(ftype, day, c["id"]))
             first = False
-        out.append({**c, "indoor": "outdoor" not in c["name"].lower(), "slots": slots})
+        out.append({**c, "slots": slots})
     return out
 
 

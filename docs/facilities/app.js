@@ -24,7 +24,10 @@ function courtName(c) {
   if (/outdoor/i.test(n)) return "室外场";
   if (/full court/i.test(n)) return "全场";
   const m = n.match(/Court\s+([A-Z0-9]+)/i);
-  if (m) return /half/i.test(n) ? `${m[1]} 半场` : `${m[1]} 场`;
+  if (m) {
+    if (/half/i.test(n)) return `${m[1]} 半场`;
+    return `${m[1]}${/^\d+$/.test(m[1]) ? " 号场" : " 场"}${/singles/i.test(n) ? "·单打" : ""}`;
+  }
   return n;
 }
 const place = (c) => c.location.replace(/^SPORTS\s*-\s*/i, "");
@@ -52,7 +55,7 @@ function renderMast() {
     ? `<div class="alert"><b>数据可能过时</b>：已 ${age}更新，实际情况以官网为准。</div>` : "";
   $("#c-type").innerHTML = state.index.types.map((x) =>
     `<button data-v="${x.key}" class="${x.key === state.type ? "on" : ""}">${esc(x.name)}</button>`).join("")
-    + `<button disabled title="即将上线">羽毛球 · 即将上线</button>`;
+;
   const last = state.data.days.at(-1)?.date;
   $("#rule").textContent = last ? `每天 08:00 开放 7 天后的预约（目前到 ${+last.slice(5, 7)}/${+last.slice(8)}）` : "";
   $("#foot-upd").textContent = `${state.data.days.length} 天数据`;
@@ -68,14 +71,17 @@ function renderIndoor() {
     for (const s of c.slots) if (s.available && !past(d.date, s.start)) rows.push({ d: d.date, c, s });
   }
   const today = hkNow().date;
+  // 有室外场的类型（篮球）只突出室内场；全是室内的（羽毛球）就列所有空位
+  const mixed = state.data.days.some((d) => d.courts.some((c) => !c.indoor));
+  $("#hl-title").textContent = mixed ? "室内场空位" : "空位";
   if (!rows.length) {
     $("#indoor").innerHTML = `<div class="zcard hue none" style="--h:25"><div class="top"><span class="zn">全部订满</span>
-      <span class="cnt"><b>0</b> 个空位</span></div><div class="next">未来 ${state.data.days.length} 天的室内场都被订完了。有人取消时这里会出现。</div></div>`;
+      <span class="cnt"><b>0</b> 个空位</span></div><div class="next">未来 ${state.data.days.length} 天的${mixed ? "室内场" : "场地"}都被订完了。有人取消时这里会出现。</div></div>`;
     return;
   }
   $("#indoor").innerHTML = `<ul class="lf">${rows.map(({ d, c, s }) =>
     `<li class="hue" style="--h:205"><span class="bar"></span>
-      <div><div class="t">${esc(courtName(c))}<small>${esc(place(c))} · 室内</small></div>
+      <div><div class="t">${esc(courtName(c))}<small>${esc(place(c))}${mixed ? " · 室内" : ""}</small></div>
       <div class="m">${dayLabel(d, today)}</div></div>
       <div class="d">${s.start}<small>–${fmt(toMin(s.start) + 60)}</small></div></li>`).join("")}</ul>`;
 }
