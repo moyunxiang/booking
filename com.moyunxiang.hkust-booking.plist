@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
   <key>Label</key><string>com.moyunxiang.hkust-booking</string>
-  <key>ProgramArguments</key><array><string>/Users/moyunxiang/kevinelw/study/coding/booking/run.sh</string></array>
+  <key>ProgramArguments</key><array><string>/Users/moyunxiang/kevinelw/study/coding/booking/run.sh</string><string>library</string></array>
   <key>StartCalendarInterval</key>
   <array>
     <dict><key>Hour</key><integer>7</integer><key>Minute</key><integer>0</integer></dict>

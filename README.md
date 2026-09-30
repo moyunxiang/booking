@@ -31,11 +31,18 @@ uv run python library/scrape.py      # 抓今天起 7 天（--days N / --date YY
 每条预约：`date, area, area_name, room_id, room, start, end, type, status, entry_id`（私有版多 `name`）。
 `type` 是 MRBS 原始类型码；`H` = Unbookable（`status: unbookable`），其余（U/R/T/S/D…）都是 `status: booked`。
 
-## 定时运行（macOS launchd，07:00–23:30 每 30 分钟；每天首次抓 7 天，其余抓今明两天）
+## 定时运行（macOS launchd，Mac 醒着时）
+
+| launchd 任务 | 频率 | 做什么 |
+|---|---|---|
+| `com.moyunxiang.hkust-booking` | 07:00–23:30 每 30 分钟 | `run.sh library`：图书馆（每天首次抓 7 天，其余抓今明两天） |
+| `com.moyunxiang.hkust-booking-facility` | 07:15–23:15 每小时 | `run.sh facility`：篮球 + 羽毛球 8 天 |
+| `com.moyunxiang.hkust-booking-monitor` | 每 5 分钟 | `facility/monitor.py`：篮球室内场 10:00 后出现新空位 → Bark 推送 |
 
 ```sh
-cp com.moyunxiang.hkust-booking.plist ~/Library/LaunchAgents/
-launchctl load ~/Library/LaunchAgents/com.moyunxiang.hkust-booking.plist
+cp com.moyunxiang.hkust-booking*.plist ~/Library/LaunchAgents/
+for p in ~/Library/LaunchAgents/com.moyunxiang.hkust-booking*.plist; do launchctl load "$p"; done
 ```
 
-日志在 `logs/run.log`。
+三个任务共用一个 Chrome profile，`auth.py` 里用文件锁排队；日志在 `logs/`。
+Bark 地址写在 `.auth/notify.json`：`{"bark": "https://api.day.app/<key>"}`。

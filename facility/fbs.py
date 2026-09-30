@@ -7,6 +7,7 @@
 import json
 import re
 import sys
+import time
 from pathlib import Path
 
 from bs4 import BeautifulSoup
@@ -41,7 +42,11 @@ class FBS:
         }
         if trigger_value is not None:
             data["_triggering_element_value"] = trigger_value
-        r = self.ctx.request.post(AJAX, form=data)
+        for attempt in range(4):  # 服务器偶尔 500 / 502，退避重试
+            r = self.ctx.request.post(AJAX, form=data)
+            if r.status < 500:
+                break
+            time.sleep(10 * (attempt + 1))
         if r.status != 200:
             raise RuntimeError(f"fbs ajax HTTP {r.status}")
         try:
