@@ -23,7 +23,8 @@ from zoneinfo import ZoneInfo
 
 from bs4 import BeautifulSoup
 
-from auth import BASE, browser, silent_login
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from auth import LIBRARY as BASE, browser, silent_login  # noqa: E402
 
 AREAS = {3: "Group Study Rooms", 8: "LC Study Rooms", 20: "Study Pods"}
 TYPE_STATUS = {"H": "unbookable"}  # 其余类型码 (U/R/T/S/D...) 均为正常预约
@@ -150,7 +151,7 @@ def scrape(days: list[date], areas: list[int]):
                 return fetch(ctx, day, area)
             except SessionExpired:
                 # 会话过期：先试一次后台静默登录（需要 Microsoft「保持登录」），成功就重试
-                if relogged or not silent_login(ctx):
+                if relogged or not silent_login(ctx, "library"):
                     raise
                 relogged = True
                 print("会话已过期，已自动重新登录", flush=True)
@@ -212,7 +213,7 @@ def main():
     try:
         scrape(days, [int(a) for a in args.areas.split(",")])
     except SessionExpired:
-        msg = "登录已失效，请运行: uv run python library/auth.py"
+        msg = "登录已失效，请运行: uv run python auth.py"
         print(msg, file=sys.stderr)
         notify(msg)
         sys.exit(2)

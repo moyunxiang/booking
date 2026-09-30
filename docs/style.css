@@ -166,6 +166,27 @@ section.sec{margin-top:40px}
 
 .empty{color:var(--muted);padding:24px 0;font-size:14px}
 
+/* ——— 设施：每日时段格 ——— */
+.types{margin:18px 0 0}
+.chips button:disabled{opacity:.5;cursor:default}
+a.book{color:var(--ink-2);border-bottom:1px solid var(--rule)}
+.fday{background:var(--card);border:1px solid var(--rule-2);border-radius:var(--radius);padding:12px 14px 10px;margin-bottom:10px}
+.fday.hot{border-color:hsl(205 48% 40%);box-shadow:0 0 0 1px hsl(205 48% 40%)}
+.fh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:8px}
+.fh b{font-family:var(--serif);font-size:18px}
+.fh span{font-size:12.5px;color:var(--muted)}
+.fh em{font-style:normal;font-weight:700;color:hsl(205 48% 40%)}
+.fgrid{display:grid;gap:3px}
+.fr{display:grid;grid-template-columns:96px repeat(var(--n),minmax(0,1fr));gap:3px;align-items:center}
+.fl{font-size:13px;font-weight:600;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fl small{display:block;font-size:10.5px;font-weight:400;color:var(--muted)}
+.fr i{display:block;height:22px;border-radius:4px;background:var(--paper-2)}
+.fr i.ok{background:var(--c)}
+.fr.axis i{height:auto;background:none;font-style:normal;font-size:10.5px;color:var(--muted);text-align:center}
+@media (max-width:560px){.fr{grid-template-columns:72px repeat(var(--n),minmax(0,1fr));gap:2px}.fgrid{gap:2px}.fr i{height:20px;border-radius:3px}.fr.axis i{font-size:9px}}
+.legend .l-free::before{background:hsl(205 48% 40%)}
+.legend .l-no::before{background:var(--paper-2);outline:1px solid var(--rule)}
+
 /* ——— 入口页 ——— */
 .hub{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:12px;margin-top:28px}
 .hcard{display:flex;flex-direction:column;gap:6px;background:var(--card);border:1px solid var(--rule-2);border-radius:var(--radius);

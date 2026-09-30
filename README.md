@@ -1,4 +1,4 @@
-# HKUST Library Booking 爬虫
+# HKUST Booking 爬虫
 
 抓取 https://lbbooking.hkust.edu.hk/calendar/ 每天各房间的预约情况（area 3 / 8 / 20），
 生成静态网页，发布在 https://moyunxiang.com/booking/ （GitHub Pages，main 分支 `docs/`）。
@@ -7,19 +7,20 @@
 library/          图书馆爬虫（auth.py 登录，scrape.py 抓取）
 docs/index.html   入口页：选 Library / Facility
 docs/library/     图书馆视图 → moyunxiang.com/booking/library/
-docs/facility/    （以后）篮球场等设施
+facility/         体育设施爬虫（fbs.py 客户端，scrape.py 抓取）
+docs/facilities/  体育设施视图 → moyunxiang.com/booking/facilities/
 ```
 
 ## 用法
 
 ```sh
-uv run python library/auth.py        # 首次 / 登录失效时：弹出 Chrome 窗口手动登录 HKUST
+uv run python auth.py        # 首次 / 登录失效时：弹出 Chrome 窗口手动登录 HKUST
 uv run python library/scrape.py      # 抓今天起 7 天（--days N / --date YYYY-MM-DD / --areas 3,8）
 ./run.sh                     # 定时任务入口：抓取 + git 提交推送 docs
 ```
 
 - 登录状态保存在 `.auth/library-chrome-profile`（Chrome profile，已 gitignore）；抓取用同一 profile 的 headless Chrome 发请求。
-- 登录失效时 `scrape.py` 以退出码 2 结束，并弹 macOS 通知提示重新运行 `library/auth.py`。
+- 登录失效时 `scrape.py` 以退出码 2 结束，并弹 macOS 通知提示重新运行 `auth.py`。
 - 服务器有限流（请求太快返回 Apache 403），所以每次请求间隔 15 秒，遇到 403 会退避重试。
 
 ## 数据
