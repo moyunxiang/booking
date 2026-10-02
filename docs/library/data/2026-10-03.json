@@ -1,6 +1,6 @@
 {
  "date": "2026-10-03",
- "fetched_at": "2026-10-02T13:10:22+08:00",
+ "fetched_at": "2026-10-02T13:36:48+08:00",
  "areas": [
   {
    "date": "2026-10-03",
@@ -1414,6 +1414,18 @@
      "type": "T",
      "status": "booked",
      "entry_id": 2261150
+    },
+    {
+     "date": "2026-10-03",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 63,
+     "room": "LC-07",
+     "start": "13:00",
+     "end": "15:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2261253
     },
     {
      "date": "2026-10-03",
