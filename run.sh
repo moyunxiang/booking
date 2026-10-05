@@ -2,12 +2,14 @@
 # 定时任务入口：抓取 → 如有变化则提交并推送 docs（GitHub Pages）
 #   run.sh library    图书馆（launchd 每 30 分钟）
 #   run.sh facility   体育设施：篮球 + 羽毛球（launchd 每小时）
+#   run.sh publish    不抓取，只提交推送 docs 里的改动
 set -u
 cd "$(dirname "$0")"
 export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
 what=${1:-library}
 mkdir -p logs
-exec >>logs/run.log 2>&1
+# 在终端里运行（make）时边看边写日志；launchd 运行时只写日志
+if [[ -t 1 ]]; then exec > >(tee -a logs/run.log) 2>&1; else exec >>logs/run.log 2>&1; fi
 echo "=== $(date '+%F %T') $what ==="
 
 case $what in
@@ -21,6 +23,8 @@ case $what in
   facility)
     uv run python facility/scrape.py
     code=$? ;;
+  publish)
+    code=0 ;;
   *) echo "unknown: $what"; exit 1 ;;
 esac
 echo "$(date '+%T') $what scrape exit $code"

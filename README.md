@@ -13,13 +13,15 @@ docs/facilities/  体育设施视图 → moyunxiang.com/booking/facilities/
 
 ## 用法
 
+日常用 `make`（`make help` 看全部）：`make update` 抓取并发布、`make auth` 查登录、`make login` 重新登录、`make log` 看记录、`make notify` 测试推送。
+
 ```sh
 uv run python auth.py        # 首次 / 登录失效时：弹出 Chrome 窗口手动登录 HKUST
 uv run python library/scrape.py      # 抓今天起 7 天（--days N / --date YYYY-MM-DD / --areas 3,8）
 ./run.sh                     # 定时任务入口：抓取 + git 提交推送 docs
 ```
 
-- 登录状态保存在 `.auth/library-chrome-profile`（Chrome profile，已 gitignore）；抓取用同一 profile 的 headless Chrome 发请求。
+- 登录状态保存在 `.auth/hkust-chrome-profile`（Chrome profile，已 gitignore）；抓取用同一 profile 的 headless Chrome 发请求。
 - 登录失效时 `scrape.py` 以退出码 2 结束，并弹 macOS 通知提示重新运行 `auth.py`。
 - 服务器有限流（请求太快返回 Apache 403），所以每次请求间隔 15 秒，遇到 403 会退避重试。
 

@@ -1,9 +1,10 @@
-"""盯篮球室内场：出现新的空位就推送到 iPhone（Bark），同时弹 Mac 通知。
+"""盯篮球室内场：出现新的空位就推送到 iPhone（iMessage / Bark），同时弹 Mac 通知。
 
   uv run python facility/monitor.py            # 检查一次（launchd 每 5 分钟跑一次）
   uv run python facility/monitor.py --test     # 只发一条测试消息
 
-Bark 推送地址写在 .auth/notify.json：{"bark": "https://api.day.app/<你的 key>"}（不进 git）。
+推送渠道写在 .auth/notify.json（不进 git），填了哪个就发哪个：
+  {"imessage": "+852xxxxxxxx 或 Apple ID 邮箱", "bark": "https://api.day.app/<你的 key>"}
 状态（已通知过的空位）存在 logs/monitor_state.json：同一个空位只通知一次，被订走后再空出来会再通知。
 """
 import argparse
@@ -34,18 +35,34 @@ SHORT = {"Basketball Court A (half court)": "A 半场", "Basketball Court B (hal
          "Basketball full court": "全场"}
 
 
+IMESSAGE = """on run argv
+  tell application "Messages"
+    set svc to 1st account whose service type = iMessage
+    send (item 2 of argv) to participant (item 1 of argv) of svc
+  end tell
+end run"""
+
+
 def send(title: str, body: str):
-    """推送到 iPhone（Bark）；同时弹一条 Mac 通知。"""
+    """弹一条 Mac 通知，再推送到 notify.json 里配置的渠道。"""
     subprocess.run(["osascript", "-e", "on run argv", "-e",
                     'display notification (item 2 of argv) with title (item 1 of argv) sound name "Glass"',
                     "-e", "end run", title, body], check=False)
-    bark = json.loads(CONF.read_text()).get("bark") if CONF.exists() else None
-    if not bark:
-        return
+    conf = json.loads(CONF.read_text()) if CONF.exists() else {}
+    if conf.get("imessage"):
+        r = subprocess.run(["osascript", "-e", IMESSAGE, conf["imessage"], f"{title}\n{body}\n{BOOK_URL}"],
+                           capture_output=True, text=True)
+        if r.returncode:
+            print("iMessage 发送失败:", r.stderr.strip(), flush=True)
+    if conf.get("bark"):
+        bark(conf["bark"], title, body)
+
+
+def bark(url: str, title: str, body: str):
     # Bark：POST 到 https://api.day.app/<key>，timeSensitive 在专注模式下也会提醒，点通知直接打开预约页
     payload = {"title": title, "body": body, "url": BOOK_URL, "group": "HKUST 篮球场",
                "level": "timeSensitive", "sound": "multiwayinvitation"}
-    req = urllib.request.Request(bark.rstrip("/"), data=json.dumps(payload).encode(),
+    req = urllib.request.Request(url.rstrip("/"), data=json.dumps(payload).encode(),
                                  headers={"Content-Type": "application/json; charset=utf-8"})
     try:
         with urllib.request.urlopen(req, timeout=15) as r:
@@ -99,7 +116,7 @@ def main():
     ap.add_argument("--test", action="store_true")
     args = ap.parse_args()
     if args.test:
-        send("🏀 测试通知", "篮球室内场监控已连上 Bark。点这条通知会打开预约页。")
+        send("🏀 测试通知", f"篮球室内场监控测试 {datetime.now(HK):%H:%M:%S}")
         return
     state = load_state()
     t0 = time.time()

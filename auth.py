@@ -3,7 +3,8 @@
 一个持久化的 Chrome profile (.auth/hkust-chrome-profile) 同时保存各站点的会话：
 登录时你只需在 CAS 登录一次，脚本会在同一次浏览器会话里依次进入各站点，让每个站点都拿到自己的会话。
 
-  uv run python auth.py      # 弹出 Chrome 窗口，手动完成 HKUST 登录
+  uv run python auth.py           # 弹出 Chrome 窗口，手动完成 HKUST 登录
+  uv run python auth.py --check   # 后台检查各站点是否还登录着（不弹窗口）
 
 爬虫在同一个 profile 里用 Playwright 发请求（导出的 cookie 给 requests 用会被服务器拒绝）。
 """
@@ -96,7 +97,21 @@ def login(timeout: int = 300) -> bool:
         return ok
 
 
+def check() -> bool:
+    with browser() as ctx:
+        ok = True
+        for site in SITES:
+            good = silent_login(ctx, site)
+            print(f"  {site}: {'已登录' if good else '已失效'}")
+            ok &= good
+        return ok
+
+
 if __name__ == "__main__":
-    ok = login()
-    print("登录成功" if ok else "登录未全部成功")
+    if "--check" in sys.argv:
+        ok = check()
+        print("登录有效" if ok else "需要重新登录：make login")
+    else:
+        ok = login()
+        print("登录成功" if ok else "登录未全部成功")
     sys.exit(0 if ok else 1)
