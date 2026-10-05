@@ -1,10 +1,9 @@
-"""盯篮球室内场：出现新的空位就推送到 iPhone（iMessage / Bark），同时弹 Mac 通知。
+"""盯篮球室内场：出现新的空位就推送到 iPhone（Bark），同时弹 Mac 通知。
 
   uv run python facility/monitor.py            # 检查一次（launchd 每 5 分钟跑一次）
   uv run python facility/monitor.py --test     # 只发一条测试消息
 
-推送渠道写在 .auth/notify.json（不进 git），填了哪个就发哪个：
-  {"imessage": "+852xxxxxxxx 或 Apple ID 邮箱", "bark": "https://api.day.app/<你的 key>"}
+Bark 推送地址写在 .auth/notify.json：{"bark": "https://api.day.app/<你的 key>"}（不进 git）。
 状态（已通知过的空位）存在 logs/monitor_state.json：同一个空位只通知一次，被订走后再空出来会再通知。
 """
 import argparse
@@ -35,25 +34,12 @@ SHORT = {"Basketball Court A (half court)": "A 半场", "Basketball Court B (hal
          "Basketball full court": "全场"}
 
 
-IMESSAGE = """on run argv
-  tell application "Messages"
-    set svc to 1st account whose service type = iMessage
-    send (item 2 of argv) to participant (item 1 of argv) of svc
-  end tell
-end run"""
-
-
 def send(title: str, body: str):
     """弹一条 Mac 通知，再推送到 notify.json 里配置的渠道。"""
     subprocess.run(["osascript", "-e", "on run argv", "-e",
                     'display notification (item 2 of argv) with title (item 1 of argv) sound name "Glass"',
                     "-e", "end run", title, body], check=False)
     conf = json.loads(CONF.read_text()) if CONF.exists() else {}
-    if conf.get("imessage"):
-        r = subprocess.run(["osascript", "-e", IMESSAGE, conf["imessage"], f"{title}\n{body}\n{BOOK_URL}"],
-                           capture_output=True, text=True)
-        if r.returncode:
-            print("iMessage 发送失败:", r.stderr.strip(), flush=True)
     if conf.get("bark"):
         bark(conf["bark"], title, body)
 
