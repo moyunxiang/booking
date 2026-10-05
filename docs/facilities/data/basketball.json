@@ -3,7 +3,7 @@
  "id": "2",
  "name": "篮球",
  "en": "Basketball",
- "fetched_at": "2026-10-05T08:15:00+08:00",
+ "fetched_at": "2026-10-05T09:15:00+08:00",
  "days": [
   {
    "date": "2026-10-05",
@@ -49,7 +49,7 @@
       },
       {
        "start": "09:00",
-       "available": true
+       "available": false
       },
       {
        "start": "10:00",
@@ -881,7 +881,7 @@
      "slots": [
       {
        "start": "08:00",
-       "available": true
+       "available": false
       },
       {
        "start": "09:00",
@@ -905,7 +905,7 @@
       },
       {
        "start": "14:00",
-       "available": true
+       "available": false
       },
       {
        "start": "15:00",
@@ -998,7 +998,7 @@
       },
       {
        "start": "18:00",
-       "available": true
+       "available": false
       },
       {
        "start": "19:00",
@@ -1018,66 +1018,9 @@
      "id": 102,
      "name": "Basketball Court A (half court)",
      "location": "SPORTS - Seafront",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     }
    ]
   }
