@@ -25,7 +25,7 @@ HK = ZoneInfo("Asia/Hong_Kong")
 ROOT = Path(__file__).parent.parent
 STATE = ROOT / "logs" / "monitor_state.json"
 CONF = ROOT / ".auth" / "notify.json"
-BOOK_URL = "https://fbs.hkust.edu.hk/facilities"
+BOOK_URL = "usthing://"  # 点推送打开 USThing App（它不支持直达预约页，进去后自己点进设施预约）
 WATCH = "basketball"  # 只通知篮球室内场
 EARLIEST = "10:00"    # 只通知这个时间及以后开始的时段（早上来不及去）
 WD = "一二三四五六日"
@@ -45,7 +45,7 @@ def send(title: str, body: str):
 
 
 def bark(url: str, title: str, body: str):
-    # Bark：POST 到 https://api.day.app/<key>，timeSensitive 在专注模式下也会提醒，点通知直接打开预约页
+    # Bark：POST 到 https://api.day.app/<key>，timeSensitive 在专注模式下也会提醒，点通知打开 USThing
     payload = {"title": title, "body": body, "url": BOOK_URL, "group": "HKUST 篮球场",
                "level": "timeSensitive", "sound": "multiwayinvitation"}
     req = urllib.request.Request(url.rstrip("/"), data=json.dumps(payload).encode(),
