@@ -102,7 +102,7 @@ def main():
     try:
         scrape(args.types.split(","), args.days)
     except SessionExpired:
-        msg = "设施系统登录已失效，请运行: uv run python auth.py"
+        msg = "设施系统登录已失效，请在本目录运行: make update"
         print(msg, file=sys.stderr)
         notify(msg)
         sys.exit(2)

@@ -111,7 +111,7 @@ def main():
     except SessionExpired:
         print("登录已失效", flush=True)
         if not state.get("expired_notified"):
-            send("🏀 篮球场监控暂停", "HKUST 登录已失效，请在 Mac 上运行 uv run python auth.py 重新登录。")
+            send("🏀 篮球场监控暂停", "HKUST 登录已失效，请在 Mac 上运行 make update 重新登录。")
             state["expired_notified"] = True
             STATE.write_text(json.dumps(state))
         sys.exit(2)
