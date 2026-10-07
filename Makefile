@@ -5,7 +5,7 @@ help:
 	@echo "make update    抓图书馆 + 体育设施并发布网站（登录失效会自动弹 Chrome 登录）"
 	@echo "make library   只抓图书馆并发布（约 2 分钟）"
 	@echo "make facility  只抓篮球 + 羽毛球并发布（约 5–20 分钟）"
-	@echo "make publish   只把本地改动发布上网站，不抓取"
+	@echo "make publish   把本地 docs/ 发布到网站（gh-pages），不抓取"
 	@echo "make auth      检查 HKUST 登录是否有效（不弹窗口）"
 	@echo "make login     弹出 Chrome 重新登录（一般不用，update 会自动处理）"
 	@echo "make log       看最近的抓取 / 监控记录"

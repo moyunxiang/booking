@@ -1,7 +1,7 @@
 # HKUST Booking 爬虫
 
 抓取 https://lbbooking.hkust.edu.hk/calendar/ 每天各房间的预约情况（area 3 / 8 / 20），
-生成静态网页，发布在 https://moyunxiang.com/booking/ （GitHub Pages，main 分支 `docs/`）。
+生成静态网页，发布在 https://moyunxiang.com/booking/ （GitHub Pages，`gh-pages` 分支）。main 只放代码；`run.sh` / `make publish` 把本地 `docs/`（含数据）作为一个新提交推到 gh-pages，数据不进 main。
 
 ```
 library/          图书馆爬虫（auth.py 登录，scrape.py 抓取）
@@ -18,7 +18,7 @@ docs/facilities/  体育设施视图 → moyunxiang.com/booking/facilities/
 ```sh
 uv run python auth.py        # 首次 / 登录失效时：弹出 Chrome 窗口手动登录 HKUST
 uv run python library/scrape.py      # 抓今天起 7 天（--days N / --date YYYY-MM-DD / --areas 3,8）
-./run.sh                     # 定时任务入口：抓取 + git 提交推送 docs
+./run.sh                     # 定时任务入口：抓取 + 发布 docs 到 gh-pages
 ```
 
 - 登录状态保存在 `.auth/hkust-chrome-profile`（Chrome profile，已 gitignore）；抓取用同一 profile 的 headless Chrome 发请求。
