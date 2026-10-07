@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f3efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#171614" media="(prefers-color-scheme: dark)">
+<title>体育设施空位</title>
+<link rel="stylesheet" href="../style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<div class="page">
+  <a class="back" href="../">← Booking</a>
+  <header class="mast">
+    <div>
+      <div class="eyebrow">HKUST Sports · Facility availability</div>
+      <h1 class="display">体育设施<span class="wd" id="wd"></span></h1>
+    </div>
+    <div class="mast-side" id="fresh"></div>
+  </header>
+  <div id="alert"></div>
+  <nav class="chips types" id="c-type"></nav>
+
+  <section class="sec">
+    <div class="sec-h"><h2 id="hl-title">室内场空位</h2><a class="muted book" href="https://fbs.hkust.edu.hk/facilities" target="_blank" rel="noopener">去官网预约 →</a></div>
+    <div id="indoor"></div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><h2>每日时段</h2><span class="muted" id="rule"></span></div>
+    <div id="days"></div>
+    <div class="legend"><span class="l-free">可预约</span><span class="l-no">已订 / 不开放</span></div>
+  </section>
+
+  <footer class="foot">
+    <span>数据来自 fbs.hkust.edu.hk，每小时更新 · <a href="scriptable.txt" style="border-bottom:1px solid var(--rule)">iPhone 小组件（Scriptable）</a></span>
+    <span id="foot-upd"></span>
+  </footer>
+</div>
+</body>
+</html>

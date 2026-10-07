@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f3efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#171614" media="(prefers-color-scheme: dark)">
+<title>图书馆空房</title>
+<link rel="stylesheet" href="../style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<div class="page">
+  <a class="back" href="../">← Booking</a>
+  <header class="mast">
+    <div>
+      <div class="eyebrow">HKUST Library · Room availability</div>
+      <h1 class="display">图书馆<span class="wd" id="wd"></span></h1>
+    </div>
+    <div class="mast-side" id="fresh"></div>
+  </header>
+  <div id="alert"></div>
+
+  <section class="sec" id="now-sec">
+    <div class="sec-h"><h2>现在有空</h2><span class="muted">数字 = 该时段空房总数</span></div>
+    <div class="chips nowtabs" id="c-now"></div>
+    <div class="nowlist" id="nowlist"></div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><h2>按时段找</h2><span class="muted" id="find-sub"></span></div>
+    <div class="ctrl">
+      <div class="ctrl-row"><span class="k">日期</span><div class="chips" id="c-date"></div></div>
+      <div class="ctrl-row"><span class="k">时段</span><div class="chips" id="c-blk"></div></div>
+      <div class="ctrl-row" id="r-start" hidden><span class="k">开始</span><div class="chips" id="c-start"></div></div>
+      <div class="ctrl-row" id="r-dur" hidden><span class="k">时长</span><div class="chips" id="c-dur"></div></div>
+      <div class="ctrl-row"><span class="k">人数</span><div class="chips" id="c-cap"></div></div>
+    </div>
+    <div class="zgrid" id="zones"></div>
+    <div class="legend"><span class="l-full">整段空</span><span class="l-part">部分空（标出空的时间）</span></div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><h2>整段空闲</h2><span class="muted" id="long-sub"></span></div>
+    <ul class="lf" id="long"></ul>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><h2>全部预约</h2><div class="chips" id="c-area"></div></div>
+    <div class="tlwrap" id="tl"></div>
+    <div class="legend"><span class="l-bk">已预约</span><span class="l-un">不可预约</span><span class="l-win">所选时段</span><span class="l-now">现在</span></div>
+  </section>
+
+  <footer class="foot">
+    <span>数据来自 lbbooking.hkust.edu.hk，每 30 分钟更新；不含预约人信息</span>
+    <span><a href="scriptable.txt" style="border-bottom:1px solid var(--rule)">iPhone 小组件（Scriptable）</a> · <span id="foot-upd"></span></span>
+  </footer>
+</div>
+</body>
+</html>

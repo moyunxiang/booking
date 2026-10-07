@@ -1,0 +1,279 @@
+// BOOKING_WIDGET · 图书馆空房小组件（Scriptable）
+// 由手机上的加载器（scriptable.txt）从网站拉取后运行；改这里 + push，手机端下次刷新自动更新。
+// 支持：桌面 小 / 中 / 大，锁屏 矩形 / 单行 / 圆形。
+// 小组件参数（长按 → 编辑小组件 → Parameter）：lc / group / pods，决定圆形锁屏和小尺寸主数字显示哪一类，默认 lc。
+const SITE = "https://moyunxiang.com/booking/library/";
+const fm = FileManager.local();
+const CACHE = fm.joinPath(fm.documentsDirectory(), "booking-library-data.json");
+
+// 与网页相同的楼层分组和色相
+const ZONES = [
+  { name: "1/F", h: 32, area: 3, test: (n) => /^1-/.test(n) },
+  { name: "LG1", h: 205, area: 3, test: (n) => n.startsWith("LG1") },
+  { name: "LG3", h: 150, area: 3, test: (n) => n.startsWith("LG3") },
+  { name: "LG4", h: 275, area: 3, test: (n) => n.startsWith("LG4") },
+  { name: "LG5", h: 340, area: 3, test: (n) => n.startsWith("LG5") },
+  { name: "其他", h: 60, area: 3, test: () => true },
+  { name: "LC", h: 12, area: 8, test: () => true },
+  { name: "Pods", h: 180, area: 20, test: () => true },
+];
+const KINDS = { lc: { area: 8, label: "LC" }, group: { area: 3, label: "Group" }, pods: { area: 20, label: "Pods" } };
+
+// ---------- 时间（按香港时间） ----------
+function hkNow() {
+  const h = new Date(Date.now() + 8 * 36e5);
+  const p = (n) => String(n).padStart(2, "0");
+  return { date: `${h.getUTCFullYear()}-${p(h.getUTCMonth() + 1)}-${p(h.getUTCDate())}`, min: h.getUTCHours() * 60 + h.getUTCMinutes() };
+}
+const toMin = (t) => { const [h, m] = t.split(":").map(Number); return h * 60 + m; };
+const fmt = (m) => `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
+
+// ---------- 数据 ----------
+async function load(date) {
+  try {
+    const d = await new Request(`${SITE}data/${date}.json?t=${Date.now()}`).loadJSON();
+    if (d && d.areas) { fm.writeString(CACHE, JSON.stringify(d)); return { d, offline: false }; }
+  } catch (e) {}
+  if (fm.fileExists(CACHE)) {
+    const d = JSON.parse(fm.readString(CACHE));
+    if (d.date === date) return { d, offline: true };
+  }
+  return { d: null, offline: true };
+}
+
+function buildRooms(day) {
+  const rooms = [];
+  for (const a of day.areas) {
+    const open = toMin(a.open), close = toMin(a.close);
+    for (const r of a.rooms) {
+      const bks = a.bookings.filter((b) => b.room_id === r.id).map((b) => ({ s: toMin(b.start), e: toMin(b.end), un: b.status === "unbookable" }));
+      const zone = ZONES.find((z) => z.area === a.area && z.test(r.name)) || { name: a.area_name, h: 90, area: a.area };
+      rooms.push({ name: r.name, cap: r.capacity, area: a.area, zone, open, close, bks });
+    }
+  }
+  return rooms;
+}
+const isFree = (r, s, e) => s >= r.open && e <= r.close && !r.bks.some((b) => b.s < e && b.e > s);
+const freeUntil = (r, s) => Math.min(r.close, ...r.bks.filter((b) => b.s >= s).map((b) => b.s));
+// 这一类房间在 [s, e) 是否全部不开放（闭馆 / 假期 / 全是 Unbookable）
+const shut = (rs, s, e) => rs.every((r) => s < r.open || e > r.close || r.bks.some((b) => b.un && b.s <= s && b.e >= e));
+
+function summarize(rooms, s, e) {
+  const byArea = {};
+  for (const k of Object.keys(KINDS)) {
+    const rs = rooms.filter((r) => r.area === KINDS[k].area);
+    byArea[k] = { total: rs.length, free: rs.filter((r) => isFree(r, s, e)), shut: rs.length > 0 && shut(rs, s, e) };
+  }
+  const zones = [];
+  for (const r of rooms) if (!zones.includes(r.zone)) zones.push(r.zone);
+  const byZone = zones.map((z) => {
+    const rs = rooms.filter((r) => r.zone === z);
+    return { z, total: rs.length, free: rs.filter((r) => isFree(r, s, e)), shut: shut(rs, s, e) };
+  });
+  return { byArea, byZone };
+}
+
+// ---------- 颜色 / 字体 ----------
+function hsl(h, s, l) {
+  s /= 100; l /= 100;
+  const k = (n) => (n + h / 30) % 12, a = s * Math.min(l, 1 - l);
+  const f = (n) => Math.round(255 * (l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)))));
+  return "#" + [f(0), f(8), f(4)].map((v) => v.toString(16).padStart(2, "0")).join("");
+}
+const zc = (h) => Color.dynamic(new Color(hsl(h, 48, 40)), new Color(hsl(h, 62, 72)));
+const C = {
+  bg: Color.dynamic(new Color("#f3efe6"), new Color("#171614")),
+  ink: Color.dynamic(new Color("#1c1a16"), new Color("#eeeae1")),
+  ink2: Color.dynamic(new Color("#4a463e"), new Color("#c9c3b6")),
+  muted: Color.dynamic(new Color("#8a8478"), new Color("#8e877a")),
+  red: Color.dynamic(new Color("#b8321f"), new Color("#ff8a73")),
+};
+const serif = (n) => new Font("Georgia-Bold", n);
+function txt(stack, s, font, color, lines = 1) {
+  const t = stack.addText(s); t.font = font; t.textColor = color; t.lineLimit = lines; t.minimumScaleFactor = 0.6; return t;
+}
+const countText = (x) => (x.shut ? "闭" : String(x.free.length));
+
+// ---------- 页脚：更新时间 ----------
+function freshness(d, offline) {
+  const m = Math.round((Date.now() - new Date(d.fetched_at)) / 6e4);
+  const t = m < 60 ? `${m} 分钟前更新` : `${Math.floor(m / 60)} 小时前更新`;
+  return { text: [t, offline ? "离线" : ""].filter(Boolean).join(" · "), stale: m > 90 || offline };
+}
+
+// ---------- 桌面：小 ----------
+function small(w, cur, nxt, win, kind) {
+  txt(w, `图书馆 · ${win.label}`, Font.boldSystemFont(11), C.muted);
+  w.addSpacer(6);
+  const order = [kind, ...["lc", "group"].filter((k) => k !== kind)].slice(0, 2);
+  for (const k of order) {
+    const x = cur.byArea[k];
+    const r = w.addStack(); r.layoutHorizontally(); r.bottomAlignContent();
+    txt(r, countText(x), serif(k === kind ? 34 : 26), x.free.length ? C.ink : C.red);
+    r.addSpacer(4);
+    const lab = r.addStack(); lab.layoutVertically();
+    txt(lab, KINDS[k].label, Font.boldSystemFont(11), C.ink2);
+    txt(lab, `/ ${x.total} 间`, Font.systemFont(10), C.muted);
+    lab.addSpacer(3);
+  }
+  w.addSpacer();
+  txt(w, `${win.nextLabel} 起  LC ${countText(nxt.byArea.lc)} · Group ${countText(nxt.byArea.group)}`, Font.mediumSystemFont(10), C.ink2);
+}
+
+// ---------- 桌面：中 ----------
+function medium(w, cur, nxt, win, fresh) {
+  const hd = w.addStack(); hd.layoutHorizontally(); hd.centerAlignContent();
+  txt(hd, `图书馆空房 · ${win.label}`, Font.boldSystemFont(11), C.muted);
+  hd.addSpacer();
+  txt(hd, fresh.text, Font.systemFont(9.5), fresh.stale ? C.red : C.muted);
+  w.addSpacer(8);
+  const body = w.addStack(); body.layoutHorizontally();
+  // 左：LC / Group 大数字
+  const L = body.addStack(); L.layoutVertically();
+  for (const k of ["lc", "group"]) {
+    const x = cur.byArea[k];
+    const r = L.addStack(); r.layoutHorizontally(); r.bottomAlignContent();
+    txt(r, countText(x), serif(30), x.free.length ? C.ink : C.red);
+    r.addSpacer(4);
+    const lab = r.addStack(); lab.layoutVertically();
+    txt(lab, KINDS[k].label, Font.boldSystemFont(11), C.ink2);
+    txt(lab, `/ ${x.total}`, Font.systemFont(10), C.muted);
+    lab.addSpacer(3);
+    L.addSpacer(2);
+  }
+  body.addSpacer(16);
+  // 右：各楼层表格，两列 = 现在 / 下一个 30 分钟，固定列宽保证上下对齐
+  const R = body.addStack(); R.layoutVertically();
+  const COLS = [44, 46];
+  const hr = R.addStack(); hr.layoutHorizontally();
+  hr.addSpacer();
+  cell(hr, "现在", COLS[0], Font.mediumSystemFont(9), C.muted);
+  cell(hr, `${win.nextLabel} 起`, COLS[1], Font.mediumSystemFont(9), C.muted);
+  R.addSpacer(2);
+  cur.byZone.filter((z) => z.z.name !== "LG5").forEach((zz) => {
+    const n = nxt.byZone.find((y) => y.z === zz.z);
+    const r = R.addStack(); r.layoutHorizontally(); r.centerAlignContent();
+    const bar = r.addStack(); bar.size = new Size(3, 11); bar.cornerRadius = 1.5; bar.backgroundColor = zc(zz.z.h);
+    r.addSpacer(5);
+    txt(r, zz.z.name, Font.semiboldSystemFont(11.5), C.ink);
+    r.addSpacer();
+    cell(r, `${countText(zz)}/${zz.total}`, COLS[0], Font.boldSystemFont(11.5), zz.free.length ? C.ink : C.muted);
+    cell(r, countText(n), COLS[1], Font.mediumSystemFont(11.5), n.free.length ? C.ink2 : C.muted);
+    R.addSpacer(1.5);
+  });
+}
+
+// 固定宽度、右对齐的一格
+function cell(stack, s, width, font, color) {
+  const c = stack.addStack(); c.size = new Size(width, 0); c.layoutHorizontally();
+  c.addSpacer(); txt(c, s, font, color);
+}
+
+// ---------- 桌面：大 ----------
+function large(w, slots, fresh) {
+  const hd = w.addStack(); hd.layoutHorizontally(); hd.centerAlignContent();
+  txt(hd, "图书馆空房", serif(17), C.ink);
+  hd.addSpacer();
+  txt(hd, fresh.text, Font.systemFont(9.5), fresh.stale ? C.red : C.muted);
+
+  // 版面预算（单位：一行楼层的高度）。每段标题约 1.5 行；前 3 段各要最多 4 行、之后每段 2 行，
+  // 放得下就继续往后加时段，剩下的空间再按顺序分给前面的时段。
+  const BUDGET = 19, HEAD = 1.5;
+  const plan = [];
+  let used = 0;
+  for (const sl of slots) {
+    const zs = sl.sum.byZone.filter((zz) => !zz.shut && zz.free.length)
+      .sort((a, b) => (b.z.area === 8) - (a.z.area === 8));  // LC 永远排第一行
+    const need = Math.max(1, Math.min(zs.length, plan.length < 3 ? 4 : 2));  // 前 3 段细一些，之后的段只要 2 行
+    if (plan.length && used + HEAD + need > BUDGET) break;
+    plan.push({ sl, zs, rows: need });
+    used += HEAD + need;
+  }
+  for (const p of plan) {
+    const extra = Math.min(BUDGET - used, Math.max(0, p.zs.length - p.rows));
+    p.rows += extra; used += extra;
+  }
+
+  plan.forEach(({ sl, zs, rows }, i) => {
+    const { sum } = sl;
+    w.addSpacer(i ? 6 : 8);
+    const sh = w.addStack(); sh.layoutHorizontally();
+    txt(sh, sl.label, Font.boldSystemFont(11), C.muted);
+    sh.addSpacer();
+    txt(sh, `LC ${countText(sum.byArea.lc)} · Group ${countText(sum.byArea.group)} · Pods ${countText(sum.byArea.pods)}`, Font.boldSystemFont(11), C.ink2);
+    w.addSpacer(3);
+    if (!zs.length) { txt(w, "没有空房", Font.systemFont(10.5), C.muted); return; }
+    const shown = zs.length > rows ? zs.slice(0, rows - 1) : zs, rest = zs.slice(shown.length);
+    for (const zz of shown) {
+      // 空到最晚的排前面，一行放不下的写成 +N
+      const items = zz.free.map((x) => ({ x, u: freeUntil(x, sl.s) })).sort((a, b) => b.u - a.u)
+        .map(({ x, u }) => `${short(x.name)}→${fmt(u)}`);
+      let names = "", k = 0;
+      while (k < items.length && (names + "  " + items[k]).length <= 40) names += (k ? "  " : "") + items[k++];
+      if (!k) names = items[k++];
+      if (k < items.length) names += `  +${items.length - k}`;
+      const r = w.addStack(); r.layoutHorizontally(); r.topAlignContent();
+      const bar = r.addStack(); bar.size = new Size(3, 12); bar.cornerRadius = 1.5; bar.backgroundColor = zc(zz.z.h);
+      r.addSpacer(5);
+      const nm = r.addStack(); nm.size = new Size(34, 0);
+      txt(nm, zz.z.name, Font.semiboldSystemFont(11), zc(zz.z.h));
+      r.addSpacer(4);
+      txt(r, names, Font.systemFont(10.5), C.ink);
+      w.addSpacer(2);
+    }
+    if (rest.length) txt(w, "+ " + rest.map((zz) => `${zz.z.name} ${zz.free.length}`).join(" · "), Font.mediumSystemFont(10), C.muted);
+  });
+  w.addSpacer();
+}
+const short = (n) => (n.length > 10 ? n.replace(/\s+/g, "").slice(0, 9) + "…" : n);
+
+// ---------- 主程序 ----------
+const now = hkNow();
+const param = String(args.widgetParameter || "lc").trim().toLowerCase();
+const kind = KINDS[param] ? param : "lc";
+const fam = config.widgetFamily || (config.runsInWidget ? "medium" : "large");
+const { d, offline } = await load(now.date);
+const w = new ListWidget();
+w.url = SITE;
+// 数据每 30 分钟（:00 / :30）抓一次，大约 2 分钟后上线；下一个 :05 / :35 刷新
+const nextRefresh = (Math.floor((now.min - 5) / 30) + 1) * 30 + 5 - now.min;
+w.refreshAfterDate = new Date(Date.now() + Math.max(nextRefresh, 5) * 6e4);
+
+if (!d) {
+  txt(w, offline ? "连不上 moyunxiang.com" : "今天没有数据", Font.boldSystemFont(13), C.red);
+} else {
+  const rooms = buildRooms(d);
+  const cut = Math.floor(now.min / 30) * 30 + 30;
+  const win = { now: now.min, next: cut, label: `现在–${fmt(cut)}`, nextLabel: fmt(cut), next2Label: fmt(cut + 30) };
+  const cur = summarize(rooms, now.min, cut);
+  const nxt = summarize(rooms, cut, cut + 30);
+  // 大尺寸：现在 + 之后若干个 30 分钟（不跨过午夜）
+  const slots = [{ s: now.min, e: cut, label: win.label, sum: cur }];
+  for (let t = cut; t < cut + 240 && t < 1440; t += 30)  // 最多往后 4 小时，实际显示几段由大尺寸版面决定
+    slots.push({ s: t, e: t + 30, label: `${fmt(t)}–${fmt(t + 30)}`, sum: t === cut ? nxt : summarize(rooms, t, t + 30) });
+  const fresh = freshness(d, offline);
+  if (fam === "accessoryInline") {
+    w.addText(`空房 LC ${countText(cur.byArea.lc)} · Group ${countText(cur.byArea.group)}`);
+  } else if (fam === "accessoryCircular") {
+    const x = cur.byArea[kind];
+    w.addAccessoryWidgetBackground = true;
+    const t = w.addText(countText(x)); t.font = Font.boldRoundedSystemFont(22); t.centerAlignText();
+    const s = w.addText(KINDS[kind].label); s.font = Font.systemFont(9); s.centerAlignText();
+  } else if (fam === "accessoryRectangular") {
+    const a = w.addText(`现在  LC ${countText(cur.byArea.lc)} · Group ${countText(cur.byArea.group)}`); a.font = Font.boldSystemFont(13);
+    const b = w.addText(`${win.nextLabel} 起  LC ${countText(nxt.byArea.lc)} · Group ${countText(nxt.byArea.group)}`); b.font = Font.systemFont(12);
+    const c = w.addText(fresh.text); c.font = Font.systemFont(10.5); c.textOpacity = 0.7;
+  } else {
+    w.backgroundColor = C.bg;
+    w.setPadding(14, 15, 12, 15);
+    if (fam === "small") small(w, cur, nxt, win, kind);
+    else if (fam === "large" || fam === "extraLarge") large(w, slots, fresh);
+    else medium(w, cur, nxt, win, fresh);
+  }
+}
+
+if (config.runsInWidget || config.runsInAccessoryWidget) Script.setWidget(w);
+else if (fam === "small") await w.presentSmall();
+else if (fam === "medium") await w.presentMedium();
+else await w.presentLarge();
+Script.complete();
