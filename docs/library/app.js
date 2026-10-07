@@ -20,6 +20,7 @@ const ZONES = [
 const AREA_SHORT = { 3: "Group Rooms", 8: "LC Rooms", 20: "Study Pods" };
 const BLOCKS = [8, 10, 12, 14, 16, 18, 20, 22];  // 两小时时段的起点（小时）
 const CAPS = [0, 4, 6, 8, 10];
+const DURS = [30, 60, 90, 120, 180, 240];  // 自选时段的时长（分钟）
 
 const hkNow = () => {
   const p = Object.fromEntries(new Intl.DateTimeFormat("en-CA", {
@@ -37,7 +38,9 @@ const dayLabel = (d, today) => {
 const q = new URLSearchParams(location.search);
 const state = {
   index: null, day: null, rooms: [],
-  date: q.get("date"), blk: q.has("b") ? +q.get("b") : null,  // null = 自动（今天取当前时段）
+  // blk：两小时时段起点；null = 自动（今天取当前时段）；"c" = 自选开始时间 + 时长
+  date: q.get("date"), blk: q.get("b") === "c" ? "c" : q.has("b") ? +q.get("b") : null,
+  start: q.get("t") || "now", dur: +q.get("d") || 60,
   cap: +q.get("p") || 0, area: +q.get("a") || 3, nowTab: +q.get("n") || 0,
 };
 
@@ -92,7 +95,11 @@ function ctx() {
   const now = hkNow();
   const isToday = state.date === now.date;
   const blk = state.blk ?? autoBlk(now, isToday);
-  const S = blk * 60, E = S + 120;
+  let S, E;
+  if (blk === "c") {
+    S = state.start !== "now" ? toMin(state.start) : isToday ? now.min : 600;
+    E = Math.min(S + state.dur, 1440);
+  } else { S = blk * 60; E = S + 120; }
   // 今天的当前时段：只看剩下的部分
   const S0 = isToday && now.min > S && now.min < E ? now.min : S;
   return { now, isToday, blk, S, E, S0 };
@@ -104,6 +111,7 @@ const zonesOf = (rooms) => [...new Set(rooms.map((r) => r.zone))]
 function setURL() {
   const p = new URLSearchParams({ date: state.date });
   if (state.blk != null) p.set("b", state.blk);
+  if (state.blk === "c") { p.set("t", state.start); p.set("d", state.dur); }
   if (state.cap) p.set("p", state.cap);
   if (state.area !== 3) p.set("a", state.area);
   if (state.nowTab) p.set("n", state.nowTab);
@@ -158,11 +166,25 @@ function renderNow() {
 }
 
 function renderControls() {
-  const { now, blk } = ctx();
+  const { now, isToday, blk } = ctx();
   $("#c-date").innerHTML = state.index.dates.filter((d) => d >= now.date).map((d) =>
     `<button data-v="${d}" class="${d === state.date ? "on" : ""}">${dayLabel(d, now.date)}${(state.index.closed?.[d] || []).includes(3) ? ` <span class="cl">闭</span>` : ""}</button>`).join("");
   $("#c-blk").innerHTML = BLOCKS.map((b) =>
-    `<button data-v="${b}" class="${b === blk ? "on" : ""}">${String(b).padStart(2, "0")}–${String(b + 2).padStart(2, "0")}</button>`).join("");
+    `<button data-v="${b}" class="${b === blk ? "on" : ""}">${String(b).padStart(2, "0")}–${String(b + 2).padStart(2, "0")}</button>`).join("")
+    + `<button data-v="c" class="${blk === "c" ? "on" : ""}">自选</button>`;
+  $("#r-start").hidden = $("#r-dur").hidden = blk !== "c";
+  if (blk === "c") {
+    const open = Math.min(...state.rooms.map((r) => r.open)), close = Math.max(...state.rooms.map((r) => r.close));
+    const opts = isToday ? [`<option value="now">现在</option>`] : [];
+    for (let m = open; m < close; m += 30) if (!isToday || m + 30 > now.min) opts.push(`<option value="${fmt(m)}">${fmt(m)}</option>`);
+    // 换到别的日期时「现在」不存在，默认 10:00
+    const val = state.start === "now" && !isToday ? "10:00" : state.start;
+    $("#c-start").innerHTML = `<select id="s-start" class="on" aria-label="开始时间">${opts.join("")}</select>`
+      + (isToday && state.start !== "now" ? `<button data-v="now">回到现在</button>` : "");
+    $("#s-start").value = val;
+    if ($("#s-start").selectedIndex < 0) $("#s-start").selectedIndex = 0;
+    $("#c-dur").innerHTML = DURS.map((d) => `<button data-v="${d}" class="${d === state.dur ? "on" : ""}">${d < 60 ? d + " 分钟" : hrs(d) + " 小时"}</button>`).join("");
+  }
   $("#c-cap").innerHTML = CAPS.map((c) => `<button data-v="${c}" class="${c === state.cap ? "on" : ""}">${c ? "≥ " + c + " 人" : "不限"}</button>`).join("");
   $("#c-area").innerHTML = [3, 8, 20].filter((a) => state.rooms.some((r) => r.area === a)).map((a) =>
     `<button data-v="${a}" class="${a === state.area ? "on" : ""}">${AREA_SHORT[a]}</button>`).join("");
@@ -183,6 +205,7 @@ function blockStatus(r, S, E) {
 
 function renderZones() {
   const { S, E, S0, blk } = ctx();
+  const len = E - S;
   $("#find-sub").textContent = S0 > S ? `剩余 ${fmt(S0)}–${fmt(E)}` : `${fmt(S)}–${fmt(E)}`;
   $("#zones").innerHTML = zonesOf(state.rooms.filter(capOK)).map((z) => {
     const rs = state.rooms.filter((r) => r.zone === z && capOK(r));
@@ -201,9 +224,12 @@ function renderZones() {
     if (part.length) body += `<div class="sub">部分空</div><div class="rlist">${part.map(({ r, parts }) =>
       roomChip(r, parts.map(([a, b]) => `${fmt(a)}–${fmt(b)}`).join("，"), "part")).join("")}</div>`;
     if (!body) {
-      const nb = BLOCKS.find((b) => b > blk && act.some((r) => isFree(r, b * 60, b * 60 + 120)));
-      const n = nb != null ? act.filter((r) => isFree(r, nb * 60, nb * 60 + 120)).length : 0;
-      body = `<div class="next">这个时段全满${nb != null ? `；<em>${nb}–${nb + 2}</em> 有 ${n} 间整段空` : ""}</div>`;
+      // 往后找最近一个有整段空房的时段（自选：每 30 分钟找同样时长）
+      const starts = blk === "c" ? Array.from({ length: 48 }, (_, i) => i * 30).filter((t) => t > S && t + len <= ec)
+        : BLOCKS.filter((b) => b > blk).map((b) => b * 60);
+      const nt = starts.find((t) => act.some((r) => isFree(r, t, t + len)));
+      const n = nt != null ? act.filter((r) => isFree(r, nt, nt + len)).length : 0;
+      body = `<div class="next">这个时段全满${nt != null ? `；<em>${fmt(nt)}–${fmt(nt + len)}</em> 有 ${n} 间整段空` : ""}</div>`;
     }
     return `<div class="zcard hue ${full.length ? "" : "none"}" style="--h:${z.h}">
       ${head(`<b>${full.length}</b>整段 · ${part.length} 部分 / ${act.length} 间`)}${body}</div>`;
@@ -272,7 +298,10 @@ function bind() {
   });
   on("#c-now", (v) => { state.nowTab = +v; setURL(); renderNow(); });
   on("#c-date", (v) => { state.date = v; loadDay(); });
-  on("#c-blk", (v) => { state.blk = +v; renderAll(); });
+  on("#c-blk", (v) => { state.blk = v === "c" ? "c" : +v; renderAll(); });
+  on("#c-start", (v) => { state.start = v; renderAll(); });
+  $("#c-start").addEventListener("change", (e) => { state.start = e.target.value; renderAll(); });
+  on("#c-dur", (v) => { state.dur = +v; renderAll(); });
   on("#c-cap", (v) => { state.cap = +v; renderAll(); });
   on("#c-area", (v) => { state.area = +v; setURL(); renderControls(); renderTimeline(); });
 }
@@ -283,7 +312,7 @@ async function init() {
   if (!dates.includes(state.date)) state.date = dates.includes(today) ? today : dates[dates.length - 1];
   bind();
   await loadDay();
-  setInterval(() => { renderMast(); renderNow(); if (state.blk == null) { renderControls(); renderZones(); renderLong(); } }, 60_000);
+  setInterval(() => { renderMast(); renderNow(); if (state.blk == null || (state.blk === "c" && state.start === "now")) { renderControls(); renderZones(); renderLong(); } }, 60_000);
 }
 
 init().catch((e) => { $("#zones").innerHTML = `<div class="empty">加载失败：${esc(e.message)}</div>`; });

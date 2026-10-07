@@ -76,6 +76,7 @@ section.sec{margin-top:40px}
 /* ——— 筛选条 ——— */
 .ctrl{display:grid;gap:10px;padding:14px 0 18px;border-bottom:1px solid var(--rule-2);margin-bottom:18px}
 .ctrl-row{display:flex;align-items:center;gap:10px;min-width:0}
+.ctrl-row[hidden]{display:none}
 .ctrl-row>.k{flex:none;width:34px;font-size:12px;color:var(--muted);letter-spacing:.06em}
 .chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;min-width:0;padding:1px}
 .chips::-webkit-scrollbar{display:none}
