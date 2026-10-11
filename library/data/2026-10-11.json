@@ -1,6 +1,6 @@
 {
  "date": "2026-10-11",
- "fetched_at": "2026-10-11T11:30:05+08:00",
+ "fetched_at": "2026-10-11T12:00:05+08:00",
  "areas": [
   {
    "date": "2026-10-11",
@@ -1096,6 +1096,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2267454
+    },
+    {
+     "date": "2026-10-11",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 16,
+     "room": "LG4-14",
+     "start": "12:00",
+     "end": "14:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2267691
     },
     {
      "date": "2026-10-11",
