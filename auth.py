@@ -5,10 +5,12 @@
 
   uv run python auth.py           # 弹出 Chrome 窗口，手动完成 HKUST 登录
   uv run python auth.py --check   # 后台检查各站点是否还登录着（不弹窗口）
+  uv run python auth.py --auto    # 定时任务用：过期时弹出 Chrome 等你登录（30 分钟内最多弹一次）
 
 爬虫在同一个 profile 里用 Playwright 发请求（导出的 cookie 给 requests 用会被服务器拒绝）。
 """
 import fcntl
+import subprocess
 import sys
 import time
 from contextlib import contextmanager
@@ -20,6 +22,7 @@ ROOT = Path(__file__).parent
 PROFILE_DIR = ROOT / ".auth" / "hkust-chrome-profile"
 LIBRARY = "https://lbbooking.hkust.edu.hk/calendar/"
 FACILITY = "https://fbs.hkust.edu.hk/"
+PROMPTED = ROOT / "logs" / ".login_prompted"  # 上次后台弹登录窗口的时间
 
 # 每个站点：进入地址 + 判断「已登录」的方法
 SITES = {
@@ -97,6 +100,22 @@ def login(timeout: int = 300) -> bool:
         return ok
 
 
+def auto_login(interactive: bool = False) -> bool:
+    """登录过期时弹出 Chrome 窗口等你登录（launchd 任务跑在你的桌面会话里，所以能弹窗）。
+    后台运行时 30 分钟内最多弹一次：你不在电脑前时不会每 5 分钟弹一个窗口。"""
+    if not interactive and PROMPTED.exists() and time.time() - PROMPTED.stat().st_mtime < 1800:
+        print("30 分钟内已弹过登录窗口，这次跳过", flush=True)
+        return False
+    PROMPTED.parent.mkdir(exist_ok=True)
+    PROMPTED.touch()
+    subprocess.run(["osascript", "-e", 'display notification "已打开 Chrome，请在 10 分钟内完成登录" '
+                    'with title "HKUST 登录已过期" sound name "Glass"'], check=False)
+    ok = login(timeout=600)
+    if ok:
+        PROMPTED.unlink(missing_ok=True)
+    return ok
+
+
 def check() -> bool:
     with browser() as ctx:
         ok = True
@@ -111,6 +130,8 @@ if __name__ == "__main__":
     if "--check" in sys.argv:
         ok = check()
         print("登录有效" if ok else "需要重新登录：make login")
+    elif "--auto" in sys.argv:
+        ok = auto_login()
     else:
         ok = login()
         print("登录成功" if ok else "登录未全部成功")

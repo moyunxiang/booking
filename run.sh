@@ -9,24 +9,35 @@ export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
 what=${1:-library}
 mkdir -p logs
 # 在终端里运行（make）时边看边写日志；launchd 运行时只写日志
-if [[ -t 1 ]]; then exec > >(tee -a logs/run.log) 2>&1; else exec >>logs/run.log 2>&1; fi
+[[ -t 1 ]] && tty=1 || tty=
+if [[ -n $tty ]]; then exec > >(tee -a logs/run.log) 2>&1; else exec >>logs/run.log 2>&1; fi
 echo "=== $(date '+%F %T') $what ==="
 
-case $what in
-  library)
-    # 每天第一次运行抓 7 天，其余只抓今天和明天（服务器限流，请求越少越好）
-    marker=logs/.last_full
-    if [[ ! -f $marker || $(( $(date +%s) - $(stat -f %m $marker) )) -gt 72000 ]]; then days=7; else days=2; fi
-    uv run python library/scrape.py --days $days
-    code=$?
-    [[ $code -eq 0 && $days -eq 7 ]] && touch $marker ;;
-  facility)
-    uv run python facility/scrape.py
-    code=$? ;;
-  publish)
-    code=0 ;;
-  *) echo "unknown: $what"; exit 1 ;;
-esac
+scrape() {
+  case $what in
+    library)
+      # 每天第一次运行抓 7 天，其余只抓今天和明天（服务器限流，请求越少越好）
+      marker=logs/.last_full
+      if [[ ! -f $marker || $(( $(date +%s) - $(stat -f %m $marker) )) -gt 72000 ]]; then days=7; else days=2; fi
+      uv run python library/scrape.py --days $days
+      code=$?
+      [[ $code -eq 0 && $days -eq 7 ]] && touch $marker ;;
+    facility)
+      uv run python facility/scrape.py
+      code=$? ;;
+    publish)
+      code=0 ;;
+    *) echo "unknown: $what"; exit 1 ;;
+  esac
+}
+scrape
+# 登录过期（退出码 2）：弹出 Chrome 等你登录，成功后重抓一次
+if [[ $code -eq 2 ]]; then
+  echo "登录已失效，打开 Chrome 等待登录…"
+  # 终端里（make）直接弹；后台（launchd）用 --auto：30 分钟内最多弹一次
+  [[ -n $tty ]] && flag=() || flag=(--auto)
+  if uv run python auth.py $flag; then scrape; fi
+fi
 echo "$(date '+%T') $what scrape exit $code"
 [[ $code -ne 0 ]] && exit $code
 

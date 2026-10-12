@@ -17,7 +17,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
-from auth import browser, silent_login  # noqa: E402
+from auth import auto_login, browser, silent_login  # noqa: E402
 from fbs import SessionExpired  # noqa: E402
 from scrape import TYPES, scrape_day  # noqa: E402
 
@@ -109,12 +109,14 @@ def main():
     try:
         free = check()
     except SessionExpired:
-        print("登录已失效", flush=True)
+        print("登录已失效，打开 Chrome 等待登录", flush=True)
         if not state.get("expired_notified"):
-            send("🏀 篮球场监控暂停", "HKUST 登录已失效，请在 Mac 上运行 make update 重新登录。")
+            send("🏀 篮球场监控暂停", "HKUST 登录已失效，Mac 上已弹出 Chrome 登录窗口，登录后自动恢复。")
             state["expired_notified"] = True
             STATE.write_text(json.dumps(state))
-        sys.exit(2)
+        if not auto_login(interactive=sys.stdout.isatty()):
+            sys.exit(2)
+        free = check()
     known = set(state.get("free", []))
     new = [x for x in free if x["key"] not in known]
     print(f"{datetime.now(HK):%F %T} indoor free={len(free)} new={len(new)} ({time.time() - t0:.0f}s)", flush=True)

@@ -7,7 +7,7 @@ help:
 	@echo "make facility  只抓篮球 + 羽毛球并发布（约 5–20 分钟）"
 	@echo "make publish   把本地 docs/ 发布到网站（gh-pages），不抓取"
 	@echo "make auth      检查 HKUST 登录是否有效（不弹窗口）"
-	@echo "make login     弹出 Chrome 重新登录（一般不用，update 会自动处理）"
+	@echo "make login     弹出 Chrome 重新登录（一般不用：过期时会自动弹出）"
 	@echo "make log       看最近的抓取 / 监控记录"
 	@echo "make watch     立刻检查一次篮球室内场（有新空位会推送）"
 	@echo "make notify    发一条测试推送"
@@ -15,11 +15,9 @@ help:
 
 update: library facility
 
-# 登录失效（退出码 2）时自动弹出 Chrome 让你登录，登录成功后接着重抓
+# 登录失效时 run.sh 会自己弹出 Chrome 等你登录，登录后接着重抓
 library facility:
-	@./run.sh $@ || { c=$$?; [ $$c -eq 2 ] || exit $$c; \
-	  echo "登录已失效，正在打开 Chrome，请完成 HKUST 登录…"; \
-	  uv run python auth.py && ./run.sh $@; }
+	@./run.sh $@
 
 publish:
 	@./run.sh publish
@@ -36,9 +34,7 @@ log:
 	@grep -E 'indoor free|失效|失败' logs/monitor.log | tail -6
 
 watch:
-	@uv run python facility/monitor.py || { c=$$?; [ $$c -eq 2 ] || exit $$c; \
-	  echo "登录已失效，正在打开 Chrome，请完成 HKUST 登录…"; \
-	  uv run python auth.py && uv run python facility/monitor.py; }
+	@uv run python facility/monitor.py
 
 notify:
 	@uv run python facility/monitor.py --test
