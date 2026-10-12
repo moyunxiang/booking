@@ -169,6 +169,11 @@ section.sec{margin-top:40px}
 
 /* ——— 设施：每日时段格 ——— */
 .types{margin:18px 0 0}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 0}
+.cta a{flex:1 1 160px;max-width:320px;text-align:center;font-size:16px;font-weight:700;padding:14px 18px;border-radius:12px;text-decoration:none}
+.cta a[hidden]{display:none}
+.cta .go{background:var(--ink);color:var(--paper)}
+.cta .sub{background:var(--amber-bg);color:var(--amber);border:1.5px solid var(--amber)}
 .chips button:disabled{opacity:.5;cursor:default}
 a.book{color:var(--ink-2);border-bottom:1px solid var(--rule)}
 .fday{background:var(--card);border:1px solid var(--rule-2);border-radius:var(--radius);padding:12px 14px 10px;margin-bottom:10px}
