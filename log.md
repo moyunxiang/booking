@@ -47,3 +47,10 @@
 **操作**：`curl -sI https://moyunxiang.com/booking/style.css` → `cache-control: max-age=14400`（Cloudflare），线上 CSS 已含 `.cta`，判断为浏览器缓存旧 CSS；HTML 为 `max-age=600`。`run.sh publish` 增加：按 `shasum` 给页面里的 `style.css` / `app.js` 引用加 `?v=<8位哈希>`。重复运行验证为 `no changes`（幂等）。  
 **结果**：已发布 gh-pages；HTML 缓存 10 分钟内过期后，浏览器会拉取新 CSS。  
 **下一步**：等用户刷新确认。
+
+#### 2026-10-12 16:55 HKT — ntfy 话题改名
+
+**背景**：用户要求订阅话题改为 `hkust-badminton-moyunxiang`。  
+**操作**：`sed -i '' 's/hkust-badminton-2cd292/hkust-badminton-moyunxiang/g' facility/monitor.py docs/facilities/subscribe.html plan.md`；`./run.sh publish`。  
+**结果**：订阅页与监控都改用新话题；旧话题 `hkust-badminton-2cd292` 不再推送，已订阅旧话题的人需重新订阅（目前只有用户本人）。  
+**下一步**：用户订阅新话题后发测试推送。

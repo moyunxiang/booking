@@ -34,7 +34,7 @@ CONF = ROOT / ".auth" / "notify.json"
 EARLIEST = "10:00"  # 只通知这个时间及以后开始的时段（早上来不及去）
 CACHE_TTL = 1800    # 「有空」场地的时段缓存多久（秒）
 NTFY = "https://ntfy.sh"
-NTFY_TOPIC = "hkust-badminton-2cd292"  # 公开话题：订阅页上写着，谁都能订阅
+NTFY_TOPIC = "hkust-badminton-moyunxiang"  # 公开话题：订阅页上写着，谁都能订阅
 FBS_URL = "https://fbs.hkust.edu.hk/facilities"
 WD = "一二三四五六日"
 
