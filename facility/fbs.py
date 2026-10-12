@@ -11,6 +11,7 @@ import time
 from pathlib import Path
 
 from bs4 import BeautifulSoup
+from playwright.sync_api import Error as PlaywrightError
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from auth import FACILITY  # noqa: E402
@@ -22,10 +23,25 @@ class SessionExpired(Exception):
     pass
 
 
+def _request(fn, *args, **kw):
+    """连接被重置 / 超时之类的网络错误，以及 5xx：退避重试 4 次。"""
+    for attempt in range(4):
+        try:
+            r = fn(*args, **kw)
+            if r.status < 500:
+                return r
+        except PlaywrightError as e:
+            if attempt == 3:
+                raise
+            print(f"fbs 网络错误，{10 * (attempt + 1)} 秒后重试：{str(e).splitlines()[0]}", flush=True)
+        time.sleep(10 * (attempt + 1))
+    return r
+
+
 class FBS:
     def __init__(self, ctx):
         self.ctx = ctx
-        r = ctx.request.get(FACILITY + "facilities")
+        r = _request(ctx.request.get, FACILITY + "facilities")
         if not r.url.startswith(FACILITY) or "casservice" in r.url or 'name="form_token"' not in r.text():
             raise SessionExpired
         soup = BeautifulSoup(r.text(), "lxml")
@@ -42,11 +58,7 @@ class FBS:
         }
         if trigger_value is not None:
             data["_triggering_element_value"] = trigger_value
-        for attempt in range(4):  # 服务器偶尔 500 / 502，退避重试
-            r = self.ctx.request.post(AJAX, form=data)
-            if r.status < 500:
-                break
-            time.sleep(10 * (attempt + 1))
+        r = _request(self.ctx.request.post, AJAX, form=data)
         if r.status != 200:
             raise RuntimeError(f"fbs ajax HTTP {r.status}")
         try:

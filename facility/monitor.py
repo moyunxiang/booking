@@ -7,10 +7,13 @@
   basketball  只看室内场 → Bark，只发给我（.auth/notify.json：{"bark": "https://api.day.app/<key>"}，不进 git）
   badminton   所有场地   → ntfy 公开话题 NTFY_TOPIC，任何人订阅都能收到（订阅页 docs/facilities/subscribe.html）
 
-羽毛球每个「有空」的场地都要单独点进去才能看时段（约 15 秒/个），而早上 8 点的空位很多，
-所以对「有空」场地的时段缓存 CACHE_TTL 秒；「满 → 有空」的场地不在缓存里，每轮都会立刻点进去。
+羽毛球每个「有空」的场地都要单独点进去才能看时段（3 个请求，约 15–40 秒/个），而早上 8–10 点的空位
+让 30+ 个场地都显示「有空」，所以羽毛球用 scrape.py 的共用缓存（logs/fbs_cache.json）：
+「满 → 有空」的场地每轮都会立刻点进去；已经有空的场地每轮只轮换刷新最旧的 3 个（超过 30 分钟的）。
+篮球不用缓存（ttl=0, refresh=None），室内场每轮都点进去。网页抓取（scrape.py）也会复用这些结果。
 
 状态存在 logs/monitor_state.json：同一个空位只通知一次，被订走后再空出来会再通知。
+状态和缓存都在 profile 锁里读写：排队等锁的进程不会拿到旧状态。
 """
 import argparse
 import json
@@ -25,22 +28,21 @@ from zoneinfo import ZoneInfo
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from auth import auto_login, browser, silent_login  # noqa: E402
 from fbs import SessionExpired  # noqa: E402
-from scrape import TYPES, scrape_day  # noqa: E402
+from scrape import load_cache, save_cache, scrape_day_cached, stale  # noqa: E402
 
 HK = ZoneInfo("Asia/Hong_Kong")
 ROOT = Path(__file__).parent.parent
 STATE = ROOT / "logs" / "monitor_state.json"
 CONF = ROOT / ".auth" / "notify.json"
 EARLIEST = "10:00"  # 只通知这个时间及以后开始的时段（早上来不及去）
-CACHE_TTL = 1800    # 「有空」场地的时段缓存多久（秒）
 NTFY = "https://ntfy.sh"
 NTFY_TOPIC = "hkust-badminton-moyunxiang"  # 公开话题：订阅页上写着，谁都能订阅
 FBS_URL = "https://fbs.hkust.edu.hk/facilities"
 WD = "一二三四五六日"
 
 WATCHES = {
-    "basketball": {"emoji": "🏀", "label": "室内篮球场", "indoor_only": True, "cache": False, "to": "bark"},
-    "badminton": {"emoji": "🏸", "label": "羽毛球场", "indoor_only": False, "cache": True, "to": "ntfy"},
+    "basketball": {"emoji": "🏀", "label": "室内篮球场", "indoor_only": True, "ttl": 0, "refresh": None, "to": "bark"},
+    "badminton": {"emoji": "🏸", "label": "羽毛球场", "indoor_only": False, "ttl": 1800, "refresh": 3, "to": "ntfy"},
 }
 
 
@@ -93,63 +95,66 @@ def load_state() -> dict:
         s = {}
     if isinstance(s.get("free"), list):  # 旧格式：只有篮球
         s["free"] = {"basketball": s["free"]}
-    return {"free": s.get("free", {}), "cache": s.get("cache", {}), "expired_notified": s.get("expired_notified", False)}
+    return {"free": s.get("free", {}), "expired_notified": s.get("expired_notified", False)}
+
+
+def save_state(state: dict):
+    STATE.parent.mkdir(exist_ok=True)
+    STATE.write_text(json.dumps(state))
 
 
 def check_type(ctx, key: str, cfg: dict, cache: dict, now: datetime) -> list[dict]:
-    """某类型 8 天内所有未开始、且不早于 EARLIEST 的空时段。cache 原地更新：{"日期|场地id": {"t": 时间戳, "slots": [...]}}"""
-    ftype = TYPES[key]["id"]
-    ts = time.time()
-
-    def detail(c, day):
-        if cfg["indoor_only"] and not c["indoor"]:
-            return False
-        hit = cache.get(f"{day}|{c['id']}")
-        return not (cfg["cache"] and hit and ts - hit["t"] < CACHE_TTL)
-
-    out, selected = [], 0
+    """某类型 8 天内所有未开始、且不早于 EARLIEST 的空时段。"""
+    want = (lambda c: c["indoor"]) if cfg["indoor_only"] else (lambda c: True)
+    before = {k: v["t"] for k, v in cache.get(key, {}).items()}
+    refresh = stale(cache, key, cfg["refresh"], cfg["ttl"])
+    out = []
     for i in range(8):
         day = (now.date() + timedelta(i)).isoformat()
-        cs = scrape_day(ctx, ftype, day, detail=lambda c: detail(c, day))
-        for c in cs:
-            ck = f"{day}|{c['id']}"
-            if not c["available"]:
-                cache.pop(ck, None)
-            elif c["slots"] is not None:
-                selected += 1
-                if cfg["cache"]:
-                    cache[ck] = {"t": ts, "slots": c["slots"]}
-            elif ck in cache:
-                c["slots"] = cache[ck]["slots"]
-            if cfg["indoor_only"] and not c["indoor"]:
+        for c in scrape_day_cached(ctx, key, day, cache, refresh, want=want):
+            if not want(c):
                 continue
             for s in c["slots"] or []:
                 start = datetime.fromisoformat(f"{day}T{s['start']}:00").replace(tzinfo=HK)
                 if s["available"] and start > now and s["start"] >= EARLIEST:
                     out.append({"key": f"{day}|{c['id']}|{s['start']}", "date": day, "start": s["start"],
                                 "court": c["name"], "location": c["location"]})
-    # 过期日期的缓存清掉
-    for ck in [k for k in cache if k.split("|")[0] < now.date().isoformat()]:
-        cache.pop(ck)
-    print(f"  {key}: 点进 {selected} 个场地", flush=True)
+    fresh = sum(1 for k, v in cache.get(key, {}).items() if before.get(k) != v["t"])
+    print(f"  {key}: 点进 {fresh} 个场地", flush=True)
     return out
 
 
-def check(state: dict) -> dict[str, list[dict]]:
-    now = datetime.now(HK)
-    result = {}
+def check_and_notify(state: dict):
+    """拿到 profile 锁后再读状态和缓存，查完、发完通知、写完状态再放锁。"""
+    t0 = time.time()
     with browser() as ctx:
-        relogged = False
+        now = datetime.now(HK)  # 拿到锁之后再取时间：排队期间开始的时段不算空位
+        waited = time.time() - t0
+        state.update(load_state())
+        cache = load_cache()
+        free, relogged = {}, False
         for key, cfg in WATCHES.items():
-            cache = state["cache"].setdefault(key, {})
             try:
-                result[key] = check_type(ctx, key, cfg, cache, now)
+                free[key] = check_type(ctx, key, cfg, cache, now)
             except SessionExpired:
                 if relogged or not silent_login(ctx, "facility"):
                     raise
                 relogged = True
-                result[key] = check_type(ctx, key, cfg, cache, now)
-    return result
+                free[key] = check_type(ctx, key, cfg, cache, now)
+        save_cache(cache)
+        summary = []
+        for key, cfg in WATCHES.items():
+            known = set(state["free"].get(key, []))
+            new = sorted((x for x in free[key] if x["key"] not in known), key=lambda x: x["key"])
+            summary.append(f"{key} free={len(free[key])} new={len(new)}")
+            if new:
+                lines = [fmt(x) for x in new]
+                send(cfg["to"], f"{cfg['emoji']} {cfg['label']}有 {len(lines)} 个新空位",
+                     "\n".join(lines[:10]) + (f"\n…共 {len(lines)} 个" if len(lines) > 10 else ""))
+            state["free"][key] = [x["key"] for x in free[key]]
+        state["expired_notified"] = False
+        save_state(state)
+    print(f"{datetime.now(HK):%F %T} {' | '.join(summary)} (等锁 {waited:.0f}s + 查询 {time.time() - t0 - waited:.0f}s)", flush=True)
 
 
 def short(name: str) -> str:
@@ -182,32 +187,17 @@ def main():
         send("ntfy", "🏸 测试通知", f"羽毛球空场订阅测试 {t}。以后有 10:00 及以后的空场会推送到这里。")
         return
     state = load_state()
-    t0 = time.time()
     try:
-        free = check(state)
+        check_and_notify(state)
     except SessionExpired:
         print("登录已失效，打开 Chrome 等待登录", flush=True)
         if not state["expired_notified"]:
             send("bark", "🏀 场地监控暂停", "HKUST 登录已失效，Mac 上已弹出 Chrome 登录窗口，登录后自动恢复。")
             state["expired_notified"] = True
-            STATE.write_text(json.dumps(state))
+            save_state(state)
         if not auto_login(interactive=sys.stdout.isatty()):
             sys.exit(2)
-        free = check(state)
-    summary = []
-    for key, cfg in WATCHES.items():
-        known = set(state["free"].get(key, []))
-        new = sorted((x for x in free[key] if x["key"] not in known), key=lambda x: x["key"])
-        summary.append(f"{key} free={len(free[key])} new={len(new)}")
-        if new:
-            lines = [fmt(x) for x in new]
-            send(cfg["to"], f"{cfg['emoji']} {cfg['label']}有 {len(lines)} 个新空位",
-                 "\n".join(lines[:10]) + (f"\n…共 {len(lines)} 个" if len(lines) > 10 else ""))
-        state["free"][key] = [x["key"] for x in free[key]]
-    print(f"{datetime.now(HK):%F %T} {' | '.join(summary)} ({time.time() - t0:.0f}s)", flush=True)
-    state["expired_notified"] = False
-    STATE.parent.mkdir(exist_ok=True)
-    STATE.write_text(json.dumps(state))
+        check_and_notify(state)
 
 
 if __name__ == "__main__":

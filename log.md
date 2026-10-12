@@ -54,3 +54,44 @@
 **操作**：`sed -i '' 's/hkust-badminton-2cd292/hkust-badminton-moyunxiang/g' facility/monitor.py docs/facilities/subscribe.html plan.md`；`./run.sh publish`。  
 **结果**：订阅页与监控都改用新话题；旧话题 `hkust-badminton-2cd292` 不再推送，已订阅旧话题的人需重新订阅（目前只有用户本人）。  
 **下一步**：用户订阅新话题后发测试推送。
+
+#### 2026-10-12 17:50 HKT — 发现 Chrome 锁争用与状态竞争；改为共用场地缓存
+
+**背景**：定时监控一轮耗时 4778s（16:18 启动，17:38 结束），且对同一空位重复通知（发到旧话题 `hkust-badminton-2cd292` 17:38:22，新话题未重复）。设施网页抓取 16:15→17:10 耗时约 55 分钟。  
+**操作 / 分析**：
+- 原因 1（bug）：`monitor.py` 在等 profile 锁之前就读了 `monitor_state.json`，排队期间别的进程更新了状态，它拿着旧状态（无缓存、无已通知记录）跑，导致重新点 37 个场地并重复通知。
+- 原因 2：`facility/scrape.py` 每小时对所有「有空」场地逐个点进（羽毛球早上 8 点空位多），长时间占锁，监控被饿死。
+- 修改：`facility/scrape.py` 新增 `load_cache` / `save_cache` / `scrape_day_cached`，缓存文件 `logs/fbs_cache.json`（TTL 1800s），网页抓取默认使用；`facility/monitor.py` 改用同一缓存（篮球 `ttl=0` 不缓存，羽毛球 1800s），并且在 `with browser()` 内读状态、读写缓存、发通知、写状态。
+- 把旧 `monitor_state.json["cache"]` 的 37 条羽毛球缓存迁移到 `logs/fbs_cache.json`。
+- 仅做语法检查；17:15 那轮旧代码的设施抓取仍在运行（未强制结束），新代码监控已在后台排队实测。  
+**结果**：未验证（等实测耗时）。  
+**决策 / 假设**：假设网页抓取复用缓存后可降到约 10 分钟以内；验证：观察 18:15 那轮 `facility scrape exit` 时间与 monitor.log 每轮耗时。  
+**下一步**：记录实测耗时；通过后提交 main。
+
+#### 2026-10-12 20:45 HKT — 实测：缓存过期时羽毛球全量重点场地太慢；改为轮换刷新
+
+**背景**：17:50 改为共用缓存后观察实际耗时（P1 锁争用）。  
+**操作 / 观察**：
+- 18:15 设施抓取（旧代码，进程启动时加载）18:58 以 exit 1 失败：`APIRequestContext.post: Timeout 30000ms exceeded`；随后在 `facility/fbs.py` 加了 `_request` 重试（网络错误 / 5xx 退避重试 4 次）。19:15 那轮里重试生效过两次（Timeout、ECONNRESET），20:02 exit 0。
+- 20:08 监控一轮：`等锁+查询` 共 1905s，其中只点进 1 个篮球场、0 个羽毛球场 → 绝大部分是排队等锁。
+- 20:08 推送了「10/12 20:00 Seafront 2 号场」到 ntfy，而此时该时段已开始：bug，`now` 在等锁前取值。修复：`check_and_notify` 在拿到锁之后再取 `now`，日志改为分别打印 `等锁 Ns + 查询 Ns`。
+- 20:09 手动跑 `uv run python facility/monitor.py`（无其他进程占锁）：`等锁 1s + 查询 1674s`，羽毛球缓存刚好过 30 分钟，37 个场地全部重新点进去。折算 fbs 今晚约 10 秒/请求、约 40 秒/场地。CPU：python 本身 4.6s user + 3.4s sys / 28 分钟。
+- 核对 ntfy 历史（`https://ntfy.sh/hkust-badminton-moyunxiang/json?poll=1&since=4h`）：18:37 那轮其实已经推到新话题，18:57 的「补发」是重复的。  
+**修改**：
+- `facility/scrape.py`：新增 `stale(cache, key, n, ttl)`（缓存中超过 ttl 的最旧 n 个）；`scrape_day_cached` 改为只重新点 `refresh` 集合里的场地，不在缓存里的「有空」场地（满→有空）总是点。网页抓取每类型每次最多刷新 `REFRESH=6` 个。
+- `facility/monitor.py`：篮球 `ttl=0, refresh=None`（室内场每轮全点）；羽毛球 `ttl=1800, refresh=3`（每轮最多刷新最旧的 3 个）。
+- `docs/facilities/subscribe.html`：说明改为「每 5–10 分钟检查；原本全满的场地马上发现；本来有空的场地上新空出的时段可能 1 小时左右才发现」。  
+**结果**：语法 / 导入检查通过（`stale` 对当前缓存返回预期）。实际每轮耗时**未验证**，等新代码跑两轮。  
+**决策 / 假设**：假设 A2：每轮羽毛球成本 = 8 次 GET+search + 最多 3 个场地 × 3 请求，今晚约 4–5 分钟；验证：monitor.log 的 `查询 Ns`。  
+**下一步**：记录实测；通过后提交 main 并发布订阅页。
+
+#### 2026-10-12 21:35 HKT — 轮换刷新实测通过
+
+**背景**：验证 20:45 的轮换刷新（假设 A2）。  
+**操作**：观察 `logs/monitor.log` 与 `logs/run.log`。  
+**结果**（fbs 今晚约 10–13 秒/请求）：
+- 监控（新代码）21:19：`等锁 1494s + 查询 254s`（等的是旧代码的 20:15 设施抓取，它 21:13 才结束，约 58 分钟）。
+- 设施网页抓取（新代码，`REFRESH=6`）21:15 启动，等监控到约 21:19，21:27:39 `facility scrape exit 0`：约 8 分钟（旧代码 47–58 分钟）。
+- 监控 21:33：`basketball 点进 1 | badminton 点进 3`，`等锁 215s + 查询 357s`。
+- 结论：单轮查询约 4–6 分钟，等锁降到几分钟；假设 A2 基本成立（略高于预估，因今晚服务器慢）。  
+**下一步**：提交 main；发布订阅页文案。观察明早 08:00 新开放一天时（大量「满→有空」场地要点进去）的耗时。

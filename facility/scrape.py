@@ -30,6 +30,9 @@ TYPES = {
 HK = ZoneInfo("Asia/Hong_Kong")
 ROOT = Path(__file__).parent.parent
 PUBLIC_DIR = ROOT / "docs" / "facilities" / "data"
+CACHE = ROOT / "logs" / "fbs_cache.json"  # 场地时段缓存，网页抓取和监控共用（都在 profile 锁里读写）
+CACHE_TTL = 1800  # 秒；缓存超过这个时间才有资格被重新点进去
+REFRESH = 6  # 网页抓取每个类型每次最多重新点几个旧场地（监控也在轮换刷新）
 DELAY = 2  # 秒；服务器本身就慢（每个请求约 5 秒），再稍微隔开一点
 
 
@@ -56,6 +59,53 @@ def scrape_day(ctx, ftype: str, day: str, detail=lambda c: True) -> list[dict]:
     return out
 
 
+def load_cache() -> dict:
+    try:
+        return json.loads(CACHE.read_text())
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
+
+
+def save_cache(cache: dict):
+    today = datetime.now(HK).date().isoformat()
+    for tc in cache.values():  # 过去的日期不要了
+        for ck in [k for k in tc if k.split("|")[0] < today]:
+            tc.pop(ck)
+    CACHE.parent.mkdir(exist_ok=True)
+    CACHE.write_text(json.dumps(cache))
+
+
+def stale(cache: dict, key: str, n: int | None, ttl: int = CACHE_TTL) -> set[str]:
+    """缓存里超过 ttl 的场地中最旧的 n 个（n=None 表示全部）：这一轮要重新点进去的。
+    fbs 每个请求约 5–10 秒，点一个场地要 3 个请求；早上 8–10 点空位多时「有空」的羽毛球场有 30+ 个，
+    一次全刷要 20 多分钟，所以每轮只轮换刷新几个最旧的。"""
+    ts = time.time()
+    old = sorted((v["t"], k) for k, v in cache.get(key, {}).items() if ts - v["t"] >= ttl)
+    return {k for _, k in old[:n]}
+
+
+def scrape_day_cached(ctx, key: str, day: str, cache: dict, refresh: set[str], want=lambda c: True) -> list[dict]:
+    """同 scrape_day，但缓存里有的「有空」场地直接用缓存的时段，只重新点 refresh 里的。
+    「满 → 有空」的场地不在缓存里，总会立刻点进去。cache 原地更新：{类型: {"日期|场地id": {"t", "slots"}}}"""
+    tc = cache.setdefault(key, {})
+    ts = time.time()
+
+    def detail(c):
+        ck = f"{day}|{c['id']}"
+        return want(c) and (ck not in tc or ck in refresh)
+
+    cs = scrape_day(ctx, TYPES[key]["id"], day, detail)
+    for c in cs:
+        ck = f"{day}|{c['id']}"
+        if not c["available"]:
+            tc.pop(ck, None)
+        elif c["slots"] is not None:
+            tc[ck] = {"t": ts, "slots": c["slots"]}
+        elif ck in tc:
+            c["slots"] = tc[ck]["slots"]
+    return cs
+
+
 def write_json(path: Path, obj):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(obj, ensure_ascii=False, indent=1))
@@ -69,25 +119,28 @@ def scrape(types: list[str], ndays: int):
     now = datetime.now(HK)
     days = [(now.date() + timedelta(i)).isoformat() for i in range(ndays)]
     with browser() as ctx:
+        cache = load_cache()
         relogged = False
         for key in types:
             t = TYPES[key]
+            refresh = stale(cache, key, REFRESH)
             result = []
             for day in days:
                 try:
-                    cs = scrape_day(ctx, t["id"], day)
+                    cs = scrape_day_cached(ctx, key, day, cache, refresh)
                 except SessionExpired:
                     if relogged or not silent_login(ctx, "facility"):
                         raise
                     relogged = True
                     print("会话已过期，已自动重新登录", flush=True)
-                    cs = scrape_day(ctx, t["id"], day)
+                    cs = scrape_day_cached(ctx, key, day, cache, refresh)
                 free = sum(1 for c in cs for s in (c["slots"] or []) if s["available"])
                 print(f"{key} {day} courts={len(cs)} free_slots={free}", flush=True)
                 result.append({"date": day, "courts": cs})
             write_json(PUBLIC_DIR / f"{key}.json", {
                 "type": key, **t, "fetched_at": now.isoformat(timespec="seconds"), "days": result,
             })
+        save_cache(cache)
     write_json(PUBLIC_DIR / "index.json", {
         "updated_at": now.isoformat(timespec="seconds"),
         "types": [{"key": k, **v} for k, v in TYPES.items() if (PUBLIC_DIR / f"{k}.json").exists()],
