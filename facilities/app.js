@@ -74,6 +74,7 @@ function renderIndoor() {
   // 有室外场的类型（篮球）只突出室内场；全是室内的（羽毛球）就列所有空位
   const mixed = state.data.days.some((d) => d.courts.some((c) => !c.indoor));
   $("#hl-title").textContent = mixed ? "室内场空位" : "空位";
+  $("#sub").hidden = state.type !== "badminton";
   if (!rows.length) {
     $("#indoor").innerHTML = `<div class="zcard hue none" style="--h:25"><div class="top"><span class="zn">全部订满</span>
       <span class="cnt"><b>0</b> 个空位</span></div><div class="next">未来 ${state.data.days.length} 天的${mixed ? "室内场" : "场地"}都被订完了。有人取消时这里会出现。</div></div>`;
