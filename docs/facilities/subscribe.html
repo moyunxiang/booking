@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f3efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#171614" media="(prefers-color-scheme: dark)">
+<title>羽毛球空场通知</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+.steps{list-style:none;margin:0;padding:0;counter-reset:s;max-width:640px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:34px minmax(0,1fr);gap:0 12px;padding:14px 0;border-top:1px dotted var(--rule)}
+.steps li::before{content:counter(s);font-family:var(--serif);font-size:22px;font-weight:700;color:var(--muted);line-height:1.2}
+.steps p{margin:4px 0 0;color:var(--ink-2);font-size:14px;line-height:1.6}
+.topic{display:inline-flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap}
+.topic code{font-size:16px;padding:6px 12px;border-radius:8px;border:1px solid var(--rule);background:var(--card);user-select:all}
+.btn{display:inline-block;font-size:13px;padding:6px 14px;border-radius:999px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);text-decoration:none;cursor:pointer}
+.btn.ghost{background:var(--card);color:var(--ink-2);border-color:var(--rule)}
+.rules{max-width:640px;margin:0;padding-left:1.2em;color:var(--ink-2);font-size:14px;line-height:1.8}
+</style>
+</head>
+<body>
+<div class="page">
+  <a class="back" href="./?t=badminton">← 体育设施</a>
+  <header class="mast">
+    <div>
+      <div class="eyebrow">HKUST Sports · Badminton alerts</div>
+      <h1 class="display">羽毛球空场通知</h1>
+    </div>
+  </header>
+
+  <section class="sec">
+    <div class="sec-h"><h2>怎么订阅</h2><span class="muted">免费，不用注册</span></div>
+    <ol class="steps">
+      <li><div><b>安装 ntfy</b>
+        <p>iPhone 在 App Store 搜「ntfy」（图标是白底对话框），安卓在 Google Play / F-Droid 安装。</p>
+        <div class="topic"><a class="btn" href="https://apps.apple.com/hk/app/ntfy/id1625396347" target="_blank" rel="noopener">App Store</a>
+          <a class="btn ghost" href="https://play.google.com/store/apps/details?id=io.heckel.ntfy" target="_blank" rel="noopener">Google Play</a></div></div></li>
+      <li><div><b>订阅这个话题</b>
+        <p>打开 ntfy → 右上角 <b>+</b> → Topic 填下面这串（服务器保持默认 ntfy.sh）→ Subscribe。第一次会问是否允许通知，选允许。</p>
+        <div class="topic"><code id="topic">hkust-badminton-2cd292</code><button class="btn ghost" id="copy" type="button">复制</button></div></div></li>
+      <li><div><b>完成</b>
+        <p>以后有新的羽毛球空场就会推到手机。点通知直接打开 USThing（第一次会问是否允许打开，选允许）；没装 USThing 的话，长按通知点「打开预约网页」。</p>
+        <p>电脑上也可以直接在浏览器订阅：<a href="https://ntfy.sh/hkust-badminton-2cd292" target="_blank" rel="noopener" style="border-bottom:1px solid var(--rule)">ntfy.sh/hkust-badminton-2cd292</a>（页面里点 Subscribe 并允许浏览器通知）。</p></div></li>
+    </ol>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><h2>什么时候会通知</h2></div>
+    <ul class="rules">
+      <li>未来 8 天内（含每天 08:00 新开放的第 7 天）任意羽毛球场出现<b>新的</b>空时段。</li>
+      <li>只通知 <b>10:00 及以后</b>开始的时段；早上 8–10 点的不通知。</li>
+      <li>同一个空位只通知一次；被订走后又空出来会再通知。</li>
+      <li>大约每 5 分钟检查一次；已经有空位的场地，新空出来的时段最多晚 30 分钟发现。</li>
+      <li>只是提醒，不会帮你预约，手快有手慢无。</li>
+    </ul>
+    <p class="muted" style="font-size:13px;max-width:640px;margin-top:14px">由一台 Mac 定时检查，电脑睡眠或断网时会暂停。不想收了，在 ntfy 里左滑删掉这个话题即可。</p>
+  </section>
+
+  <footer class="foot">
+    <span>数据来自 fbs.hkust.edu.hk · 推送经由 ntfy.sh</span>
+    <span><a href="./?t=badminton" style="border-bottom:1px solid var(--rule)">羽毛球空位一览</a></span>
+  </footer>
+</div>
+<script>
+document.getElementById("copy").addEventListener("click", async (e) => {
+  try { await navigator.clipboard.writeText(document.getElementById("topic").textContent); e.target.textContent = "已复制"; }
+  catch { e.target.textContent = "长按上面文字复制"; }
+});
+</script>
+</body>
+</html>

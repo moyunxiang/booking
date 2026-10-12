@@ -31,7 +31,7 @@ login:
 log:
 	@grep -E '^=== |exit|pushed|no changes' logs/run.log | tail -12
 	@echo "--- 篮球室内场监控"
-	@grep -E 'indoor free|失效|失败' logs/monitor.log | tail -6
+	@grep -E 'free=|失效|失败|点进' logs/monitor.log | tail -6
 
 watch:
 	@uv run python facility/monitor.py
