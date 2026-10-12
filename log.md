@@ -40,3 +40,10 @@
 - `./run.sh publish` 发布 gh-pages。  
 **结果**：已发布。测试 #1/#2 用户收到；测试 #3 是否打开 USThing 待用户确认。  
 **下一步**：提交 main；记录监控首轮和稳态耗时。
+
+#### 2026-10-12 16:50 HKT — 修复 CSS 缓存导致新按钮显示为纯文字
+
+**背景**：用户反馈设施页没显示大按钮，只有纯文字。  
+**操作**：`curl -sI https://moyunxiang.com/booking/style.css` → `cache-control: max-age=14400`（Cloudflare），线上 CSS 已含 `.cta`，判断为浏览器缓存旧 CSS；HTML 为 `max-age=600`。`run.sh publish` 增加：按 `shasum` 给页面里的 `style.css` / `app.js` 引用加 `?v=<8位哈希>`。重复运行验证为 `no changes`（幂等）。  
+**结果**：已发布 gh-pages；HTML 缓存 10 分钟内过期后，浏览器会拉取新 CSS。  
+**下一步**：等用户刷新确认。

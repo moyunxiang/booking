@@ -26,6 +26,13 @@ scrape() {
       uv run python facility/scrape.py
       code=$? ;;
     publish)
+      # 给页面里的 css / js 引用加内容哈希（?v=xxxx）：文件变了浏览器才会重新下载，不用等 4 小时缓存过期
+      for f in docs/style.css docs/*/app.js; do
+        v=$(shasum "$f" | cut -c1-8)
+        name=${f:t}
+        [[ $f == docs/style.css ]] && pages=(docs/*.html docs/*/*.html) || pages=(${f:h}/*.html)
+        sed -i '' -E "s#(href|src)=\"((\.\./)?$name)(\?v=[0-9a-f]+)?\"#\1=\"\2?v=$v\"#" $pages
+      done
       code=0 ;;
     *) echo "unknown: $what"; exit 1 ;;
   esac
