@@ -9,7 +9,7 @@ help:
 	@echo "make auth      检查 HKUST 登录是否有效（不弹窗口）"
 	@echo "make login     弹出 Chrome 重新登录（一般不用：过期时会自动弹出）"
 	@echo "make log       看最近的抓取 / 监控记录"
-	@echo "make watch     立刻检查一次篮球室内场（有新空位会推送）"
+	@echo "make watch     立刻检查一次篮球室内场 + 羽毛球（有新空位会推送）"
 	@echo "make notify    发一条测试推送"
 	@echo "make status    看定时任务是否在跑"
 
@@ -30,7 +30,7 @@ login:
 
 log:
 	@grep -E '^=== |exit|pushed|no changes' logs/run.log | tail -12
-	@echo "--- 篮球室内场监控"
+	@echo "--- 空位监控（篮球 / 羽毛球）"
 	@grep -E 'free=|失效|失败|点进' logs/monitor.log | tail -6
 
 watch:

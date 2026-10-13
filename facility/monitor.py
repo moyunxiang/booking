@@ -3,9 +3,11 @@
   uv run python facility/monitor.py            # 检查一次（launchd 每 5 分钟跑一次）
   uv run python facility/monitor.py --test     # 每个渠道发一条测试消息
 
-监控对象（WATCHES）：
-  basketball  只看室内场 → Bark，只发给我（.auth/notify.json：{"bark": "https://api.day.app/<key>"}，不进 git）
-  badminton   所有场地   → ntfy 公开话题 NTFY_TOPIC，任何人订阅都能收到（订阅页 docs/facilities/subscribe.html）
+监控对象（WATCHES）和推送去向（to）：
+  basketball  只看室内场 → ntfy 公开话题 hkust-basketball-moyunxiang（所有室内场）
+                          + Bark 只发给我（只要 LG1；.auth/notify.json：{"bark": "https://api.day.app/<key>"}，不进 git）
+  badminton   所有场地   → ntfy 公开话题 hkust-badminton-moyunxiang
+ntfy 话题任何人订阅都能收到（订阅页 docs/facilities/subscribe.html?t=<类型>）。
 
 羽毛球每个「有空」的场地都要单独点进去才能看时段（3 个请求，约 15–40 秒/个），而早上 8–10 点的空位
 让 30+ 个场地都显示「有空」，所以羽毛球用 scrape.py 的共用缓存（logs/fbs_cache.json）：
@@ -36,13 +38,14 @@ STATE = ROOT / "logs" / "monitor_state.json"
 CONF = ROOT / ".auth" / "notify.json"
 EARLIEST = "10:00"  # 只通知这个时间及以后开始的时段（早上来不及去）
 NTFY = "https://ntfy.sh"
-NTFY_TOPIC = "hkust-badminton-moyunxiang"  # 公开话题：订阅页上写着，谁都能订阅
 FBS_URL = "https://fbs.hkust.edu.hk/facilities"
 WD = "一二三四五六日"
 
 WATCHES = {
-    "basketball": {"emoji": "🏀", "label": "室内篮球场", "indoor_only": True, "ttl": 0, "refresh": None, "to": "bark"},
-    "badminton": {"emoji": "🏸", "label": "羽毛球场", "indoor_only": False, "ttl": 1800, "refresh": 3, "to": "ntfy"},
+    "basketball": {"emoji": "🏀", "label": "室内篮球场", "indoor_only": True, "ttl": 0, "refresh": None,
+                   "to": [("ntfy", "hkust-basketball-moyunxiang", None), ("bark", None, "LG1")]},
+    "badminton": {"emoji": "🏸", "label": "羽毛球场", "indoor_only": False, "ttl": 1800, "refresh": 3,
+                  "to": [("ntfy", "hkust-badminton-moyunxiang", None)]},
 }
 
 
@@ -75,17 +78,27 @@ def bark(title: str, body: str):
                   lambda r: r.get("code") == 200)
 
 
-def ntfy(title: str, body: str):
-    """推到公开话题：priority 5（最高），点通知打开 USThing，另带一个「打开预约网页」按钮。"""
-    post_json(NTFY, {"topic": NTFY_TOPIC, "title": title, "message": body, "priority": 5,
-                     "tags": ["badminton"], "click": "usthing://",
+def ntfy(topic: str, title: str, body: str):
+    """推到公开话题（订阅页上写着，谁都能订阅）：priority 5（最高），点通知打开 USThing，另带一个「打开预约网页」按钮。"""
+    post_json(NTFY, {"topic": topic, "title": title, "message": body, "priority": 5,
+                     "tags": [topic.split("-")[1]], "click": "usthing://",
                      "actions": [{"action": "view", "label": "打开预约网页", "url": FBS_URL}]},
               lambda r: r.get("id") is not None)
 
 
-def send(to: str, title: str, body: str):
-    mac_notify(title, body)
-    (bark if to == "bark" else ntfy)(title, body)
+def send(to: list, title: str, lines: list[str], items: list[dict]):
+    """to: [(渠道, ntfy 话题, 场馆过滤)]，场馆过滤如 "LG1"：只推这个场馆的空位。Mac 通知收全部。"""
+    def text(ls):
+        return "\n".join(ls[:10]) + (f"\n…共 {len(ls)} 个" if len(ls) > 10 else "")
+    mac_notify(title.format(n=len(lines)), text(lines))
+    for channel, topic, where in to:
+        ls = [l for l, x in zip(lines, items) if not where or where in x["location"]]
+        if not ls:
+            continue
+        if channel == "bark":
+            bark(title.format(n=len(ls)), text(ls))
+        else:
+            ntfy(topic, title.format(n=len(ls)), text(ls))
 
 
 def load_state() -> dict:
@@ -148,9 +161,7 @@ def check_and_notify(state: dict):
             new = sorted((x for x in free[key] if x["key"] not in known), key=lambda x: x["key"])
             summary.append(f"{key} free={len(free[key])} new={len(new)}")
             if new:
-                lines = [fmt(x) for x in new]
-                send(cfg["to"], f"{cfg['emoji']} {cfg['label']}有 {len(lines)} 个新空位",
-                     "\n".join(lines[:10]) + (f"\n…共 {len(lines)} 个" if len(lines) > 10 else ""))
+                send(cfg["to"], f"{cfg['emoji']} {cfg['label']}有 {{n}} 个新空位", [fmt(x) for x in new], new)
             state["free"][key] = [x["key"] for x in free[key]]
         state["expired_notified"] = False
         save_state(state)
@@ -183,8 +194,11 @@ def main():
     args = ap.parse_args()
     if args.test:
         t = f"{datetime.now(HK):%H:%M:%S}"
-        send("bark", "🏀 测试通知", f"篮球室内场监控测试 {t}")
-        send("ntfy", "🏸 测试通知", f"羽毛球空场订阅测试 {t}。以后有 10:00 及以后的空场会推送到这里。")
+        bark("🏀 测试通知", f"篮球 LG1 监控测试 {t}")
+        for key, cfg in WATCHES.items():
+            for channel, topic, _ in cfg["to"]:
+                if channel == "ntfy":
+                    ntfy(topic, f"{cfg['emoji']} 测试通知", f"{cfg['label']}空场订阅测试 {t}。以后有 10:00 及以后的空场会推送到这里。")
         return
     state = load_state()
     try:
@@ -192,7 +206,7 @@ def main():
     except SessionExpired:
         print("登录已失效，打开 Chrome 等待登录", flush=True)
         if not state["expired_notified"]:
-            send("bark", "🏀 场地监控暂停", "HKUST 登录已失效，Mac 上已弹出 Chrome 登录窗口，登录后自动恢复。")
+            bark("🏀 场地监控暂停", "HKUST 登录已失效，Mac 上已弹出 Chrome 登录窗口，登录后自动恢复。")
             state["expired_notified"] = True
             save_state(state)
         if not auto_login(interactive=sys.stdout.isatty()):

@@ -95,3 +95,17 @@
 - 监控 21:33：`basketball 点进 1 | badminton 点进 3`，`等锁 215s + 查询 357s`。
 - 结论：单轮查询约 4–6 分钟，等锁降到几分钟；假设 A2 基本成立（略高于预估，因今晚服务器慢）。  
 **下一步**：提交 main；发布订阅页文案。观察明早 08:00 新开放一天时（大量「满→有空」场地要点进去）的耗时。
+
+#### 2026-10-13 19:30 HKT — 篮球订阅话题；Bark 只推 LG1
+
+**背景**：用户要求篮球也做一个和羽毛球一样的订阅（话题 `hkust-basketball-moyunxiang`），推送内容和 Bark 一样；Bark 改成只推 LG1，Seafront 不推。  
+**操作**：
+- `facility/monitor.py`：`WATCHES[*]["to"]` 改为推送列表 `[(渠道, ntfy 话题, 场馆过滤)]`。篮球：`("ntfy", "hkust-basketball-moyunxiang", None)` + `("bark", None, "LG1")`；羽毛球：`("ntfy", "hkust-badminton-moyunxiang", None)`。`ntfy()` 增加 topic 参数，tag 取话题第二段（`basketball` / `badminton`）。`send()` 按场馆过滤后分别发，标题里的个数按过滤后计算；Mac 通知收全部。登录失效提醒仍只发 Bark。
+- 用 mock 验证路由：LG1 + Seafront 各 1 个 → ntfy 2 个、Bark 只有 LG1 1 个；只有 Seafront → 只发 ntfy，不发 Bark。
+- `docs/facilities/subscribe.html`：按 `?t=basketball|badminton` 切换标题、话题、ntfy 网页链接、通知范围（篮球只通知室内场）和延迟说明；默认羽毛球（旧链接不变）。
+- `docs/facilities/app.js` / `index.html`：订阅按钮两种类型都显示，链接带 `?t=<类型>`；页脚改为「篮球 / 羽毛球空场通知」。
+- 本地 `python3 -m http.server` + Playwright 冒烟：标题、话题、链接正确，无 JS 报错；截图检查 390px 排版。
+- 测试推送 19:29：向 `hkust-basketball-moyunxiang` 和 Bark 各发 3 条相同内容（测试通知 + 两条格式示例，正文注明「测试」）；ntfy poll 确认 3 条均到达，`click=usthing://`，Bark 无报错。
+- README / Makefile 说明同步。  
+**结果**：已验证路由与页面；真实空位推送等下一次出现空位时观察。  
+**下一步**：提交 main，发布 gh-pages。

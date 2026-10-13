@@ -1,6 +1,6 @@
 # 项目计划
 
-> 最后更新：2026-10-12 21:25 HKT
+> 最后更新：2026-10-13 19:30 HKT
 > 本文件是新 Claude session 的首要上下文。说明性内容使用中文。
 
 ## 1. 最大目标
@@ -18,7 +18,10 @@
 
 - 图书馆：`library/scrape.py` 每 30 分钟抓 area 3/8/20，网页 `docs/library/`（现在有空 / 按时段找含「自选」/ 整段空闲 / 时间轴），Scriptable 小组件。
 - 体育设施：`facility/scrape.py` 每小时抓篮球 + 羽毛球 8 天，网页 `docs/facilities/`，Scriptable 小组件。
-- 空位监控：`facility/monitor.py` 每 5 分钟（launchd，不重叠）：篮球室内场新空位（≥10:00）推 Bark（只发给我）；羽毛球新空位（≥10:00）推 ntfy 公开话题 `hkust-badminton-moyunxiang`（订阅页 `docs/facilities/subscribe.html`）。
+- 空位监控：`facility/monitor.py` 每 5 分钟（launchd，不重叠），只通知 ≥10:00 的新空位：
+  - 篮球室内场（LG1 ×3 + Seafront 室内 A 半场）→ ntfy 公开话题 `hkust-basketball-moyunxiang`；其中 **LG1** 的另推 Bark（只发给我），Seafront 不推 Bark。
+  - 羽毛球所有场 → ntfy 公开话题 `hkust-badminton-moyunxiang`。
+  - 订阅页 `docs/facilities/subscribe.html?t=basketball|badminton`（同一页面，JS 按参数切换）；设施页两种类型都显示「订阅空场通知」大按钮。
 - 场地时段缓存 `logs/fbs_cache.json`：监控和网页抓取共用；「满→有空」的场地立刻点进去，已有空的场地轮换刷新（监控羽毛球每轮最旧 3 个，网页抓取每类型最多 6 个）。
 - 发布：网站从 `gh-pages` 分支发布，`run.sh` 把本地 `docs/` 追加提交推上去；main 只放代码，数据不进 main。
 - 登录：共用 Chrome profile `.auth/hkust-chrome-profile`；过期时后台自动弹出 Chrome 等我登录（30 分钟内最多弹一次）。
@@ -32,6 +35,7 @@
 
 ### P0
 - [x] 羽毛球空场订阅通知（ntfy 话题 + 订阅页）：已上线，用户已订阅并收到推送。
+- [x] 篮球空场订阅（`hkust-basketball-moyunxiang`）+ Bark 只推 LG1：2026-10-13 上线，测试推送已发出。
 - [ ] 验证轮换刷新后的稳态耗时：监控每轮 `查询` 时间、设施网页抓取整轮时间、`等锁` 时间都应明显下降。
   - 服务于最大目标：监控被锁饿死时，通知会晚几十分钟，等于没用。
 

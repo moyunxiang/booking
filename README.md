@@ -39,7 +39,7 @@ uv run python library/scrape.py      # 抓今天起 7 天（--days N / --date YY
 |---|---|---|
 | `com.moyunxiang.hkust-booking` | 07:00–23:30 每 30 分钟 | `run.sh library`：图书馆（每天首次抓 7 天，其余抓今明两天） |
 | `com.moyunxiang.hkust-booking-facility` | 07:15–23:15 每小时 | `run.sh facility`：篮球 + 羽毛球 8 天 |
-| `com.moyunxiang.hkust-booking-monitor` | 每 5 分钟 | `facility/monitor.py`：篮球室内场 10:00 后出现新空位 → Bark 推送 |
+| `com.moyunxiang.hkust-booking-monitor` | 每 5 分钟 | `facility/monitor.py`：10:00 后出现新空位 → ntfy 公开话题（篮球室内场 `hkust-basketball-moyunxiang`、羽毛球 `hkust-badminton-moyunxiang`，订阅页 `facilities/subscribe.html?t=<类型>`）；LG1 篮球场另推 Bark 给我 |
 
 ```sh
 cp com.moyunxiang.hkust-booking*.plist ~/Library/LaunchAgents/
