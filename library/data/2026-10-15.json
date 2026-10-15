@@ -1,6 +1,6 @@
 {
  "date": "2026-10-15",
- "fetched_at": "2026-10-15T18:00:05+08:00",
+ "fetched_at": "2026-10-15T18:30:04+08:00",
  "areas": [
   {
    "date": "2026-10-15",
@@ -2829,6 +2829,18 @@
      "date": "2026-10-15",
      "area": 3,
      "area_name": "Group Study Rooms",
+     "room_id": 13,
+     "room": "LG3-15",
+     "start": "18:30",
+     "end": "19:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2271147
+    },
+    {
+     "date": "2026-10-15",
+     "area": 3,
+     "area_name": "Group Study Rooms",
      "room_id": 30,
      "room": "LG4-07",
      "start": "18:30",
@@ -3157,9 +3169,9 @@
      "room": "LG1-353",
      "start": "20:00",
      "end": "22:00",
-     "type": "U",
+     "type": "T",
      "status": "booked",
-     "entry_id": 2270358
+     "entry_id": 2271148
     },
     {
      "date": "2026-10-15",
@@ -3544,18 +3556,6 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2270733
-    },
-    {
-     "date": "2026-10-15",
-     "area": 3,
-     "area_name": "Group Study Rooms",
-     "room_id": 168,
-     "room": "LG1- Media and Discussion",
-     "start": "21:30",
-     "end": "22:30",
-     "type": "U",
-     "status": "booked",
-     "entry_id": 2271028
     },
     {
      "date": "2026-10-15",
@@ -5979,6 +5979,18 @@
      "date": "2026-10-15",
      "area": 8,
      "area_name": "LC Study Rooms",
+     "room_id": 71,
+     "room": "LC-15",
+     "start": "23:30",
+     "end": "24:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2271154
+    },
+    {
+     "date": "2026-10-15",
+     "area": 8,
+     "area_name": "LC Study Rooms",
      "room_id": 72,
      "room": "LC-16",
      "start": "23:30",
@@ -6871,18 +6883,6 @@
      "type": "R",
      "status": "booked",
      "entry_id": 2270139
-    },
-    {
-     "date": "2026-10-15",
-     "area": 20,
-     "area_name": "Study Pods",
-     "room_id": 119,
-     "room": "POD-08",
-     "start": "20:00",
-     "end": "22:00",
-     "type": "U",
-     "status": "booked",
-     "entry_id": 2270852
     },
     {
      "date": "2026-10-15",
