@@ -1,6 +1,6 @@
 {
  "date": "2026-10-16",
- "fetched_at": "2026-10-15T16:00:05+08:00",
+ "fetched_at": "2026-10-15T16:30:05+08:00",
  "areas": [
   {
    "date": "2026-10-16",
@@ -417,6 +417,30 @@
      "date": "2026-10-16",
      "area": 3,
      "area_name": "Group Study Rooms",
+     "room_id": 40,
+     "room": "LG4-05",
+     "start": "10:00",
+     "end": "12:00",
+     "type": "R",
+     "status": "booked",
+     "entry_id": 2271061
+    },
+    {
+     "date": "2026-10-16",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 16,
+     "room": "LG4-14",
+     "start": "10:00",
+     "end": "12:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2271051
+    },
+    {
+     "date": "2026-10-16",
+     "area": 3,
+     "area_name": "Group Study Rooms",
      "room_id": 126,
      "room": "1-350",
      "start": "10:30",
@@ -448,6 +472,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2268734
+    },
+    {
+     "date": "2026-10-16",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 29,
+     "room": "LG1-362",
+     "start": "10:30",
+     "end": "12:30",
+     "type": "R",
+     "status": "booked",
+     "entry_id": 2271064
     },
     {
      "date": "2026-10-16",
@@ -2259,6 +2295,18 @@
      "date": "2026-10-16",
      "area": 8,
      "area_name": "LC Study Rooms",
+     "room_id": 67,
+     "room": "LC-11",
+     "start": "00:00",
+     "end": "02:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2271062
+    },
+    {
+     "date": "2026-10-16",
+     "area": 8,
+     "area_name": "LC Study Rooms",
      "room_id": 71,
      "room": "LC-15",
      "start": "00:00",
@@ -3166,6 +3214,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2270518
+    },
+    {
+     "date": "2026-10-16",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 65,
+     "room": "LC-09",
+     "start": "18:00",
+     "end": "19:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2271085
     },
     {
      "date": "2026-10-16",
