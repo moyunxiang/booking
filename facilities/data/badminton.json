@@ -3,7 +3,7 @@
  "id": "3",
  "name": "羽毛球",
  "en": "Badminton",
- "fetched_at": "2026-10-18T15:15:05+08:00",
+ "fetched_at": "2026-10-18T16:15:00+08:00",
  "days": [
   {
    "date": "2026-10-18",
@@ -1734,7 +1734,7 @@
       },
       {
        "start": "09:00",
-       "available": true
+       "available": false
       },
       {
        "start": "10:00",
@@ -2124,7 +2124,7 @@
       },
       {
        "start": "09:00",
-       "available": true
+       "available": false
       },
       {
        "start": "10:00",
@@ -2189,7 +2189,7 @@
       },
       {
        "start": "09:00",
-       "available": true
+       "available": false
       },
       {
        "start": "10:00",
