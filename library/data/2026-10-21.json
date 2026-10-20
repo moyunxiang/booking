@@ -1,6 +1,6 @@
 {
  "date": "2026-10-21",
- "fetched_at": "2026-10-20T15:30:02+08:00",
+ "fetched_at": "2026-10-20T16:00:05+08:00",
  "areas": [
   {
    "date": "2026-10-21",
@@ -1797,6 +1797,18 @@
      "date": "2026-10-21",
      "area": 3,
      "area_name": "Group Study Rooms",
+     "room_id": 39,
+     "room": "LG4-04",
+     "start": "18:00",
+     "end": "20:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2273876
+    },
+    {
+     "date": "2026-10-21",
+     "area": 3,
+     "area_name": "Group Study Rooms",
      "room_id": 169,
      "room": "LG1-330",
      "start": "18:30",
@@ -1852,6 +1864,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2273653
+    },
+    {
+     "date": "2026-10-21",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 126,
+     "room": "1-350",
+     "start": "19:00",
+     "end": "21:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2273889
     },
     {
      "date": "2026-10-21",
@@ -2398,6 +2422,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2273792
+    },
+    {
+     "date": "2026-10-21",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 59,
+     "room": "LC-03",
+     "start": "11:00",
+     "end": "13:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2273879
     },
     {
      "date": "2026-10-21",
@@ -3600,18 +3636,6 @@
      "date": "2026-10-21",
      "area": 20,
      "area_name": "Study Pods",
-     "room_id": 116,
-     "room": "POD-05",
-     "start": "12:00",
-     "end": "13:30",
-     "type": "U",
-     "status": "booked",
-     "entry_id": 2272887
-    },
-    {
-     "date": "2026-10-21",
-     "area": 20,
-     "area_name": "Study Pods",
      "room_id": 112,
      "room": "POD-01",
      "start": "12:30",
@@ -3619,6 +3643,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2273311
+    },
+    {
+     "date": "2026-10-21",
+     "area": 20,
+     "area_name": "Study Pods",
+     "room_id": 113,
+     "room": "POD-02",
+     "start": "12:30",
+     "end": "13:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2273888
     },
     {
      "date": "2026-10-21",
