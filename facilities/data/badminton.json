@@ -3,77 +3,8 @@
  "id": "3",
  "name": "羽毛球",
  "en": "Badminton",
- "fetched_at": "2026-10-20T23:15:05+08:00",
+ "fetched_at": "2026-10-21T07:15:04+08:00",
  "days": [
-  {
-   "date": "2026-10-20",
-   "courts": [
-    {
-     "id": 2,
-     "name": "Badminton Court 1",
-     "location": "SPORTS - LG1",
-     "available": false,
-     "indoor": true,
-     "slots": null
-    },
-    {
-     "id": 3,
-     "name": "Badminton Court 2",
-     "location": "SPORTS - LG1",
-     "available": false,
-     "indoor": true,
-     "slots": null
-    },
-    {
-     "id": 4,
-     "name": "Badminton Court 3",
-     "location": "SPORTS - LG1",
-     "available": false,
-     "indoor": true,
-     "slots": null
-    },
-    {
-     "id": 5,
-     "name": "Badminton Court 4",
-     "location": "SPORTS - LG1",
-     "available": false,
-     "indoor": true,
-     "slots": null
-    },
-    {
-     "id": 79,
-     "name": "Badminton Court 5 (singles only)",
-     "location": "SPORTS - LG1",
-     "available": false,
-     "indoor": true,
-     "slots": null
-    },
-    {
-     "id": 80,
-     "name": "Badminton Court 6 (singles only)",
-     "location": "SPORTS - LG1",
-     "available": false,
-     "indoor": true,
-     "slots": null
-    },
-    {
-     "id": 100,
-     "name": "Badminton Court 1",
-     "location": "SPORTS - Seafront",
-     "available": false,
-     "indoor": true,
-     "slots": null
-    },
-    {
-     "id": 101,
-     "name": "Badminton Court 2",
-     "location": "SPORTS - Seafront",
-     "available": false,
-     "indoor": true,
-     "slots": null
-    }
-   ]
-  },
   {
    "date": "2026-10-21",
    "courts": [
@@ -89,326 +20,41 @@
      "id": 3,
      "name": "Badminton Court 2",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 4,
      "name": "Badminton Court 3",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 5,
      "name": "Badminton Court 4",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 79,
      "name": "Badminton Court 5 (singles only)",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 80,
      "name": "Badminton Court 6 (singles only)",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 100,
@@ -422,66 +68,9 @@
      "id": 101,
      "name": "Badminton Court 2",
      "location": "SPORTS - Seafront",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     }
    ]
   },
@@ -516,326 +105,41 @@
      "id": 5,
      "name": "Badminton Court 4",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 79,
      "name": "Badminton Court 5 (singles only)",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 80,
      "name": "Badminton Court 6 (singles only)",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 100,
      "name": "Badminton Court 1",
      "location": "SPORTS - Seafront",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 101,
      "name": "Badminton Court 2",
      "location": "SPORTS - Seafront",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     }
    ]
   },
@@ -846,521 +150,65 @@
      "id": 2,
      "name": "Badminton Court 1",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 3,
      "name": "Badminton Court 2",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 4,
      "name": "Badminton Court 3",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 5,
      "name": "Badminton Court 4",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 79,
      "name": "Badminton Court 5 (singles only)",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 80,
      "name": "Badminton Court 6 (singles only)",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 100,
      "name": "Badminton Court 1",
      "location": "SPORTS - Seafront",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 101,
      "name": "Badminton Court 2",
      "location": "SPORTS - Seafront",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     }
    ]
   },
@@ -1371,131 +219,17 @@
      "id": 2,
      "name": "Badminton Court 1",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 3,
      "name": "Badminton Court 2",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 4,
@@ -1509,66 +243,9 @@
      "id": 5,
      "name": "Badminton Court 4",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 79,
@@ -1582,196 +259,25 @@
      "id": 80,
      "name": "Badminton Court 6 (singles only)",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 100,
      "name": "Badminton Court 1",
      "location": "SPORTS - Seafront",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": true
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 101,
      "name": "Badminton Court 2",
      "location": "SPORTS - Seafront",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     }
    ]
   },
@@ -1790,66 +296,9 @@
      "id": 3,
      "name": "Badminton Court 2",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 4,
@@ -1863,66 +312,9 @@
      "id": 5,
      "name": "Badminton Court 4",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 79,
@@ -1936,196 +328,25 @@
      "id": 80,
      "name": "Badminton Court 6 (singles only)",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 100,
      "name": "Badminton Court 1",
      "location": "SPORTS - Seafront",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 101,
      "name": "Badminton Court 2",
      "location": "SPORTS - Seafront",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     }
    ]
   },
@@ -2136,326 +357,41 @@
      "id": 2,
      "name": "Badminton Court 1",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 3,
      "name": "Badminton Court 2",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 4,
      "name": "Badminton Court 3",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 5,
      "name": "Badminton Court 4",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 79,
      "name": "Badminton Court 5 (singles only)",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 80,
@@ -2477,66 +413,9 @@
      "id": 101,
      "name": "Badminton Court 2",
      "location": "SPORTS - Seafront",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     }
    ]
   },
@@ -2547,521 +426,134 @@
      "id": 2,
      "name": "Badminton Court 1",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 3,
      "name": "Badminton Court 2",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 4,
      "name": "Badminton Court 3",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 5,
      "name": "Badminton Court 4",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 79,
      "name": "Badminton Court 5 (singles only)",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 80,
      "name": "Badminton Court 6 (singles only)",
      "location": "SPORTS - LG1",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 100,
      "name": "Badminton Court 1",
      "location": "SPORTS - Seafront",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
     },
     {
      "id": 101,
      "name": "Badminton Court 2",
      "location": "SPORTS - Seafront",
-     "available": true,
+     "available": false,
      "indoor": true,
-     "slots": [
-      {
-       "start": "08:00",
-       "available": true
-      },
-      {
-       "start": "09:00",
-       "available": false
-      },
-      {
-       "start": "10:00",
-       "available": false
-      },
-      {
-       "start": "11:00",
-       "available": false
-      },
-      {
-       "start": "12:00",
-       "available": false
-      },
-      {
-       "start": "13:00",
-       "available": false
-      },
-      {
-       "start": "14:00",
-       "available": false
-      },
-      {
-       "start": "15:00",
-       "available": false
-      },
-      {
-       "start": "16:00",
-       "available": false
-      },
-      {
-       "start": "17:00",
-       "available": false
-      },
-      {
-       "start": "18:00",
-       "available": false
-      },
-      {
-       "start": "19:00",
-       "available": false
-      },
-      {
-       "start": "20:00",
-       "available": false
-      },
-      {
-       "start": "21:00",
-       "available": false
-      }
-     ]
+     "slots": null
+    }
+   ]
+  },
+  {
+   "date": "2026-10-28",
+   "courts": [
+    {
+     "id": 2,
+     "name": "Badminton Court 1",
+     "location": "SPORTS - LG1",
+     "available": false,
+     "indoor": true,
+     "slots": null
+    },
+    {
+     "id": 3,
+     "name": "Badminton Court 2",
+     "location": "SPORTS - LG1",
+     "available": false,
+     "indoor": true,
+     "slots": null
+    },
+    {
+     "id": 4,
+     "name": "Badminton Court 3",
+     "location": "SPORTS - LG1",
+     "available": false,
+     "indoor": true,
+     "slots": null
+    },
+    {
+     "id": 5,
+     "name": "Badminton Court 4",
+     "location": "SPORTS - LG1",
+     "available": false,
+     "indoor": true,
+     "slots": null
+    },
+    {
+     "id": 79,
+     "name": "Badminton Court 5 (singles only)",
+     "location": "SPORTS - LG1",
+     "available": false,
+     "indoor": true,
+     "slots": null
+    },
+    {
+     "id": 80,
+     "name": "Badminton Court 6 (singles only)",
+     "location": "SPORTS - LG1",
+     "available": false,
+     "indoor": true,
+     "slots": null
+    },
+    {
+     "id": 100,
+     "name": "Badminton Court 1",
+     "location": "SPORTS - Seafront",
+     "available": false,
+     "indoor": true,
+     "slots": null
+    },
+    {
+     "id": 101,
+     "name": "Badminton Court 2",
+     "location": "SPORTS - Seafront",
+     "available": false,
+     "indoor": true,
+     "slots": null
     }
    ]
   }
