@@ -1,6 +1,6 @@
 {
  "date": "2026-10-24",
- "fetched_at": "2026-10-23T14:00:04+08:00",
+ "fetched_at": "2026-10-23T14:30:06+08:00",
  "areas": [
   {
    "date": "2026-10-24",
@@ -2338,6 +2338,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2275848
+    },
+    {
+     "date": "2026-10-24",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 71,
+     "room": "LC-15",
+     "start": "14:30",
+     "end": "16:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2276382
     },
     {
      "date": "2026-10-24",
