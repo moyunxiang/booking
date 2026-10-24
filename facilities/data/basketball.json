@@ -3,7 +3,7 @@
  "id": "2",
  "name": "篮球",
  "en": "Basketball",
- "fetched_at": "2026-10-24T18:15:05+08:00",
+ "fetched_at": "2026-10-24T19:15:04+08:00",
  "days": [
   {
    "date": "2026-10-24",
@@ -11,14 +11,6 @@
     {
      "id": 6,
      "name": "Basketball Court A (half court)",
-     "location": "SPORTS - LG1",
-     "available": false,
-     "indoor": true,
-     "slots": null
-    },
-    {
-     "id": 7,
-     "name": "Basketball Court B (half court)",
      "location": "SPORTS - LG1",
      "available": true,
      "indoor": true,
@@ -80,6 +72,14 @@
        "available": false
       }
      ]
+    },
+    {
+     "id": 7,
+     "name": "Basketball Court B (half court)",
+     "location": "SPORTS - LG1",
+     "available": false,
+     "indoor": true,
+     "slots": null
     },
     {
      "id": 88,
