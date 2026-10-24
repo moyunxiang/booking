@@ -3,7 +3,7 @@
  "id": "2",
  "name": "篮球",
  "en": "Basketball",
- "fetched_at": "2026-10-24T12:15:52+08:00",
+ "fetched_at": "2026-10-24T14:15:04+08:00",
  "days": [
   {
    "date": "2026-10-24",
@@ -12,17 +12,131 @@
      "id": 6,
      "name": "Basketball Court A (half court)",
      "location": "SPORTS - LG1",
-     "available": false,
+     "available": true,
      "indoor": true,
-     "slots": null
+     "slots": [
+      {
+       "start": "08:00",
+       "available": false
+      },
+      {
+       "start": "09:00",
+       "available": false
+      },
+      {
+       "start": "10:00",
+       "available": false
+      },
+      {
+       "start": "11:00",
+       "available": false
+      },
+      {
+       "start": "12:00",
+       "available": false
+      },
+      {
+       "start": "13:00",
+       "available": false
+      },
+      {
+       "start": "14:00",
+       "available": false
+      },
+      {
+       "start": "15:00",
+       "available": false
+      },
+      {
+       "start": "16:00",
+       "available": false
+      },
+      {
+       "start": "17:00",
+       "available": false
+      },
+      {
+       "start": "18:00",
+       "available": false
+      },
+      {
+       "start": "19:00",
+       "available": true
+      },
+      {
+       "start": "20:00",
+       "available": false
+      },
+      {
+       "start": "21:00",
+       "available": false
+      }
+     ]
     },
     {
      "id": 7,
      "name": "Basketball Court B (half court)",
      "location": "SPORTS - LG1",
-     "available": false,
+     "available": true,
      "indoor": true,
-     "slots": null
+     "slots": [
+      {
+       "start": "08:00",
+       "available": false
+      },
+      {
+       "start": "09:00",
+       "available": false
+      },
+      {
+       "start": "10:00",
+       "available": false
+      },
+      {
+       "start": "11:00",
+       "available": false
+      },
+      {
+       "start": "12:00",
+       "available": false
+      },
+      {
+       "start": "13:00",
+       "available": false
+      },
+      {
+       "start": "14:00",
+       "available": false
+      },
+      {
+       "start": "15:00",
+       "available": true
+      },
+      {
+       "start": "16:00",
+       "available": false
+      },
+      {
+       "start": "17:00",
+       "available": false
+      },
+      {
+       "start": "18:00",
+       "available": false
+      },
+      {
+       "start": "19:00",
+       "available": false
+      },
+      {
+       "start": "20:00",
+       "available": false
+      },
+      {
+       "start": "21:00",
+       "available": false
+      }
+     ]
     },
     {
      "id": 88,
@@ -105,6 +219,27 @@
      "id": 102,
      "name": "Basketball Court A (half court)",
      "location": "SPORTS - Seafront",
+     "available": false,
+     "indoor": true,
+     "slots": null
+    }
+   ]
+  },
+  {
+   "date": "2026-10-25",
+   "courts": [
+    {
+     "id": 6,
+     "name": "Basketball Court A (half court)",
+     "location": "SPORTS - LG1",
+     "available": false,
+     "indoor": true,
+     "slots": null
+    },
+    {
+     "id": 7,
+     "name": "Basketball Court B (half court)",
+     "location": "SPORTS - LG1",
      "available": true,
      "indoor": true,
      "slots": [
@@ -118,7 +253,7 @@
       },
       {
        "start": "10:00",
-       "available": false
+       "available": true
       },
       {
        "start": "11:00",
@@ -134,7 +269,7 @@
       },
       {
        "start": "14:00",
-       "available": true
+       "available": false
       },
       {
        "start": "15:00",
@@ -165,27 +300,6 @@
        "available": false
       }
      ]
-    }
-   ]
-  },
-  {
-   "date": "2026-10-25",
-   "courts": [
-    {
-     "id": 6,
-     "name": "Basketball Court A (half court)",
-     "location": "SPORTS - LG1",
-     "available": false,
-     "indoor": true,
-     "slots": null
-    },
-    {
-     "id": 7,
-     "name": "Basketball Court B (half court)",
-     "location": "SPORTS - LG1",
-     "available": false,
-     "indoor": true,
-     "slots": null
     },
     {
      "id": 88,
@@ -480,9 +594,66 @@
      "id": 102,
      "name": "Basketball Court A (half court)",
      "location": "SPORTS - Seafront",
-     "available": false,
+     "available": true,
      "indoor": true,
-     "slots": null
+     "slots": [
+      {
+       "start": "08:00",
+       "available": true
+      },
+      {
+       "start": "09:00",
+       "available": false
+      },
+      {
+       "start": "10:00",
+       "available": false
+      },
+      {
+       "start": "11:00",
+       "available": false
+      },
+      {
+       "start": "12:00",
+       "available": false
+      },
+      {
+       "start": "13:00",
+       "available": false
+      },
+      {
+       "start": "14:00",
+       "available": false
+      },
+      {
+       "start": "15:00",
+       "available": false
+      },
+      {
+       "start": "16:00",
+       "available": false
+      },
+      {
+       "start": "17:00",
+       "available": false
+      },
+      {
+       "start": "18:00",
+       "available": false
+      },
+      {
+       "start": "19:00",
+       "available": false
+      },
+      {
+       "start": "20:00",
+       "available": false
+      },
+      {
+       "start": "21:00",
+       "available": false
+      }
+     ]
     }
    ]
   },
