@@ -215,9 +215,9 @@ a.book{color:var(--ink-2);border-bottom:1px solid var(--rule)}
 }
 
 /* 图书馆地图：官方平面图 + 房间状态色块（平面图本身是浅色，色块颜色不随深色模式变） */
-.mapwrap{overflow-x:auto;margin:12px 0 0;border:1px solid var(--rule);border-radius:var(--radius);background:#fff;-webkit-overflow-scrolling:touch}
-.fmap{position:relative;overflow:hidden}
-.fmap img{position:absolute;max-width:none;display:block;user-select:none;-webkit-user-drag:none}
+.mapwrap{overflow-x:auto;margin:12px 0 0;border-radius:var(--radius);-webkit-overflow-scrolling:touch}
+.fmap{position:relative;overflow:hidden;margin:0 auto;border:1px solid var(--rule);border-radius:var(--radius);background:#fff;box-sizing:border-box}
+.fmap img{position:absolute;inset:0;width:100%;height:100%;max-width:none;display:block;user-select:none;-webkit-user-drag:none}
 .fmap .rm{position:absolute;border-radius:3px;border:2px solid;cursor:pointer;padding:0;background:none;font:inherit}
 .fmap .rm.full{background:rgba(47,140,64,.38);border-color:#2f8c40}
 .fmap .rm.part{background:rgba(230,160,20,.32);border-color:#c98500;border-style:dashed}

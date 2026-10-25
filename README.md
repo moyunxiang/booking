@@ -29,7 +29,7 @@ uv run python library/scrape.py      # 抓今天起 7 天（--days N / --date YY
 
 - `data/library/YYYY-MM-DD.json`：完整数据，含预约人姓名，**只存在本地**
 - `docs/library/data/YYYY-MM-DD.json`：去掉姓名的公开版本，供网页展示
-- `docs/library/floorplans.json`：各层平面图里每个可预约房间的位置（`make maps` 生成，来自公开的 lbcone.hkust.edu.hk/floorplans；网页直接引用官方图片，不复制）
+- `docs/library/floorplans.json` + `docs/library/maps/*.jpg`：各层平面图（裁到有房间的区域、压成 JPEG）和每个可预约房间的位置；`make maps` 从公开的 lbcone.hkust.edu.hk/floorplans 生成
 
 每条预约：`date, area, area_name, room_id, room, start, end, type, status, entry_id`（私有版多 `name`）。
 `type` 是 MRBS 原始类型码；`H` = Unbookable（`status: unbookable`），其余（U/R/T/S/D…）都是 `status: booked`。
