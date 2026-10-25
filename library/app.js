@@ -42,6 +42,7 @@ const state = {
   date: q.get("date"), blk: q.get("b") === "c" ? "c" : q.has("b") ? +q.get("b") : null,
   start: q.get("t") || "now", dur: +q.get("d") || 60,
   cap: +q.get("p") || 0, area: +q.get("a") || 3, nowTab: +q.get("n") || 0,
+  plans: null, floor: q.get("f") || "lg1", pick: null,
 };
 
 async function getJSON(url) {
@@ -115,6 +116,7 @@ function setURL() {
   if (state.cap) p.set("p", state.cap);
   if (state.area !== 3) p.set("a", state.area);
   if (state.nowTab) p.set("n", state.nowTab);
+  if (state.floor !== "lg1") p.set("f", state.floor);
   history.replaceState(null, "", "?" + p);
 }
 
@@ -282,8 +284,66 @@ function renderTimeline() {
   if (anchor) g.scrollLeft = Math.max(0, anchor.offsetLeft - (g.clientWidth - 112) / 3);
 }
 
+// 地图：官方平面图上按所选时段给每个房间上色。坐标以图宽 basis（1600px）为准，只显示有房间的那一块
+function mapStatus(r, S0, E) {
+  if (r.closed || E <= r.eo || S0 >= r.ec) return { cls: "shut", text: "不开放" };
+  const st = blockStatus(r, S0, E);
+  if (st.full) return { cls: "full", text: `整段空，空到 ${fmt(freeUntil(r, S0))}` };
+  if (st.parts.length) return { cls: "part", text: "部分空：" + st.parts.map(([a, b]) => `${fmt(a)}–${fmt(b)}`).join("，") };
+  return { cls: "busy", text: "已满" };
+}
+const RANK = { full: 0, part: 1, busy: 2, shut: 3 };
+
+function renderMap() {
+  const sec = $("#map-sec");
+  sec.hidden = !state.plans;
+  if (!state.plans) return;
+  const { S0, E } = ctx();
+  $("#map-sub").textContent = `${fmt(S0)}–${fmt(E)} · 点房间看详情`;
+  const byName = new Map(state.rooms.map((r) => [r.name, r]));
+  const floors = state.plans.floors.filter((f) => Object.keys(f.rooms).some((n) => byName.has(n)));
+  if (!floors.length) { sec.hidden = true; return; }
+  const f = floors.find((x) => x.key === state.floor) || floors[0];
+  state.floor = f.key;
+  $("#c-floor").innerHTML = floors.map((x) => {
+    const n = Object.keys(x.rooms).filter((nm) => byName.has(nm) && capOK(byName.get(nm)) && mapStatus(byName.get(nm), S0, E).cls === "full").length;
+    return `<button data-v="${x.key}" class="${x === f ? "on" : ""}">${esc(x.name)} <span class="n">${n}</span></button>`;
+  }).join("");
+  // 同一个矩形（Study Pods 整块区域）合并成一个色块，颜色取其中最好的状态
+  const boxes = new Map();
+  for (const [name, rect] of Object.entries(f.rooms)) {
+    const r = byName.get(name); if (!r) continue;
+    const k = rect.join(",");
+    if (!boxes.has(k)) boxes.set(k, { rect, rooms: [] });
+    boxes.get(k).rooms.push({ r, ...mapStatus(r, S0, E) });
+  }
+  const rects = [...boxes.values()].map((b) => b.rect), M = 30;
+  const x0 = Math.max(0, Math.min(...rects.map((r) => r[0])) - M), y0 = Math.max(0, Math.min(...rects.map((r) => r[1])) - M);
+  const x1 = Math.min(f.basis, Math.max(...rects.map((r) => r[0] + r[2])) + M), y1 = Math.max(...rects.map((r) => r[1] + r[3])) + M;
+  const bw = x1 - x0, bh = y1 - y0, pc = (v, d) => (v / d * 100).toFixed(3) + "%";
+  const html = [...boxes.values()].map((b, i) => {
+    const ok = b.rooms.filter((x) => capOK(x.r)), best = (ok.length ? ok : b.rooms).sort((p, q) => RANK[p.cls] - RANK[q.cls])[0];
+    const [l, t, w, h] = b.rect, many = b.rooms.length > 1;
+    const nfree = b.rooms.filter((x) => x.cls === "full").length;
+    const lbl = many ? `${b.rooms[0].r.zone.name} ${nfree}/${b.rooms.length} 空` : b.rooms[0].r.name;
+    return `<button class="rm ${best.cls}${ok.length ? "" : " dim"}${state.pick === i ? " sel" : ""}" data-i="${i}" aria-label="${esc(lbl)}"
+      style="left:${pc(l - x0, bw)};top:${pc(t - y0, bh)};width:${pc(w, bw)};height:${pc(h, bh)}">${many ? `<small>${nfree}/${b.rooms.length}</small>` : ""}</button>`;
+  }).join("");
+  // 手机上不缩得太小：至少按 0.7 倍显示，可左右滑
+  $("#fmap").innerHTML = `<div class="fmap" style="width:max(100%, ${Math.round(bw * 0.7)}px);aspect-ratio:${bw} / ${bh}">
+    <img src="${esc(f.img)}" alt="${esc(f.name)} 平面图" style="width:${pc(f.basis, bw)};left:${pc(-x0, bw)};top:${pc(-y0, bh)}">${html}</div>`;
+  const box = [...boxes.values()][state.pick];
+  $("#mapinfo").innerHTML = box ? box.rooms.map((x) =>
+    `<div><b>${esc(x.r.name)}</b> · ${x.r.capacity ?? "?"}人 · ${esc(x.text)}</div>`).join("")
+    : `<span class="muted">绿色 = 整段空，虚线黄 = 部分空；地图可左右滑动；按上面「人数」筛选，不够人数的变淡。</span>`;
+  $("#fmap").onclick = (e) => {
+    const b = e.target.closest(".rm"); if (!b) return;
+    state.pick = state.pick === +b.dataset.i ? null : +b.dataset.i; renderMap();
+  };
+}
+
 function renderAll() {
-  setURL(); renderMast(); renderNow(); renderControls(); renderZones(); renderLong(); renderTimeline();
+  setURL(); renderMast(); renderNow(); renderControls(); renderZones(); renderMap(); renderLong(); renderTimeline();
 }
 
 async function loadDay() {
@@ -303,16 +363,20 @@ function bind() {
   $("#c-start").addEventListener("change", (e) => { state.start = e.target.value; renderAll(); });
   on("#c-dur", (v) => { state.dur = +v; renderAll(); });
   on("#c-cap", (v) => { state.cap = +v; renderAll(); });
+  on("#c-floor", (v) => { state.floor = v; state.pick = null; setURL(); renderMap(); });
   on("#c-area", (v) => { state.area = +v; setURL(); renderControls(); renderTimeline(); });
 }
 
 async function init() {
+  // 平面图坐标是静态文件，拿不到就不显示地图，不影响其他部分
+  const plans = getJSON("floorplans.json").catch(() => null);
   state.index = await getJSON("data/index.json");
+  state.plans = await plans;
   const today = hkNow().date, dates = state.index.dates;
   if (!dates.includes(state.date)) state.date = dates.includes(today) ? today : dates[dates.length - 1];
   bind();
   await loadDay();
-  setInterval(() => { renderMast(); renderNow(); if (state.blk == null || (state.blk === "c" && state.start === "now")) { renderControls(); renderZones(); renderLong(); } }, 60_000);
+  setInterval(() => { renderMast(); renderNow(); if (state.blk == null || (state.blk === "c" && state.start === "now")) { renderControls(); renderZones(); renderMap(); renderLong(); } }, 60_000);
 }
 
 init().catch((e) => { $("#zones").innerHTML = `<div class="empty">加载失败：${esc(e.message)}</div>`; });

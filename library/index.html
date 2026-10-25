@@ -6,8 +6,8 @@
 <meta name="theme-color" content="#f3efe6" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#171614" media="(prefers-color-scheme: dark)">
 <title>图书馆空房</title>
-<link rel="stylesheet" href="../style.css?v=bc49f83e">
-<script src="app.js?v=8d427140" defer></script>
+<link rel="stylesheet" href="../style.css?v=38abd946">
+<script src="app.js?v=fff959ab" defer></script>
 </head>
 <body>
 <div class="page">
@@ -40,6 +40,14 @@
     <div class="legend"><span class="l-full">整段空</span><span class="l-part">部分空（标出空的时间）</span></div>
   </section>
 
+  <section class="sec" id="map-sec">
+    <div class="sec-h"><h2>地图</h2><span class="muted" id="map-sub"></span></div>
+    <div class="chips" id="c-floor"></div>
+    <div class="mapwrap" id="fmap"></div>
+    <div class="mapinfo" id="mapinfo"></div>
+    <div class="legend"><span class="l-mfull">整段空</span><span class="l-mpart">部分空</span><span class="l-mbusy">已满</span><span class="l-mshut">不开放</span></div>
+  </section>
+
   <section class="sec">
     <div class="sec-h"><h2>整段空闲</h2><span class="muted" id="long-sub"></span></div>
     <ul class="lf" id="long"></ul>
@@ -52,7 +60,7 @@
   </section>
 
   <footer class="foot">
-    <span>数据来自 lbbooking.hkust.edu.hk，每 30 分钟更新；不含预约人信息</span>
+    <span>数据来自 lbbooking.hkust.edu.hk，每 30 分钟更新；不含预约人信息 · 平面图来自 <a href="https://lbcone.hkust.edu.hk/floorplans/" style="border-bottom:1px solid var(--rule)">HKUST Library Floor Plans</a></span>
     <span><a href="scriptable.txt" style="border-bottom:1px solid var(--rule)">iPhone 小组件（Scriptable）</a> · <span id="foot-upd"></span></span>
   </footer>
 </div>
