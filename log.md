@@ -109,3 +109,18 @@
 - README / Makefile 说明同步。  
 **结果**：已验证路由与页面；真实空位推送等下一次出现空位时观察。  
 **下一步**：提交 main，发布 gh-pages。
+
+#### 2026-10-25 11:00 HKT — 图书馆页面加楼层地图
+
+**背景**：用户要求把图书馆地图放到网站上。服务于最大目标：找到空房后能直接看到在哪层、哪个位置。  
+**操作**：
+- 搜到官方平面图系统 https://lbcone.hkust.edu.hk/floorplans/（公开，不用登录）。`floor/view?name=<1f|gf|lg1|lg3|lg4|lg5>` 页面里有平面图 `<img id="map">` 和每个地点的 `div.lib_obj`（title = 地点名），坐标写在内联 CSS `#place_N{top;left;width;height}`。
+- 把矩形叠到原图上截图核对：LG1 与 1600px 原图吻合；LG5 原图 2146px 宽，按 1600px 缩放后吻合 → 坐标基准统一为 1600px。
+- 新增 `library/floorplans.py`：抓 1/F、LG1、LG3、LG4、LG5（G/F 无可预约房间），按楼层（`floor_of`）+ 房间号（后面不能紧跟数字）匹配预约系统房间名，写 `docs/library/floorplans.json`。结果：1/F 3、LG1 37（含 9 个 Pod 共用一块）、LG3 10、LG4 11、LG5 3，未匹配：无。
+- 网页：`docs/library/index.html` 在「按时段找」后新增「地图」：楼层标签（数字 = 该时段整段空的房间数）、官方平面图裁到有房间的区域、房间色块（整段空绿 / 部分空虚线黄 / 已满红 / 不开放灰，人数不够变淡），点房间显示名称、人数、状态；手机上至少按 0.7 倍显示、可左右滑。图片直接引用 lbcone，不复制到本站；页脚注明来源。`floorplans.json` 拿不到时整个地图隐藏。
+- `Makefile` 新增 `make maps`；README / plan.md 同步。
+- 写 Makefile 注释前验证代理：`curl` 经 shell 代理 200（1.8s），直连 200（0.04s），注释写「直连更快」。
+- 期间失误：第一次下载时 scratchpad 目录不存在，`cd` 失败导致在仓库里建了 `lbcone/`（2 个下载的 html），已整体移到 scratchpad，仓库无残留。
+- 验证：本地 `python3 -m http.server` + Playwright，390px 浅色 LG1 / 1100px 深色 LG3 / 390px LG5：图片加载成功（naturalWidth 1600/1600/2146），色块数 29/10/3，点击显示详情，无 JS 报错；截图目测位置正确。  
+**结果**：本地验证通过。  
+**下一步**：提交 main，`./run.sh publish` 发布；等用户真机反馈。

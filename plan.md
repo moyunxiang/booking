@@ -1,6 +1,6 @@
 # 项目计划
 
-> 最后更新：2026-10-13 19:30 HKT
+> 最后更新：2026-10-25 11:00 HKT
 > 本文件是新 Claude session 的首要上下文。说明性内容使用中文。
 
 ## 1. 最大目标
@@ -16,7 +16,8 @@
 
 ## 2. 当前状态
 
-- 图书馆：`library/scrape.py` 每 30 分钟抓 area 3/8/20，网页 `docs/library/`（现在有空 / 按时段找含「自选」/ 整段空闲 / 时间轴），Scriptable 小组件。
+- 图书馆：`library/scrape.py` 每 30 分钟抓 area 3/8/20，网页 `docs/library/`（现在有空 / 按时段找含「自选」/ 地图 / 整段空闲 / 时间轴），Scriptable 小组件。
+- 图书馆地图：`library/floorplans.py`（`make maps`）从公开的 lbcone.hkust.edu.hk/floorplans 抓各层房间矩形，写 `docs/library/floorplans.json`（坐标以图宽 1600px 为基准）；网页直接引用官方 PNG，按所选时段给房间上色。
 - 体育设施：`facility/scrape.py` 每小时抓篮球 + 羽毛球 8 天，网页 `docs/facilities/`，Scriptable 小组件。
 - 空位监控：`facility/monitor.py` 每 5 分钟（launchd，不重叠），只通知 ≥10:00 的新空位：
   - 篮球室内场（LG1 ×3 + Seafront 室内 A 半场）→ ntfy 公开话题 `hkust-basketball-moyunxiang`；其中 **LG1** 的另推 Bark（只发给我），Seafront 不推 Bark。
@@ -43,6 +44,7 @@
 - [ ] 若设施网页抓取仍长时间占锁：让 `monitor.py` 顺手写 `docs/facilities/data/*.json`（它每轮已经搜了两类型 8 天），去掉单独的设施抓取任务或降频。
 
 ### P2
+- [ ] 图书馆地图：用户真机看效果后调整（手机上 LG1 需要左右滑）。
 - [ ] 小组件真机排版反馈后微调。
 
 ## 5. 里程碑
@@ -61,6 +63,7 @@
 - F5: launchd 的 LaunchAgent 在用户桌面会话内运行，可以弹出有界面的 Chrome。
 - F6: 2026-10-12 晚 fbs 约 10–13 秒/请求，偶发 30s 超时与 ECONNRESET（`fbs._request` 已重试）；点一个场地 = GET+search+select 3 个请求。
 - F7: 缓存一次性全部过期时，37 个羽毛球场全量重点要 28 分钟（20:09 实测 1674s）；因此改为轮换刷新。
+- F9: lbcone 平面图页面公开、不用登录；每个地点是 `#place_N{top;left;width;height}`，坐标基准宽 1600px（LG5 图 2146px 宽也一样）；预约系统 64 个房间全部能对上（`LG1- Media and Discussion`→LG1-329，`LG3 Seminar`→LG3-10，9 个 Study Pod 共用一块「Study Pod Zone」）。
 - F8: 监控脚本本身几乎不耗 CPU（28 分钟内 python 4.6s user + 3.4s sys），时间都花在等服务器。
 
 ## 7. 未解决问题 / 阻塞项

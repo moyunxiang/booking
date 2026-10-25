@@ -213,3 +213,22 @@ a.book{color:var(--ink-2);border-bottom:1px solid var(--rule)}
   .rise{animation:rise .45s cubic-bezier(.2,.7,.2,1) both}
   @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 }
+
+/* 图书馆地图：官方平面图 + 房间状态色块（平面图本身是浅色，色块颜色不随深色模式变） */
+.mapwrap{overflow-x:auto;margin:12px 0 0;border:1px solid var(--rule);border-radius:var(--radius);background:#fff;-webkit-overflow-scrolling:touch}
+.fmap{position:relative;overflow:hidden}
+.fmap img{position:absolute;max-width:none;display:block;user-select:none;-webkit-user-drag:none}
+.fmap .rm{position:absolute;border-radius:3px;border:2px solid;cursor:pointer;padding:0;background:none;font:inherit}
+.fmap .rm.full{background:rgba(47,140,64,.38);border-color:#2f8c40}
+.fmap .rm.part{background:rgba(230,160,20,.32);border-color:#c98500;border-style:dashed}
+.fmap .rm.busy{background:rgba(184,50,31,.16);border-color:rgba(184,50,31,.55)}
+.fmap .rm.shut{background:rgba(120,120,120,.18);border-color:rgba(120,120,120,.5)}
+.fmap .rm.dim{opacity:.35}
+.fmap .rm.sel{outline:3px solid #1c1a16;outline-offset:1px;z-index:2}
+.fmap .rm small{position:absolute;left:50%;top:-18px;transform:translateX(-50%);font-size:11px;font-weight:700;background:#1c1a16;color:#fff;border-radius:4px;padding:0 4px;white-space:nowrap}
+.mapinfo{min-height:22px;margin:10px 0 0;font-size:14px;color:var(--ink-2)}
+.mapinfo b{color:var(--ink)}
+.legend .l-mfull::before{background:rgba(47,140,64,.6);outline:1px solid #2f8c40}
+.legend .l-mpart::before{background:rgba(230,160,20,.45);outline:1px dashed #c98500}
+.legend .l-mbusy::before{background:rgba(184,50,31,.25);outline:1px solid rgba(184,50,31,.6)}
+.legend .l-mshut::before{background:rgba(120,120,120,.25);outline:1px solid rgba(120,120,120,.6)}
