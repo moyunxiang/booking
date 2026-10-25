@@ -284,7 +284,7 @@ function renderTimeline() {
   if (anchor) g.scrollLeft = Math.max(0, anchor.offsetLeft - (g.clientWidth - 112) / 3);
 }
 
-// 地图：官方平面图上按所选时段给每个房间上色。坐标以图宽 basis（1600px）为准，只显示有房间的那一块
+// 地图：官方平面图（已裁剪，见 library/floorplans.py）上按所选时段给每个房间上色；坐标是图片里的像素
 function mapStatus(r, S0, E) {
   if (r.closed || E <= r.eo || S0 >= r.ec) return { cls: "shut", text: "不开放" };
   const st = blockStatus(r, S0, E);
@@ -317,21 +317,18 @@ function renderMap() {
     if (!boxes.has(k)) boxes.set(k, { rect, rooms: [] });
     boxes.get(k).rooms.push({ r, ...mapStatus(r, S0, E) });
   }
-  const rects = [...boxes.values()].map((b) => b.rect), M = 30;
-  const x0 = Math.max(0, Math.min(...rects.map((r) => r[0])) - M), y0 = Math.max(0, Math.min(...rects.map((r) => r[1])) - M);
-  const x1 = Math.min(f.basis, Math.max(...rects.map((r) => r[0] + r[2])) + M), y1 = Math.max(...rects.map((r) => r[1] + r[3])) + M;
-  const bw = x1 - x0, bh = y1 - y0, pc = (v, d) => (v / d * 100).toFixed(3) + "%";
+  const bw = f.w, bh = f.h, pc = (v, d) => (v / d * 100).toFixed(3) + "%";
   const html = [...boxes.values()].map((b, i) => {
     const ok = b.rooms.filter((x) => capOK(x.r)), best = (ok.length ? ok : b.rooms).sort((p, q) => RANK[p.cls] - RANK[q.cls])[0];
     const [l, t, w, h] = b.rect, many = b.rooms.length > 1;
     const nfree = b.rooms.filter((x) => x.cls === "full").length;
     const lbl = many ? `${b.rooms[0].r.zone.name} ${nfree}/${b.rooms.length} 空` : b.rooms[0].r.name;
     return `<button class="rm ${best.cls}${ok.length ? "" : " dim"}${state.pick === i ? " sel" : ""}" data-i="${i}" aria-label="${esc(lbl)}"
-      style="left:${pc(l - x0, bw)};top:${pc(t - y0, bh)};width:${pc(w, bw)};height:${pc(h, bh)}">${many ? `<small>${nfree}/${b.rooms.length}</small>` : ""}</button>`;
+      style="left:${pc(l, bw)};top:${pc(t, bh)};width:${pc(w, bw)};height:${pc(h, bh)}">${many ? `<small>${nfree}/${b.rooms.length}</small>` : ""}</button>`;
   }).join("");
-  // 手机上不缩得太小：至少按 0.7 倍显示，可左右滑
-  $("#fmap").innerHTML = `<div class="fmap" style="width:max(100%, ${Math.round(bw * 0.7)}px);aspect-ratio:${bw} / ${bh}">
-    <img src="${esc(f.img)}" alt="${esc(f.name)} 平面图" style="width:${pc(f.basis, bw)};left:${pc(-x0, bw)};top:${pc(-y0, bh)}">${html}</div>`;
+  // 图已经裁到有房间的那一块（本站的 maps/*.jpg）。手机上至少按 0.7 倍显示、可左右滑；大屏上不超过原图大小
+  $("#fmap").innerHTML = `<div class="fmap" style="width:min(max(100%, ${Math.round(bw * 0.7)}px), ${bw}px);aspect-ratio:${bw} / ${bh}">
+    <img src="${esc(f.img)}" alt="${esc(f.name)} 平面图" width="${bw}" height="${bh}">${html}</div>`;
   const box = [...boxes.values()][state.pick];
   $("#mapinfo").innerHTML = box ? box.rooms.map((x) =>
     `<div><b>${esc(x.r.name)}</b> · ${x.r.capacity ?? "?"}人 · ${esc(x.text)}</div>`).join("")
@@ -368,10 +365,11 @@ function bind() {
 }
 
 async function init() {
-  // 平面图坐标是静态文件，拿不到就不显示地图，不影响其他部分
+  // 平面图坐标是静态文件，拿不到就不显示地图，不影响其他部分；各层图很小（≤ 160 KB），空闲时预加载
   const plans = getJSON("floorplans.json").catch(() => null);
   state.index = await getJSON("data/index.json");
   state.plans = await plans;
+  if (state.plans) setTimeout(() => state.plans.floors.forEach((f) => { new Image().src = f.img; }), 1500);
   const today = hkNow().date, dates = state.index.dates;
   if (!dates.includes(state.date)) state.date = dates.includes(today) ? today : dates[dates.length - 1];
   bind();
