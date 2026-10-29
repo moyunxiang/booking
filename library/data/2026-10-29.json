@@ -1,6 +1,6 @@
 {
  "date": "2026-10-29",
- "fetched_at": "2026-10-29T17:30:05+08:00",
+ "fetched_at": "2026-10-29T18:00:05+08:00",
  "areas": [
   {
    "date": "2026-10-29",
@@ -3081,6 +3081,18 @@
      "date": "2026-10-29",
      "area": 3,
      "area_name": "Group Study Rooms",
+     "room_id": 31,
+     "room": "LG4-08",
+     "start": "20:00",
+     "end": "22:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2280348
+    },
+    {
+     "date": "2026-10-29",
+     "area": 3,
+     "area_name": "Group Study Rooms",
      "room_id": 32,
      "room": "LG4-09",
      "start": "20:00",
@@ -5175,6 +5187,18 @@
      "date": "2026-10-29",
      "area": 8,
      "area_name": "LC Study Rooms",
+     "room_id": 60,
+     "room": "LC-04",
+     "start": "20:00",
+     "end": "21:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2280358
+    },
+    {
+     "date": "2026-10-29",
+     "area": 8,
+     "area_name": "LC Study Rooms",
      "room_id": 62,
      "room": "LC-06",
      "start": "20:00",
@@ -5578,6 +5602,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2280320
+    },
+    {
+     "date": "2026-10-29",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 61,
+     "room": "LC-05",
+     "start": "23:00",
+     "end": "24:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2280346
     },
     {
      "date": "2026-10-29",
@@ -6192,6 +6228,18 @@
      "date": "2026-10-29",
      "area": 20,
      "area_name": "Study Pods",
+     "room_id": 118,
+     "room": "POD-07",
+     "start": "18:00",
+     "end": "19:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2280340
+    },
+    {
+     "date": "2026-10-29",
+     "area": 20,
+     "area_name": "Study Pods",
      "room_id": 113,
      "room": "POD-02",
      "start": "18:30",
@@ -6247,6 +6295,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2280147
+    },
+    {
+     "date": "2026-10-29",
+     "area": 20,
+     "area_name": "Study Pods",
+     "room_id": 116,
+     "room": "POD-05",
+     "start": "19:30",
+     "end": "21:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2280344
     },
     {
      "date": "2026-10-29",
