@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f3efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#171614" media="(prefers-color-scheme: dark)">
+<title>3D 打印机</title>
+<link rel="stylesheet" href="../style.css?v=63e0f41b">
+<script src="app.js?v=0d08ddef" defer></script>
+</head>
+<body>
+<div class="page">
+  <a class="back" href="../">← Booking</a>
+  <header class="mast">
+    <div>
+      <div class="eyebrow">HKUST Library · 3D Printers</div>
+      <h1 class="display">3D 打印机<span class="wd" id="wd"></span></h1>
+    </div>
+    <div class="mast-side" id="fresh"></div>
+  </header>
+  <div id="alert"></div>
+  <div class="cta">
+    <a class="go" href="https://lbbooking.hkust.edu.hk/calendar/day.php?area=14" target="_blank" rel="noopener">去官网预约 →</a>
+  </div>
+  <p class="rules muted">规则：每次最多 4 小时；每人每天 1 次、每周 2 次；可当天或最多提前两周预约；开始后 10 分钟内没到算缺席（<a href="https://library.hkust.edu.hk/facilities-space/facilities/3d-printing" target="_blank" rel="noopener" style="border-bottom:1px solid var(--rule)">官方说明</a>）。</p>
+
+  <section class="sec" id="now-sec">
+    <div class="sec-h"><h2>现在</h2><span class="muted" id="now-sub"></span></div>
+    <div id="now"></div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><h2>找空档</h2><span class="muted" id="find-sub"></span></div>
+    <div class="ctrl">
+      <div class="ctrl-row"><span class="k">时长</span><div class="chips" id="c-dur"></div></div>
+      <div class="ctrl-row"><span class="k">机器</span><div class="chips" id="c-pr"></div></div>
+    </div>
+    <ul class="lf" id="free"></ul>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><h2>两周时间轴</h2></div>
+    <div class="tlwrap" id="tl"></div>
+    <div class="legend"><span class="l-bk">已预约</span><span class="l-un">不可预约</span><span class="l-now">现在</span></div>
+  </section>
+
+  <footer class="foot">
+    <span>数据来自 lbbooking.hkust.edu.hk（3D Printers）：今明两天每 30 分钟、之后两周每小时更新；不含预约人信息</span>
+    <span id="foot-upd"></span>
+  </footer>
+</div>
+</body>
+</html>
