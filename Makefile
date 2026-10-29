@@ -3,7 +3,7 @@
 
 help:
 	@echo "make update    抓图书馆 + 体育设施并发布网站（登录失效会自动弹 Chrome 登录）"
-	@echo "make library   只抓图书馆并发布（约 2 分钟）"
+	@echo "make library   只抓图书馆（自习室 + 3D 打印机）并发布（约 2–6 分钟）"
 	@echo "make facility  只抓篮球 + 羽毛球并发布（约 5–20 分钟）"
 	@echo "make publish   把本地 docs/ 发布到网站（gh-pages），不抓取"
 	@echo "make maps      重新抓图书馆楼层平面图的房间位置（布局变了才需要），之后 make publish"

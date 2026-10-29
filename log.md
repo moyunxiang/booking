@@ -136,3 +136,19 @@
 - 本地 Playwright：1100px 1/F 显示 640×320（原来铺满整页）；各层图片加载 0.07–0.18s；无 JS 报错；截图核对色块位置正确。  
 **决策**：图片从直接引用改为本站托管裁剪版（为了速度），页脚继续注明来源 HKUST Library Floor Plans。  
 **下一步**：提交并发布；用户确认手机 / 网页效果。
+
+#### 2026-10-29 14:10 HKT — 新增 3D 打印机空档页面
+
+**背景**：用户要求把 3D 打印机预约也放到网站上。服务于最大目标：稀缺资源（3D 打印机）不用反复手动刷就能看到空档。  
+**操作 / 观察**：
+- 用登录的 profile 读 `day.php?area=3` 的区域导航：同一个 MRBS 系统还有 area 6 Teaching Venues、10 LC Creative Media Zone、13 Computers、**14 3D Printers**、19 Nap Pods、21 Curved Monitors。（注意：该页面含预约人姓名，曾临时存到 scratchpad 解析，用完已删除，没有进仓库。）
+- 用现有 `parse_day` 解析 area 14：2 台（101 Printer 1 Mono-colour、102 Printer 2 Multi-colour），09:30–20:30，30 分钟一格，每天 14:30–15:00 Unbookable，周末全天 Unbookable。
+- 官方规则（https://library.hkust.edu.hk/facilities-space/facilities/3d-printing）：每次最多 4 小时，每天 1 次、每周 2 次，当天或最多提前两周。
+- `uv run python library/scrape.py --sites print3d --days 21`：10/29–11/11 两台几乎全满（≥1 小时的空档只有 7 段）；11/11（今天 +13）已有预约，11/12（+14）起整天空。
+- 判断（推断，未验证）：最远只能约到今天 +13 天，11/12 尚未开放。验证方式：之后每小时抓 15 天（含 +14），看 +14 那天第一次出现预约的时间 → 也就能知道新的一天几点开放。  
+**修改**：
+- `library/scrape.py`：`SITES = {"library": {3,8,20}, "print3d": {14}}`，各写各的目录（`data/<site>/`、`docs/<site>/data/`），自习室数据和小组件不受影响；`scrape(plan)` 按 site 分别给日期；CLI 改为 `--sites`、`--days`（自习室）、`--print3d-days`（默认 15），去掉 `--areas`。
+- `run.sh library`：3D 打印机每小时（`logs/.last_print3d` 超过 3300s）抓完整 15 天，其余只抓今明两天，减少请求（服务器限流）。
+- 新页面 `docs/print3d/`：现在（每台状态）、找空档（时长 不限/≥1/≥2/≥3/4 小时、按机器筛选，只列能约的 14 天）、两周时间轴（+14 那天标「还未开放预约」）、官网预约按钮、规则说明；首页加入口卡片；`.gitignore` 加 `/docs/print3d/data/`。
+- 验证：公开数据 57 条预约均无 `name` 字段；本地 Playwright 390px 浅色 / 1100px 深色无 JS 报错；筛选结果与 Python 独立计算的空档一致（≥1h 共 7 段）；截图检查排版。  
+**下一步**：提交并发布；观察 +14 天什么时候开始出现预约，回写开放时间。

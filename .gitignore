@@ -6,3 +6,4 @@ logs/
 # 网站数据只发布到 gh-pages，不进 main
 /docs/library/data/
 /docs/facilities/data/
+/docs/print3d/data/

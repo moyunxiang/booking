@@ -1,13 +1,18 @@
 """抓取 HKUST Library Booking 每日各房间预约情况。
 
-  uv run python library/scrape.py              # 从今天起抓 7 天
-  uv run python library/scrape.py --days 3
+  uv run python library/scrape.py              # 自习室从今天起 7 天 + 3D 打印机 15 天
+  uv run python library/scrape.py --days 3 --print3d-days 2
   uv run python library/scrape.py --date 2026-09-30
+  uv run python library/scrape.py --sites print3d
 
-输出：
-  data/library/YYYY-MM-DD.json   含预约人姓名，仅本地（已 gitignore）
-  docs/library/data/YYYY-MM-DD.json      去掉姓名，供网页展示
-  docs/library/data/index.json           可用日期 + 更新时间
+同一个预约系统里的几块分开存（SITES），网页 / 小组件各读各的：
+  library   自习室 area 3/8/20 → data/library/、docs/library/data/
+  print3d   3D 打印机 area 14  → data/print3d/、docs/print3d/data/
+            （可提前两周预约、常常一周内全满，所以默认抓今天起 15 天）
+每块输出：
+  data/<site>/YYYY-MM-DD.json          含预约人姓名，仅本地（已 gitignore）
+  docs/<site>/data/YYYY-MM-DD.json     去掉姓名，供网页展示
+  docs/<site>/data/index.json          可用日期 + 更新时间
 
 退出码：0 成功；2 登录失效（需运行 auth.py 重新登录）；1 其他错误。
 """
@@ -26,12 +31,14 @@ from bs4 import BeautifulSoup
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from auth import LIBRARY as BASE, browser, silent_login  # noqa: E402
 
-AREAS = {3: "Group Study Rooms", 8: "LC Study Rooms", 20: "Study Pods"}
+SITES = {
+    "library": {3: "Group Study Rooms", 8: "LC Study Rooms", 20: "Study Pods"},
+    "print3d": {14: "3D Printers"},
+}
+AREAS = {a: n for areas in SITES.values() for a, n in areas.items()}
 TYPE_STATUS = {"H": "unbookable"}  # 其余类型码 (U/R/T/S/D...) 均为正常预约
 HK = ZoneInfo("Asia/Hong_Kong")
 ROOT = Path(__file__).parent.parent
-PRIVATE_DIR = ROOT / "data" / "library"
-PUBLIC_DIR = ROOT / "docs" / "library" / "data"
 DELAY = 15  # 秒；服务器有限流，连续快速请求会返回 403
 
 
@@ -140,8 +147,10 @@ def write_json(path: Path, obj):
     path.write_text(json.dumps(obj, ensure_ascii=False, indent=1))
 
 
-def scrape(days: list[date], areas: list[int]):
+def scrape(plan: dict[str, list[date]]):
+    """plan：{site: 要抓的日期}。按日期顺序抓，每个请求之间隔 DELAY。"""
     now = datetime.now(HK).isoformat(timespec="seconds")
+    first = True
     with browser() as ctx:
         relogged = False
 
@@ -158,24 +167,31 @@ def scrape(days: list[date], areas: list[int]):
                 time.sleep(DELAY)
                 return fetch(ctx, day, area)
 
-        for i, day in enumerate(days):
-            results = []
-            for j, area in enumerate(areas):
-                if i or j:
-                    time.sleep(DELAY)
-                d = parse_day(get(day, area), day, area)
-                print(f"{day} area={area:<3} rooms={len(d['rooms']):<3} bookings={len(d['bookings'])}",
-                      flush=True)
-                results.append(d)
-            snap = {"date": day.isoformat(), "fetched_at": now, "areas": results}
-            write_json(PRIVATE_DIR / f"{day}.json", snap)
-            public = json.loads(json.dumps(snap))
-            for a in public["areas"]:
-                for b in a["bookings"]:
-                    b.pop("name")
-            write_json(PUBLIC_DIR / f"{day}.json", public)
+        for day in sorted({d for ds in plan.values() for d in ds}):
+            for site in [s for s in plan if day in plan[s]]:
+                results = []
+                for area in SITES[site]:
+                    if not first:
+                        time.sleep(DELAY)
+                    first = False
+                    d = parse_day(get(day, area), day, area)
+                    print(f"{day} area={area:<3} rooms={len(d['rooms']):<3} bookings={len(d['bookings'])}",
+                          flush=True)
+                    results.append(d)
+                snap = {"date": day.isoformat(), "fetched_at": now, "areas": results}
+                write_json(ROOT / "data" / site / f"{day}.json", snap)
+                public = json.loads(json.dumps(snap))
+                for a in public["areas"]:
+                    for b in a["bookings"]:
+                        b.pop("name")
+                write_json(public_dir(site) / f"{day}.json", public)
 
-    write_index(now, areas)
+    for site in plan:
+        write_index(now, site)
+
+
+def public_dir(site: str) -> Path:
+    return ROOT / "docs" / site / "data"
 
 
 def closed_areas(snap: dict) -> list[int]:
@@ -189,29 +205,31 @@ def closed_areas(snap: dict) -> list[int]:
     return out
 
 
-def write_index(now: str, areas: list[int]):
-    files = sorted(PUBLIC_DIR.glob("????-??-??.json"))
+def write_index(now: str, site: str):
+    files = sorted(public_dir(site).glob("????-??-??.json"))
     dates = [p.stem for p in files]
     closed = {p.stem: c for p in files if (c := closed_areas(json.loads(p.read_text())))}
-    write_json(PUBLIC_DIR / "index.json", {
+    write_json(public_dir(site) / "index.json", {
         "updated_at": now,
         "dates": dates,
         "closed": closed,
-        "areas": [{"id": a, "name": AREAS.get(a, str(a))} for a in areas],
+        "areas": [{"id": a, "name": n} for a, n in SITES[site].items()],
     })
 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--days", type=int, default=7)
+    ap.add_argument("--days", type=int, default=7, help="自习室抓几天")
+    ap.add_argument("--print3d-days", type=int, default=15, help="3D 打印机抓几天（可提前两周预约）")
     ap.add_argument("--date", help="只抓某一天 YYYY-MM-DD")
-    ap.add_argument("--areas", default=",".join(map(str, AREAS)))
+    ap.add_argument("--sites", default=",".join(SITES), help="逗号分隔：" + " / ".join(SITES))
     args = ap.parse_args()
     today = datetime.now(HK).date()
-    days = ([date.fromisoformat(args.date)] if args.date
-            else [today + timedelta(i) for i in range(args.days)])
+    n = {"library": args.days, "print3d": args.print3d_days}
+    plan = {s: [date.fromisoformat(args.date)] if args.date else [today + timedelta(i) for i in range(n[s])]
+            for s in args.sites.split(",")}
     try:
-        scrape(days, [int(a) for a in args.areas.split(",")])
+        scrape(plan)
     except SessionExpired:
         msg = "登录已失效，请在本目录运行: make update"
         print(msg, file=sys.stderr)

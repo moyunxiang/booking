@@ -1,6 +1,6 @@
 # 项目计划
 
-> 最后更新：2026-10-25 11:00 HKT
+> 最后更新：2026-10-29 14:00 HKT
 > 本文件是新 Claude session 的首要上下文。说明性内容使用中文。
 
 ## 1. 最大目标
@@ -17,6 +17,7 @@
 ## 2. 当前状态
 
 - 图书馆：`library/scrape.py` 每 30 分钟抓 area 3/8/20，网页 `docs/library/`（现在有空 / 按时段找含「自选」/ 地图 / 整段空闲 / 时间轴），Scriptable 小组件。
+- 3D 打印机：同一个图书馆预约系统的 area 14（Printer 1 单色 / Printer 2 多色，09:30–20:30，30 分钟一格）。`library/scrape.py` 的 `SITES["print3d"]` 写到 `data/print3d/`（含姓名，本地）和 `docs/print3d/data/`（公开）；`run.sh library` 每小时抓完整 15 天，其余只抓今明两天。网页 `docs/print3d/`（现在 / 找空档 / 时间轴），首页有入口。
 - 图书馆地图：`library/floorplans.py`（`make maps`）从公开的 lbcone.hkust.edu.hk/floorplans 抓各层房间矩形，写 `docs/library/floorplans.json`（坐标以图宽 1600px 为基准）；网页直接引用官方 PNG，按所选时段给房间上色。
 - 体育设施：`facility/scrape.py` 每小时抓篮球 + 羽毛球 8 天，网页 `docs/facilities/`，Scriptable 小组件。
 - 空位监控：`facility/monitor.py` 每 5 分钟（launchd，不重叠），只通知 ≥10:00 的新空位：
@@ -64,6 +65,7 @@
 - F6: 2026-10-12 晚 fbs 约 10–13 秒/请求，偶发 30s 超时与 ECONNRESET（`fbs._request` 已重试）；点一个场地 = GET+search+select 3 个请求。
 - F7: 缓存一次性全部过期时，37 个羽毛球场全量重点要 28 分钟（20:09 实测 1674s）；因此改为轮换刷新。
 - F9: lbcone 平面图页面公开、不用登录；每个地点是 `#place_N{top;left;width;height}`，坐标基准宽 1600px（LG5 图 2146px 宽也一样）；预约系统 64 个房间全部能对上（`LG1- Media and Discussion`→LG1-329，`LG3 Seminar`→LG3-10，9 个 Study Pod 共用一块「Study Pod Zone」）。
+- F10: 3D 打印机规则（官方页 library.hkust.edu.hk/facilities-space/facilities/3d-printing）：每次最多 4 小时、每天 1 次、每周 2 次、最多提前两周；2026-10-29 实测未来 7 天两台几乎全满（只剩 3 个零散 30 分钟），周末不开放。
 - F8: 监控脚本本身几乎不耗 CPU（28 分钟内 python 4.6s user + 3.4s sys），时间都花在等服务器。
 
 ## 7. 未解决问题 / 阻塞项

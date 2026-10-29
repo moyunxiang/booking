@@ -1,12 +1,13 @@
 # HKUST Booking 爬虫
 
-抓取 https://lbbooking.hkust.edu.hk/calendar/ 每天各房间的预约情况（area 3 / 8 / 20），
+抓取 https://lbbooking.hkust.edu.hk/calendar/ 每天各房间的预约情况（自习室 area 3 / 8 / 20，3D 打印机 area 14），
 生成静态网页，发布在 https://moyunxiang.com/booking/ （GitHub Pages，`gh-pages` 分支）。main 只放代码；`run.sh` / `make publish` 把本地 `docs/`（含数据）作为一个新提交推到 gh-pages，数据不进 main。
 
 ```
 library/          图书馆爬虫（auth.py 登录，scrape.py 抓取，floorplans.py 楼层平面图房间位置）
 docs/index.html   入口页：选 Library / Facility
 docs/library/     图书馆视图 → moyunxiang.com/booking/library/
+docs/print3d/     3D 打印机视图 → moyunxiang.com/booking/print3d/
 facility/         体育设施爬虫（fbs.py 客户端，scrape.py 抓取）
 docs/facilities/  体育设施视图 → moyunxiang.com/booking/facilities/
 ```
@@ -17,7 +18,7 @@ docs/facilities/  体育设施视图 → moyunxiang.com/booking/facilities/
 
 ```sh
 uv run python auth.py        # 首次 / 登录失效时：弹出 Chrome 窗口手动登录 HKUST
-uv run python library/scrape.py      # 抓今天起 7 天（--days N / --date YYYY-MM-DD / --areas 3,8）
+uv run python library/scrape.py      # 抓今天起 7 天，自习室 + 3D 打印机（--days N / --date YYYY-MM-DD / --sites library,print3d）
 ./run.sh                     # 定时任务入口：抓取 + 发布 docs 到 gh-pages
 ```
 
@@ -27,8 +28,8 @@ uv run python library/scrape.py      # 抓今天起 7 天（--days N / --date YY
 
 ## 数据
 
-- `data/library/YYYY-MM-DD.json`：完整数据，含预约人姓名，**只存在本地**
-- `docs/library/data/YYYY-MM-DD.json`：去掉姓名的公开版本，供网页展示
+- `data/library/YYYY-MM-DD.json`、`data/print3d/YYYY-MM-DD.json`：完整数据，含预约人姓名，**只存在本地**
+- `docs/library/data/YYYY-MM-DD.json`、`docs/print3d/data/YYYY-MM-DD.json`：去掉姓名的公开版本，供网页展示（3D 打印机每小时抓今天起 15 天，其余只抓今明两天）
 - `docs/library/floorplans.json` + `docs/library/maps/*.jpg`：各层平面图（裁到有房间的区域、压成 JPEG）和每个可预约房间的位置；`make maps` 从公开的 lbcone.hkust.edu.hk/floorplans 生成
 
 每条预约：`date, area, area_name, room_id, room, start, end, type, status, entry_id`（私有版多 `name`）。

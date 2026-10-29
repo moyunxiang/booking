@@ -232,3 +232,9 @@ a.book{color:var(--ink-2);border-bottom:1px solid var(--rule)}
 .legend .l-mpart::before{background:rgba(230,160,20,.45);outline:1px dashed #c98500}
 .legend .l-mbusy::before{background:rgba(184,50,31,.25);outline:1px solid rgba(184,50,31,.6)}
 .legend .l-mshut::before{background:rgba(120,120,120,.25);outline:1px solid rgba(120,120,120,.6)}
+
+/* 3D 打印机 */
+.pnow{font-size:14px;color:var(--ink-2);padding-top:3px;line-height:1.5}
+.pnow b{color:var(--green)}
+.tr.zh .shut{position:absolute;left:10px;top:4px;font-size:12px;color:var(--muted)}
+.rules{font-size:13px;margin:12px 0 0;line-height:1.6}

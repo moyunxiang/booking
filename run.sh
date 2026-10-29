@@ -19,9 +19,13 @@ scrape() {
       # 每天第一次运行抓 7 天，其余只抓今天和明天（服务器限流，请求越少越好）
       marker=logs/.last_full
       if [[ ! -f $marker || $(( $(date +%s) - $(stat -f %m $marker) )) -gt 72000 ]]; then days=7; else days=2; fi
-      uv run python library/scrape.py --days $days
+      # 3D 打印机可提前两周预约：每小时抓一次完整 15 天（约多 15 个请求、4 分钟），其余只抓今天和明天
+      pmarker=logs/.last_print3d
+      if [[ ! -f $pmarker || $(( $(date +%s) - $(stat -f %m $pmarker) )) -gt 3300 ]]; then pdays=15; else pdays=2; fi
+      uv run python library/scrape.py --days $days --print3d-days $pdays
       code=$?
-      [[ $code -eq 0 && $days -eq 7 ]] && touch $marker ;;
+      [[ $code -eq 0 && $days -eq 7 ]] && touch $marker
+      [[ $code -eq 0 && $pdays -eq 15 ]] && touch $pmarker ;;
     facility)
       uv run python facility/scrape.py
       code=$? ;;
