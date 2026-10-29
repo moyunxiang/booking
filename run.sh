@@ -63,6 +63,13 @@ lockf -t 300 logs/.git.lock zsh -c '
   git --work-tree=docs add -A .
   tree=$(git write-tree)
   rm -f $GIT_INDEX_FILE
+  # 先和远端对齐：上次推送成功但本地 gh-pages 没来得及更新（进程被中断）时，本地落后会导致之后每次推送都被拒
+  if env -u HTTPS_PROXY -u HTTP_PROXY -u ALL_PROXY git fetch -q origin gh-pages 2>/dev/null; then
+    remote=$(git rev-parse FETCH_HEAD)
+    if ! git rev-parse -q --verify gh-pages >/dev/null || git merge-base --is-ancestor gh-pages $remote; then
+      git update-ref refs/heads/gh-pages $remote
+    fi
+  fi
   parent=$(git rev-parse -q --verify gh-pages || true)
   [[ -n $parent && $tree == $(git rev-parse "gh-pages^{tree}") ]] && { echo "no changes"; exit 0; }
   c=$(git commit-tree $tree ${parent:+-p} $parent -m "site: $(date "+%F %H:%M") '"$what"'")

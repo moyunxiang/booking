@@ -152,3 +152,14 @@
 - 新页面 `docs/print3d/`：现在（每台状态）、找空档（时长 不限/≥1/≥2/≥3/4 小时、按机器筛选，只列能约的 14 天）、两周时间轴（+14 那天标「还未开放预约」）、官网预约按钮、规则说明；首页加入口卡片；`.gitignore` 加 `/docs/print3d/data/`。
 - 验证：公开数据 57 条预约均无 `name` 字段；本地 Playwright 390px 浅色 / 1100px 深色无 JS 报错；筛选结果与 Python 独立计算的空档一致（≥1h 共 7 段）；截图检查排版。  
 **下一步**：提交并发布；观察 +14 天什么时候开始出现预约，回写开放时间。
+
+#### 2026-10-29 13:55 HKT — 修复：网站约 30 小时没更新（gh-pages 推送一直被拒）
+
+**背景**：发布 3D 打印机页面时 `./run.sh publish` 推送失败，线上 print3d 404。  
+**观察**：
+- `logs/run.log`：`! [rejected] … -> gh-pages (non-fast-forward)`，之前的定时发布同样失败。
+- 远端 `origin/gh-pages` = `c73bc73`（2026-10-28 07:24 facility），本地 `gh-pages` = `c7bd70c`（10-28 00:31），本地是远端的祖先 → 07:24 那次推送成功了但本地 `update-ref` 没执行（假设：进程在 push 和 update-ref 之间被中断；无法再验证）。此后每次都以旧的本地提交为父，推送全部被拒，网站停在 10-28 07:24，约 30 小时。
+- 同时看到一次 `run.sh:68: parse error near ')'`：我直接改写 `run.sh` 时有定时任务正在读它（zsh 边读边执行），属一次性问题。  
+**修改**：`run.sh` 发布前先 `git fetch origin gh-pages`，若本地 gh-pages 不存在或是远端的祖先，就快进到远端再作为父提交；fetch 失败（断网）则沿用本地。这次改 `run.sh` 用「写临时文件 + rename」，正在运行的任务继续读旧文件。  
+**结果**：`./run.sh publish` → `pushed`，gh-pages `c73bc73 → 8d22c81`（快进，未强推）；Pages build `built`；线上 `print3d/` 200、首页有 3D 打印机入口、`library/data/index.json` 更新到 13:30。  
+**下一步**：观察之后定时发布是否都成功（`grep -c rejected logs/run.log` 不再增加）。
