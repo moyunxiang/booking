@@ -1,6 +1,6 @@
 {
  "date": "2026-11-13",
- "fetched_at": "2026-10-30T16:30:05+08:00",
+ "fetched_at": "2026-10-30T18:00:05+08:00",
  "areas": [
   {
    "date": "2026-11-13",
@@ -77,10 +77,10 @@
      "room_id": 102,
      "room": "Printer 2 (Multi-colour)",
      "start": "15:00",
-     "end": "16:30",
+     "end": "18:00",
      "type": "U",
      "status": "booked",
-     "entry_id": 2280856
+     "entry_id": 2280898
     }
    ]
   }
