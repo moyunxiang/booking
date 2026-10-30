@@ -3,7 +3,7 @@
  "id": "2",
  "name": "篮球",
  "en": "Basketball",
- "fetched_at": "2026-10-30T12:15:04+08:00",
+ "fetched_at": "2026-10-30T13:15:05+08:00",
  "days": [
   {
    "date": "2026-10-30",
@@ -65,7 +65,7 @@
       },
       {
        "start": "13:00",
-       "available": true
+       "available": false
       },
       {
        "start": "14:00",
@@ -1047,7 +1047,7 @@
       },
       {
        "start": "16:00",
-       "available": true
+       "available": false
       },
       {
        "start": "17:00",
@@ -1059,15 +1059,15 @@
       },
       {
        "start": "19:00",
-       "available": true
+       "available": false
       },
       {
        "start": "20:00",
-       "available": true
+       "available": false
       },
       {
        "start": "21:00",
-       "available": true
+       "available": false
       }
      ]
     },
