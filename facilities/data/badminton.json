@@ -3,77 +3,8 @@
  "id": "3",
  "name": "羽毛球",
  "en": "Badminton",
- "fetched_at": "2026-11-01T23:15:01+08:00",
+ "fetched_at": "2026-11-02T07:15:05+08:00",
  "days": [
-  {
-   "date": "2026-11-01",
-   "courts": [
-    {
-     "id": 2,
-     "name": "Badminton Court 1",
-     "location": "SPORTS - LG1",
-     "available": false,
-     "indoor": true,
-     "slots": null
-    },
-    {
-     "id": 3,
-     "name": "Badminton Court 2",
-     "location": "SPORTS - LG1",
-     "available": false,
-     "indoor": true,
-     "slots": null
-    },
-    {
-     "id": 4,
-     "name": "Badminton Court 3",
-     "location": "SPORTS - LG1",
-     "available": false,
-     "indoor": true,
-     "slots": null
-    },
-    {
-     "id": 5,
-     "name": "Badminton Court 4",
-     "location": "SPORTS - LG1",
-     "available": false,
-     "indoor": true,
-     "slots": null
-    },
-    {
-     "id": 79,
-     "name": "Badminton Court 5 (singles only)",
-     "location": "SPORTS - LG1",
-     "available": false,
-     "indoor": true,
-     "slots": null
-    },
-    {
-     "id": 80,
-     "name": "Badminton Court 6 (singles only)",
-     "location": "SPORTS - LG1",
-     "available": false,
-     "indoor": true,
-     "slots": null
-    },
-    {
-     "id": 100,
-     "name": "Badminton Court 1",
-     "location": "SPORTS - Seafront",
-     "available": false,
-     "indoor": true,
-     "slots": null
-    },
-    {
-     "id": 101,
-     "name": "Badminton Court 2",
-     "location": "SPORTS - Seafront",
-     "available": false,
-     "indoor": true,
-     "slots": null
-    }
-   ]
-  },
   {
    "date": "2026-11-02",
    "courts": [
@@ -490,6 +421,75 @@
   },
   {
    "date": "2026-11-08",
+   "courts": [
+    {
+     "id": 2,
+     "name": "Badminton Court 1",
+     "location": "SPORTS - LG1",
+     "available": false,
+     "indoor": true,
+     "slots": null
+    },
+    {
+     "id": 3,
+     "name": "Badminton Court 2",
+     "location": "SPORTS - LG1",
+     "available": false,
+     "indoor": true,
+     "slots": null
+    },
+    {
+     "id": 4,
+     "name": "Badminton Court 3",
+     "location": "SPORTS - LG1",
+     "available": false,
+     "indoor": true,
+     "slots": null
+    },
+    {
+     "id": 5,
+     "name": "Badminton Court 4",
+     "location": "SPORTS - LG1",
+     "available": false,
+     "indoor": true,
+     "slots": null
+    },
+    {
+     "id": 79,
+     "name": "Badminton Court 5 (singles only)",
+     "location": "SPORTS - LG1",
+     "available": false,
+     "indoor": true,
+     "slots": null
+    },
+    {
+     "id": 80,
+     "name": "Badminton Court 6 (singles only)",
+     "location": "SPORTS - LG1",
+     "available": false,
+     "indoor": true,
+     "slots": null
+    },
+    {
+     "id": 100,
+     "name": "Badminton Court 1",
+     "location": "SPORTS - Seafront",
+     "available": false,
+     "indoor": true,
+     "slots": null
+    },
+    {
+     "id": 101,
+     "name": "Badminton Court 2",
+     "location": "SPORTS - Seafront",
+     "available": false,
+     "indoor": true,
+     "slots": null
+    }
+   ]
+  },
+  {
+   "date": "2026-11-09",
    "courts": [
     {
      "id": 2,
