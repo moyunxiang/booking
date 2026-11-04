@@ -1,6 +1,6 @@
 {
  "date": "2026-11-17",
- "fetched_at": "2026-11-04T11:00:03+08:00",
+ "fetched_at": "2026-11-04T12:36:10+08:00",
  "areas": [
   {
    "date": "2026-11-17",
@@ -62,6 +62,18 @@
      "date": "2026-11-17",
      "area": 14,
      "area_name": "3D Printers",
+     "room_id": 101,
+     "room": "Printer 1 (Mono-colour)",
+     "start": "15:00",
+     "end": "19:00",
+     "type": "T",
+     "status": "booked",
+     "entry_id": 2283581
+    },
+    {
+     "date": "2026-11-17",
+     "area": 14,
+     "area_name": "3D Printers",
      "room_id": 102,
      "room": "Printer 2 (Multi-colour)",
      "start": "15:00",
@@ -69,6 +81,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2283143
+    },
+    {
+     "date": "2026-11-17",
+     "area": 14,
+     "area_name": "3D Printers",
+     "room_id": 101,
+     "room": "Printer 1 (Mono-colour)",
+     "start": "19:00",
+     "end": "20:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2283582
     }
    ]
   }
