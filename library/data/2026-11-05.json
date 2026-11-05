@@ -1,6 +1,6 @@
 {
  "date": "2026-11-05",
- "fetched_at": "2026-11-05T11:30:03+08:00",
+ "fetched_at": "2026-11-05T12:00:05+08:00",
  "areas": [
   {
    "date": "2026-11-05",
@@ -957,6 +957,18 @@
      "date": "2026-11-05",
      "area": 3,
      "area_name": "Group Study Rooms",
+     "room_id": 168,
+     "room": "LG1- Media and Discussion",
+     "start": "12:00",
+     "end": "12:30",
+     "type": "R",
+     "status": "booked",
+     "entry_id": 2284240
+    },
+    {
+     "date": "2026-11-05",
+     "area": 3,
+     "area_name": "Group Study Rooms",
      "room_id": 37,
      "room": "LG1-355",
      "start": "12:00",
@@ -1060,6 +1072,18 @@
      "type": "T",
      "status": "booked",
      "entry_id": 2283381
+    },
+    {
+     "date": "2026-11-05",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 91,
+     "room": "LG1-353",
+     "start": "12:30",
+     "end": "13:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2284252
     },
     {
      "date": "2026-11-05",
@@ -3165,6 +3189,18 @@
      "date": "2026-11-05",
      "area": 3,
      "area_name": "Group Study Rooms",
+     "room_id": 16,
+     "room": "LG4-14",
+     "start": "20:30",
+     "end": "22:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2284256
+    },
+    {
+     "date": "2026-11-05",
+     "area": 3,
+     "area_name": "Group Study Rooms",
      "room_id": 28,
      "room": "1-351",
      "start": "21:00",
@@ -4377,7 +4413,7 @@
      "end": "16:30",
      "type": "U",
      "status": "booked",
-     "entry_id": 2282654
+     "entry_id": 2284255
     },
     {
      "date": "2026-11-05",
@@ -5611,6 +5647,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2282226
+    },
+    {
+     "date": "2026-11-05",
+     "area": 20,
+     "area_name": "Study Pods",
+     "room_id": 117,
+     "room": "POD-06",
+     "start": "13:30",
+     "end": "14:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2284254
     },
     {
      "date": "2026-11-05",
