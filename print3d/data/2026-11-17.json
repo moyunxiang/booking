@@ -1,6 +1,6 @@
 {
  "date": "2026-11-17",
- "fetched_at": "2026-11-05T16:00:03+08:00",
+ "fetched_at": "2026-11-05T17:30:00+08:00",
  "areas": [
   {
    "date": "2026-11-17",
@@ -105,6 +105,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2283143
+    },
+    {
+     "date": "2026-11-17",
+     "area": 14,
+     "area_name": "3D Printers",
+     "room_id": 102,
+     "room": "Printer 2 (Multi-colour)",
+     "start": "18:00",
+     "end": "20:30",
+     "type": "R",
+     "status": "booked",
+     "entry_id": 2284486
     },
     {
      "date": "2026-11-17",
