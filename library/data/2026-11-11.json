@@ -1,6 +1,6 @@
 {
  "date": "2026-11-11",
- "fetched_at": "2026-11-10T22:00:06+08:00",
+ "fetched_at": "2026-11-10T22:30:06+08:00",
  "areas": [
   {
    "date": "2026-11-11",
@@ -376,6 +376,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2285607
+    },
+    {
+     "date": "2026-11-11",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 12,
+     "room": "LG1-363",
+     "start": "10:00",
+     "end": "11:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2287469
     },
     {
      "date": "2026-11-11",
@@ -2895,6 +2907,18 @@
      "date": "2026-11-11",
      "area": 8,
      "area_name": "LC Study Rooms",
+     "room_id": 60,
+     "room": "LC-04",
+     "start": "02:00",
+     "end": "03:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2287470
+    },
+    {
+     "date": "2026-11-11",
+     "area": 8,
+     "area_name": "LC Study Rooms",
      "room_id": 69,
      "room": "LC-13",
      "start": "09:30",
@@ -3171,6 +3195,18 @@
      "date": "2026-11-11",
      "area": 8,
      "area_name": "LC Study Rooms",
+     "room_id": 67,
+     "room": "LC-11",
+     "start": "12:00",
+     "end": "14:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2287464
+    },
+    {
+     "date": "2026-11-11",
+     "area": 8,
+     "area_name": "LC Study Rooms",
      "room_id": 68,
      "room": "LC-12",
      "start": "12:00",
@@ -3262,18 +3298,6 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2284575
-    },
-    {
-     "date": "2026-11-11",
-     "area": 8,
-     "area_name": "LC Study Rooms",
-     "room_id": 67,
-     "room": "LC-11",
-     "start": "13:00",
-     "end": "14:00",
-     "type": "U",
-     "status": "booked",
-     "entry_id": 2287463
     },
     {
      "date": "2026-11-11",
@@ -3862,6 +3886,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2284977
+    },
+    {
+     "date": "2026-11-11",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 65,
+     "room": "LC-09",
+     "start": "17:30",
+     "end": "18:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2287465
     },
     {
      "date": "2026-11-11",
