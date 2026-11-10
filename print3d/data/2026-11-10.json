@@ -1,6 +1,6 @@
 {
  "date": "2026-11-10",
- "fetched_at": "2026-11-09T20:30:05+08:00",
+ "fetched_at": "2026-11-10T09:30:05+08:00",
  "areas": [
   {
    "date": "2026-11-10",
@@ -32,7 +32,7 @@
      "end": "12:00",
      "type": "U",
      "status": "booked",
-     "entry_id": 2286656
+     "entry_id": 2286738
     },
     {
      "date": "2026-11-10",
@@ -104,7 +104,7 @@
      "end": "19:00",
      "type": "U",
      "status": "booked",
-     "entry_id": 2279131
+     "entry_id": 2286729
     },
     {
      "date": "2026-11-10",
@@ -137,10 +137,10 @@
      "room_id": 101,
      "room": "Printer 1 (Mono-colour)",
      "start": "19:00",
-     "end": "20:30",
+     "end": "20:00",
      "type": "U",
      "status": "booked",
-     "entry_id": 2282676
+     "entry_id": 2286782
     }
    ]
   }
