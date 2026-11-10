@@ -1,6 +1,6 @@
 {
  "date": "2026-11-10",
- "fetched_at": "2026-11-10T11:00:05+08:00",
+ "fetched_at": "2026-11-10T11:30:05+08:00",
  "areas": [
   {
    "date": "2026-11-10",
@@ -952,6 +952,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2286972
+    },
+    {
+     "date": "2026-11-10",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 167,
+     "room": "LG1-328",
+     "start": "12:30",
+     "end": "13:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2287004
     },
     {
      "date": "2026-11-10",
@@ -2589,18 +2601,6 @@
      "date": "2026-11-10",
      "area": 3,
      "area_name": "Group Study Rooms",
-     "room_id": 29,
-     "room": "LG1-362",
-     "start": "19:00",
-     "end": "19:30",
-     "type": "U",
-     "status": "booked",
-     "entry_id": 2284891
-    },
-    {
-     "date": "2026-11-10",
-     "area": 3,
-     "area_name": "Group Study Rooms",
      "room_id": 12,
      "room": "LG1-363",
      "start": "19:00",
@@ -2853,6 +2853,18 @@
      "date": "2026-11-10",
      "area": 3,
      "area_name": "Group Study Rooms",
+     "room_id": 44,
+     "room": "LG3-27",
+     "start": "20:00",
+     "end": "22:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2287001
+    },
+    {
+     "date": "2026-11-10",
+     "area": 3,
+     "area_name": "Group Study Rooms",
      "room_id": 92,
      "room": "LG4-02",
      "start": "20:00",
@@ -3040,18 +3052,6 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2286927
-    },
-    {
-     "date": "2026-11-10",
-     "area": 3,
-     "area_name": "Group Study Rooms",
-     "room_id": 90,
-     "room": "LG1-327",
-     "start": "21:00",
-     "end": "22:00",
-     "type": "U",
-     "status": "booked",
-     "entry_id": 2286995
     },
     {
      "date": "2026-11-10",
@@ -3675,6 +3675,18 @@
      "date": "2026-11-10",
      "area": 8,
      "area_name": "LC Study Rooms",
+     "room_id": 67,
+     "room": "LC-11",
+     "start": "12:00",
+     "end": "13:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2287014
+    },
+    {
+     "date": "2026-11-10",
+     "area": 8,
+     "area_name": "LC Study Rooms",
      "room_id": 69,
      "room": "LC-13",
      "start": "12:00",
@@ -4162,6 +4174,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2285805
+    },
+    {
+     "date": "2026-11-10",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 63,
+     "room": "LC-07",
+     "start": "16:00",
+     "end": "16:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2287000
     },
     {
      "date": "2026-11-10",
@@ -5136,6 +5160,30 @@
      "date": "2026-11-10",
      "area": 20,
      "area_name": "Study Pods",
+     "room_id": 114,
+     "room": "POD-03",
+     "start": "11:30",
+     "end": "12:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2287017
+    },
+    {
+     "date": "2026-11-10",
+     "area": 20,
+     "area_name": "Study Pods",
+     "room_id": 117,
+     "room": "POD-06",
+     "start": "11:30",
+     "end": "12:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2287002
+    },
+    {
+     "date": "2026-11-10",
+     "area": 20,
+     "area_name": "Study Pods",
      "room_id": 113,
      "room": "POD-02",
      "start": "12:00",
@@ -5155,6 +5203,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2286667
+    },
+    {
+     "date": "2026-11-10",
+     "area": 20,
+     "area_name": "Study Pods",
+     "room_id": 115,
+     "room": "POD-04",
+     "start": "12:30",
+     "end": "13:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2287019
     },
     {
      "date": "2026-11-10",
@@ -5419,6 +5479,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2286710
+    },
+    {
+     "date": "2026-11-10",
+     "area": 20,
+     "area_name": "Study Pods",
+     "room_id": 112,
+     "room": "POD-01",
+     "start": "19:00",
+     "end": "21:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2286999
     },
     {
      "date": "2026-11-10",
