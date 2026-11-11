@@ -48,13 +48,18 @@ class FBS:
         f = soup.find("form", id=re.compile("fbs-facilities-booking-form"))
         self.build_id = f.find("input", attrs={"name": "form_build_id"})["value"]
         self.token = f.find("input", attrs={"name": "form_token"})["value"]
+        # 2026-11-02 起服务器要求 AJAX 请求带上页面的 ajaxPageState（libraries / theme_token），否则返回 500
+        settings = soup.find("script", attrs={"data-drupal-selector": "drupal-settings-json"})
+        self.page_state = json.loads(settings.string).get("ajaxPageState", {}) if settings else {}
 
     def post(self, fields: dict, trigger: str, trigger_value: str | None = None) -> BeautifulSoup:
         data = {
             **fields,
             "form_build_id": self.build_id, "form_token": self.token, "form_id": "fbs_facilities_booking_form",
             "_triggering_element_name": trigger, "_drupal_ajax": "1",
-            "ajax_page_state[theme]": "hkust_fbs", "ajax_page_state[theme_token]": "",
+            "ajax_page_state[theme]": self.page_state.get("theme", "hkust_fbs"),
+            "ajax_page_state[theme_token]": self.page_state.get("theme_token", ""),
+            "ajax_page_state[libraries]": self.page_state.get("libraries", ""),
         }
         if trigger_value is not None:
             data["_triggering_element_value"] = trigger_value

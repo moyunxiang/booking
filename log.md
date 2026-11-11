@@ -163,3 +163,15 @@
 **修改**：`run.sh` 发布前先 `git fetch origin gh-pages`，若本地 gh-pages 不存在或是远端的祖先，就快进到远端再作为父提交；fetch 失败（断网）则沿用本地。这次改 `run.sh` 用「写临时文件 + rename」，正在运行的任务继续读旧文件。  
 **结果**：`./run.sh publish` → `pushed`，gh-pages `c73bc73 → 8d22c81`（快进，未强推）；Pages build `built`；线上 `print3d/` 200、首页有 3D 打印机入口、`library/data/index.json` 更新到 13:30。  
 **下一步**：观察之后定时发布是否都成功（`grep -c rejected logs/run.log` 不再增加）。
+
+#### 2026-11-11 13:35 HKT — 修复：FBS 搜索接口自 11-02 起返回 500，导致空位通知中断
+
+**背景**：用户反映很久没收到 ntfy 通知。`logs/monitor.log` 显示最后一次成功运行是 `2026-11-02 16:46:30`，之后每一轮都以 `RuntimeError: fbs ajax HTTP 500` 失败，`facility scrape` 同样 exit 1。所以篮球和羽毛球的空位监控停了 9 天，网页上的设施数据也停在 11-02。ntfy 本身没有问题。
+**操作**：
+- 探针 1（scratchpad 中的 `fbs_probe.py`）：GET `/facilities` 返回 200，登录有效，表单字段与类型 id（篮球 2、羽毛球 3）都没变；按原方式 POST search，返回 500 "The website encountered an unexpected error"。
+- 探针 2（`fbs_click.py`）：用同一个 profile 在真实页面里点 Search，AJAX 返回 200。对比请求字段，浏览器多带了 `ajax_page_state[libraries]`，`theme_token` 也不为空。
+- 探针 3（`fbs_probe2.py`）：从页面的 `drupal-settings-json` 读取 `ajaxPageState`（libraries、theme、theme_token）一并 POST，返回 200，羽毛球有 8 个场地按钮。
+- 修改 `facility/fbs.py`：`FBS.__init__` 解析 `ajaxPageState`，`post()` 带上 theme、theme_token、libraries。
+**结果**：launchd 下一轮 `2026-11-11 13:28:13 basketball free=0 new=0 | badminton free=0 new=0 (等锁 4s + 查询 452s)` 运行成功，`monitor_state.json` 已更新。当前没有空位，所以没有推送。
+**决策 / 假设**：假设 HKUST 在 11-02 升级了 Drupal，开始要求 AJAX 请求带上 ajaxPageState，这个假设已由探针 3 验证。没有为测试向公开的 ntfy 话题发消息，以免打扰订阅者。
+**下一步**：等到出现新的空位时，确认 ntfy 和 Bark 实际能收到推送；同时观察 `make log`。
