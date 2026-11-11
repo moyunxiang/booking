@@ -1,6 +1,6 @@
 {
  "date": "2026-11-11",
- "fetched_at": "2026-11-11T13:30:05+08:00",
+ "fetched_at": "2026-11-11T14:00:05+08:00",
  "areas": [
   {
    "date": "2026-11-11",
@@ -1585,9 +1585,9 @@
      "room": "LG3-16",
      "start": "14:30",
      "end": "15:30",
-     "type": "T",
+     "type": "U",
      "status": "booked",
-     "entry_id": 2285591
+     "entry_id": 2287749
     },
     {
      "date": "2026-11-11",
@@ -1869,18 +1869,6 @@
      "date": "2026-11-11",
      "area": 3,
      "area_name": "Group Study Rooms",
-     "room_id": 90,
-     "room": "LG1-327",
-     "start": "16:00",
-     "end": "18:00",
-     "type": "T",
-     "status": "booked",
-     "entry_id": 2283878
-    },
-    {
-     "date": "2026-11-11",
-     "area": 3,
-     "area_name": "Group Study Rooms",
      "room_id": 168,
      "room": "LG1- Media and Discussion",
      "start": "16:00",
@@ -2008,6 +1996,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2285919
+    },
+    {
+     "date": "2026-11-11",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 90,
+     "room": "LG1-327",
+     "start": "16:30",
+     "end": "18:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2287768
     },
     {
      "date": "2026-11-11",
@@ -3112,6 +3112,18 @@
      "type": "T",
      "status": "booked",
      "entry_id": 2285853
+    },
+    {
+     "date": "2026-11-11",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 131,
+     "room": "LG3-07",
+     "start": "20:30",
+     "end": "22:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2287757
     },
     {
      "date": "2026-11-11",
@@ -5755,6 +5767,18 @@
      "type": "R",
      "status": "booked",
      "entry_id": 2287656
+    },
+    {
+     "date": "2026-11-11",
+     "area": 20,
+     "area_name": "Study Pods",
+     "room_id": 113,
+     "room": "POD-02",
+     "start": "18:30",
+     "end": "20:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2287766
     },
     {
      "date": "2026-11-11",
