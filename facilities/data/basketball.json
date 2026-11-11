@@ -3,7 +3,7 @@
  "id": "2",
  "name": "篮球",
  "en": "Basketball",
- "fetched_at": "2026-11-11T17:15:06+08:00",
+ "fetched_at": "2026-11-11T18:15:05+08:00",
  "days": [
   {
    "date": "2026-11-11",
@@ -216,11 +216,11 @@
       },
       {
        "start": "13:00",
-       "available": true
+       "available": false
       },
       {
        "start": "14:00",
-       "available": true
+       "available": false
       },
       {
        "start": "15:00",
