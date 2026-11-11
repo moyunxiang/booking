@@ -175,3 +175,18 @@
 **结果**：launchd 下一轮 `2026-11-11 13:28:13 basketball free=0 new=0 | badminton free=0 new=0 (等锁 4s + 查询 452s)` 运行成功，`monitor_state.json` 已更新。当前没有空位，所以没有推送。
 **决策 / 假设**：假设 HKUST 在 11-02 升级了 Drupal，开始要求 AJAX 请求带上 ajaxPageState，这个假设已由探针 3 验证。没有为测试向公开的 ntfy 话题发消息，以免打扰订阅者。
 **下一步**：等到出现新的空位时，确认 ntfy 和 Bark 实际能收到推送；同时观察 `make log`。
+
+#### 2026-11-11 14:20 HKT — 系统更新后核查 cookie / 权限
+
+**背景**：用户怀疑 macOS 更新（现为 27.2）后 cookie 权限出了问题，要求修复。
+**操作**：
+- 用 `launchctl submit` 临时提交一个后台任务（已删除），在 launchd 环境下检查：
+  - `cookie-helper/read-chrome-cookies`：rc=0
+  - 直接列出 Chrome 目录：成功
+  - `security find-generic-password -w -s "Chrome Safe Storage"`：rc=0
+- 手动运行 `refresh-cookie.sh`：读出 3 个 cookie，值都是可打印字符，没有乱码。
+- 手动模拟一次课程面板的自动登录（打开 canvas.ust.hk，然后循环检查）：15 秒后认证有效。
+- 本仓库：FBS 的 GET 返回 200，持久化 profile 的登录态有效；修复后监控连续 4 轮成功（13:28–14:11）。
+**结果**：系统更新后 launchd 下的磁盘访问和 Keychain 权限都正常。booking 中断的真正原因是 FBS 接口变化（见上一条），已修复。课程面板的"Canvas 登录过期"是 canvas_session 约一天过期的已知行为，不是权限问题。
+**决策 / 假设**：本仓库 2 个提交（554508f、546a0a7）的 push 被 Claude Code 自动权限拦截，留给用户手动执行。
+**下一步**：用户执行 `env -u HTTPS_PROXY -u HTTP_PROXY -u ALL_PROXY git push`；确认 14:15 之后的 facility scrape 返回 exit 0。
