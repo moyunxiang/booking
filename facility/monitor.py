@@ -15,6 +15,8 @@ ntfy 话题任何人订阅都能收到（订阅页 docs/facilities/subscribe.htm
 篮球不用缓存（ttl=0, refresh=None），室内场每轮都点进去。网页抓取（scrape.py）也会复用这些结果。
 
 状态存在 logs/monitor_state.json：同一个空位只通知一次，被订走后再空出来会再通知。
+失败告警：连续出错超过 FAIL_ALERT_AFTER（1 小时）只给我发一条 Bark（不发 ntfy 公开话题），恢复后再发一条；
+记录在 logs/monitor_health.json。登录失效另有专门提醒，不算在内。
 状态和缓存都在 profile 锁里读写：排队等锁的进程不会拿到旧状态。
 """
 import argparse
@@ -35,6 +37,8 @@ from scrape import load_cache, save_cache, scrape_day_cached, stale  # noqa: E40
 HK = ZoneInfo("Asia/Hong_Kong")
 ROOT = Path(__file__).parent.parent
 STATE = ROOT / "logs" / "monitor_state.json"
+HEALTH = ROOT / "logs" / "monitor_health.json"
+FAIL_ALERT_AFTER = 3600  # 连续失败多少秒后告警
 CONF = ROOT / ".auth" / "notify.json"
 EARLIEST = "10:00"  # 只通知这个时间及以后开始的时段（早上来不及去）
 NTFY = "https://ntfy.sh"
@@ -114,6 +118,38 @@ def load_state() -> dict:
 def save_state(state: dict):
     STATE.parent.mkdir(exist_ok=True)
     STATE.write_text(json.dumps(state))
+
+
+def record_failure(err: BaseException):
+    """第一次失败记下时间；连续失败超过 FAIL_ALERT_AFTER 且还没告警过，就发一条 Bark。"""
+    try:
+        h = json.loads(HEALTH.read_text())
+    except (FileNotFoundError, json.JSONDecodeError):
+        h = {}
+    now = time.time()
+    h.setdefault("fail_since", now)
+    h["fails"] = h.get("fails", 0) + 1
+    h["last_error"] = f"{type(err).__name__}: {err}"[:200]
+    if not h.get("alerted") and now - h["fail_since"] >= FAIL_ALERT_AFTER:
+        since = datetime.fromtimestamp(h["fail_since"], HK)
+        body = f"从 {since:%m-%d %H:%M} 起连续失败 {h['fails']} 次，空位通知已停。\n最近错误：{h['last_error']}\n日志：booking/logs/monitor.log"
+        bark("⚠️ 场地监控出错", body)
+        mac_notify("⚠️ 场地监控出错", body)
+        h["alerted"] = True
+    HEALTH.parent.mkdir(exist_ok=True)
+    HEALTH.write_text(json.dumps(h, ensure_ascii=False))
+
+
+def record_success():
+    """成功一次就清掉失败记录；之前告警过的话，再发一条恢复通知。"""
+    try:
+        h = json.loads(HEALTH.read_text())
+    except (FileNotFoundError, json.JSONDecodeError):
+        return
+    if h.get("alerted"):
+        since = datetime.fromtimestamp(h["fail_since"], HK)
+        bark("✅ 场地监控已恢复", f"{since:%m-%d %H:%M} 起的错误已恢复（共失败 {h.get('fails', 0)} 次）。")
+    HEALTH.unlink(missing_ok=True)
 
 
 def check_type(ctx, key: str, cfg: dict, cache: dict, now: datetime) -> list[dict]:
@@ -201,6 +237,15 @@ def main():
                     ntfy(topic, f"{cfg['emoji']} 测试通知", f"{cfg['label']}空场订阅测试 {t}。以后有 10:00 及以后的空场会推送到这里。")
         return
     state = load_state()
+    try:
+        run(state)
+    except Exception as e:
+        record_failure(e)
+        raise
+    record_success()
+
+
+def run(state: dict):
     try:
         check_and_notify(state)
     except SessionExpired:

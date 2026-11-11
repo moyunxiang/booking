@@ -190,3 +190,17 @@
 **结果**：系统更新后 launchd 下的磁盘访问和 Keychain 权限都正常。booking 中断的真正原因是 FBS 接口变化（见上一条），已修复。课程面板的"Canvas 登录过期"是 canvas_session 约一天过期的已知行为，不是权限问题。
 **决策 / 假设**：本仓库 2 个提交（554508f、546a0a7）的 push 被 Claude Code 自动权限拦截，留给用户手动执行。
 **下一步**：用户执行 `env -u HTTPS_PROXY -u HTTP_PROXY -u ALL_PROXY git push`；确认 14:15 之后的 facility scrape 返回 exit 0。
+
+#### 2026-11-11 14:30 HKT — 监控加失败告警
+
+**背景**：11-02 起监控连续失败 9 天都没有提醒，用户要求加告警。
+**操作**：修改 `facility/monitor.py`：
+- 新增 `record_failure`：第一次失败时记下时间，连续失败超过 `FAIL_ALERT_AFTER=3600` 秒且还没告警过，就发 Bark 和 Mac 通知（含起始时间、失败次数、最近一条错误）。只告警一次，不发 ntfy 公开话题。
+- 新增 `record_success`：成功后清除 `logs/monitor_health.json`；如果之前告警过，再发一条"已恢复"的 Bark。
+- `main()` 捕获 Exception 后先记录，再重新抛出，原来的退出码和 traceback 不变。登录失效时 `sys.exit(2)` 抛出的 SystemExit 不计入，因为它已有专门提醒。
+**结果**：
+- 用 stub 跑 scratchpad 中的 `test_health.py`，6 种情况都符合预期：首次失败和不满 1 小时都不发；超过 1 小时发 Bark 和 Mac 通知；已经告警过的不重复发；成功后发恢复通知并删除文件；再次成功不再发。
+- 真实发送一条 Bark 测试，接口返回成功。
+- launchd 下一轮 `2026-11-11 14:26:24 ... (等锁 2s + 查询 118s)` 正常，没有生成 health 文件。
+**决策 / 假设**：只对 monitor 告警。facility scrape 用的是同一个 FBS 接口，会和 monitor 一起出错，所以不再单独告警。
+**下一步**：无。
