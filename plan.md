@@ -66,6 +66,7 @@
 - F7: 缓存一次性全部过期时，37 个羽毛球场全量重点要 28 分钟（20:09 实测 1674s）；因此改为轮换刷新。
 - F9: lbcone 平面图页面公开、不用登录；每个地点是 `#place_N{top;left;width;height}`，坐标基准宽 1600px（LG5 图 2146px 宽也一样）；预约系统 64 个房间全部能对上（`LG1- Media and Discussion`→LG1-329，`LG3 Seminar`→LG3-10，9 个 Study Pod 共用一块「Study Pod Zone」）。
 - F10: 3D 打印机规则（官方页 library.hkust.edu.hk/facilities-space/facilities/3d-printing）：每次最多 4 小时、每天 1 次、每周 2 次、最多提前两周；2026-10-29 实测未来 7 天两台几乎全满（只剩 3 个零散 30 分钟），周末不开放。
+- F11: FBS 的 AJAX POST 必须带页面 `drupal-settings-json` 里的 `ajaxPageState`（libraries / theme / theme_token），否则返回 500。从 2026-11-02 起是这样，导致监控和设施抓取停了 9 天，2026-11-11 在 `facility/fbs.py` 修复（`554508f`）。风险：脚本连续失败时没有任何告警，这次是靠用户发现收不到通知才察觉。
 - F8: 监控脚本本身几乎不耗 CPU（28 分钟内 python 4.6s user + 3.4s sys），时间都花在等服务器。
 
 ## 7. 未解决问题 / 阻塞项
