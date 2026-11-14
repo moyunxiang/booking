@@ -3,7 +3,7 @@
  "id": "3",
  "name": "羽毛球",
  "en": "Badminton",
- "fetched_at": "2026-11-14T12:15:05+08:00",
+ "fetched_at": "2026-11-14T19:30:16+08:00",
  "days": [
   {
    "date": "2026-11-14",
@@ -113,14 +113,6 @@
      "id": 79,
      "name": "Badminton Court 5 (singles only)",
      "location": "SPORTS - LG1",
-     "available": false,
-     "indoor": true,
-     "slots": null
-    },
-    {
-     "id": 80,
-     "name": "Badminton Court 6 (singles only)",
-     "location": "SPORTS - LG1",
      "available": true,
      "indoor": true,
      "slots": [
@@ -181,6 +173,14 @@
        "available": false
       }
      ]
+    },
+    {
+     "id": 80,
+     "name": "Badminton Court 6 (singles only)",
+     "location": "SPORTS - LG1",
+     "available": false,
+     "indoor": true,
+     "slots": null
     },
     {
      "id": 100,
