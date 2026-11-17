@@ -3,53 +3,8 @@
  "id": "2",
  "name": "篮球",
  "en": "Basketball",
- "fetched_at": "2026-11-17T23:21:08+08:00",
+ "fetched_at": "2026-11-18T07:15:05+08:00",
  "days": [
-  {
-   "date": "2026-11-17",
-   "courts": [
-    {
-     "id": 6,
-     "name": "Basketball Court A (half court)",
-     "location": "SPORTS - LG1",
-     "available": false,
-     "indoor": true,
-     "slots": null
-    },
-    {
-     "id": 7,
-     "name": "Basketball Court B (half court)",
-     "location": "SPORTS - LG1",
-     "available": false,
-     "indoor": true,
-     "slots": null
-    },
-    {
-     "id": 88,
-     "name": "Basketball full court",
-     "location": "SPORTS - LG1",
-     "available": false,
-     "indoor": true,
-     "slots": null
-    },
-    {
-     "id": 41,
-     "name": "Basketball Court (Outdoor)",
-     "location": "SPORTS - Seafront",
-     "available": false,
-     "indoor": false,
-     "slots": null
-    },
-    {
-     "id": 102,
-     "name": "Basketball Court A (half court)",
-     "location": "SPORTS - Seafront",
-     "available": false,
-     "indoor": true,
-     "slots": null
-    }
-   ]
-  },
   {
    "date": "2026-11-18",
    "courts": [
@@ -322,6 +277,51 @@
   },
   {
    "date": "2026-11-24",
+   "courts": [
+    {
+     "id": 6,
+     "name": "Basketball Court A (half court)",
+     "location": "SPORTS - LG1",
+     "available": false,
+     "indoor": true,
+     "slots": null
+    },
+    {
+     "id": 7,
+     "name": "Basketball Court B (half court)",
+     "location": "SPORTS - LG1",
+     "available": false,
+     "indoor": true,
+     "slots": null
+    },
+    {
+     "id": 88,
+     "name": "Basketball full court",
+     "location": "SPORTS - LG1",
+     "available": false,
+     "indoor": true,
+     "slots": null
+    },
+    {
+     "id": 41,
+     "name": "Basketball Court (Outdoor)",
+     "location": "SPORTS - Seafront",
+     "available": false,
+     "indoor": false,
+     "slots": null
+    },
+    {
+     "id": 102,
+     "name": "Basketball Court A (half court)",
+     "location": "SPORTS - Seafront",
+     "available": false,
+     "indoor": true,
+     "slots": null
+    }
+   ]
+  },
+  {
+   "date": "2026-11-25",
    "courts": [
     {
      "id": 6,
