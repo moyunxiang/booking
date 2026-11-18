@@ -1,6 +1,6 @@
 {
  "date": "2026-11-19",
- "fetched_at": "2026-11-18T18:00:06+08:00",
+ "fetched_at": "2026-11-18T18:30:05+08:00",
  "areas": [
   {
    "date": "2026-11-19",
@@ -940,6 +940,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2290602
+    },
+    {
+     "date": "2026-11-19",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 18,
+     "room": "LG4-16",
+     "start": "12:00",
+     "end": "13:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2292372
     },
     {
      "date": "2026-11-19",
@@ -2709,6 +2721,30 @@
      "date": "2026-11-19",
      "area": 3,
      "area_name": "Group Study Rooms",
+     "room_id": 32,
+     "room": "LG4-09",
+     "start": "20:00",
+     "end": "22:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2292382
+    },
+    {
+     "date": "2026-11-19",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 45,
+     "room": "LG4-27",
+     "start": "20:00",
+     "end": "22:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2292392
+    },
+    {
+     "date": "2026-11-19",
+     "area": 3,
+     "area_name": "Group Study Rooms",
      "room_id": 28,
      "room": "1-351",
      "start": "20:30",
@@ -3190,18 +3226,6 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2292296
-    },
-    {
-     "date": "2026-11-19",
-     "area": 8,
-     "area_name": "LC Study Rooms",
-     "room_id": 58,
-     "room": "LC-02",
-     "start": "10:30",
-     "end": "11:00",
-     "type": "U",
-     "status": "booked",
-     "entry_id": 2292367
     },
     {
      "date": "2026-11-19",
@@ -4498,6 +4522,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2292044
+    },
+    {
+     "date": "2026-11-19",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 60,
+     "room": "LC-04",
+     "start": "21:30",
+     "end": "23:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2292374
     },
     {
      "date": "2026-11-19",
