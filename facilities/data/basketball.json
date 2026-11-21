@@ -3,7 +3,7 @@
  "id": "2",
  "name": "篮球",
  "en": "Basketball",
- "fetched_at": "2026-11-21T07:28:24+08:00",
+ "fetched_at": "2026-11-21T10:15:05+08:00",
  "days": [
   {
    "date": "2026-11-21",
@@ -12,9 +12,66 @@
      "id": 6,
      "name": "Basketball Court A (half court)",
      "location": "SPORTS - LG1",
-     "available": false,
+     "available": true,
      "indoor": true,
-     "slots": null
+     "slots": [
+      {
+       "start": "08:00",
+       "available": false
+      },
+      {
+       "start": "09:00",
+       "available": false
+      },
+      {
+       "start": "10:00",
+       "available": false
+      },
+      {
+       "start": "11:00",
+       "available": false
+      },
+      {
+       "start": "12:00",
+       "available": true
+      },
+      {
+       "start": "13:00",
+       "available": false
+      },
+      {
+       "start": "14:00",
+       "available": false
+      },
+      {
+       "start": "15:00",
+       "available": false
+      },
+      {
+       "start": "16:00",
+       "available": false
+      },
+      {
+       "start": "17:00",
+       "available": false
+      },
+      {
+       "start": "18:00",
+       "available": false
+      },
+      {
+       "start": "19:00",
+       "available": false
+      },
+      {
+       "start": "20:00",
+       "available": false
+      },
+      {
+       "start": "21:00",
+       "available": false
+      }
+     ]
     },
     {
      "id": 7,
@@ -53,7 +110,7 @@
       },
       {
        "start": "10:00",
-       "available": true
+       "available": false
       },
       {
        "start": "11:00",
@@ -85,7 +142,7 @@
       },
       {
        "start": "18:00",
-       "available": true
+       "available": false
       },
       {
        "start": "19:00",
@@ -913,7 +970,7 @@
       },
       {
        "start": "18:00",
-       "available": true
+       "available": false
       },
       {
        "start": "19:00",
@@ -921,7 +978,7 @@
       },
       {
        "start": "20:00",
-       "available": false
+       "available": true
       },
       {
        "start": "21:00",
@@ -958,11 +1015,11 @@
       },
       {
        "start": "13:00",
-       "available": true
+       "available": false
       },
       {
        "start": "14:00",
-       "available": true
+       "available": false
       },
       {
        "start": "15:00",
