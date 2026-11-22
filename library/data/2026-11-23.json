@@ -1,6 +1,6 @@
 {
  "date": "2026-11-23",
- "fetched_at": "2026-11-22T16:30:06+08:00",
+ "fetched_at": "2026-11-22T17:00:06+08:00",
  "areas": [
   {
    "date": "2026-11-23",
@@ -592,6 +592,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2294197
+    },
+    {
+     "date": "2026-11-23",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 76,
+     "room": "LG4-17",
+     "start": "11:00",
+     "end": "13:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2294618
     },
     {
      "date": "2026-11-23",
@@ -1713,6 +1725,18 @@
      "date": "2026-11-23",
      "area": 3,
      "area_name": "Group Study Rooms",
+     "room_id": 131,
+     "room": "LG3-07",
+     "start": "16:30",
+     "end": "18:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2294610
+    },
+    {
+     "date": "2026-11-23",
+     "area": 3,
+     "area_name": "Group Study Rooms",
      "room_id": 40,
      "room": "LG4-05",
      "start": "16:30",
@@ -2044,6 +2068,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2292610
+    },
+    {
+     "date": "2026-11-23",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 25,
+     "room": "LG3 Seminar",
+     "start": "18:00",
+     "end": "19:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2294616
     },
     {
      "date": "2026-11-23",
@@ -2560,18 +2596,6 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2294263
-    },
-    {
-     "date": "2026-11-23",
-     "area": 3,
-     "area_name": "Group Study Rooms",
-     "room_id": 45,
-     "room": "LG4-27",
-     "start": "20:00",
-     "end": "22:00",
-     "type": "U",
-     "status": "booked",
-     "entry_id": 2294584
     },
     {
      "date": "2026-11-23",
@@ -3178,6 +3202,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2290281
+    },
+    {
+     "date": "2026-11-23",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 108,
+     "room": "LC-18",
+     "start": "13:00",
+     "end": "14:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2294612
     },
     {
      "date": "2026-11-23",
