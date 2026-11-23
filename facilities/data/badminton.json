@@ -3,7 +3,7 @@
  "id": "3",
  "name": "羽毛球",
  "en": "Badminton",
- "fetched_at": "2026-11-23T13:15:06+08:00",
+ "fetched_at": "2026-11-23T14:15:06+08:00",
  "days": [
   {
    "date": "2026-11-23",
@@ -11,6 +11,30 @@
     {
      "id": 2,
      "name": "Badminton Court 1",
+     "location": "SPORTS - LG1",
+     "available": false,
+     "indoor": true,
+     "slots": null
+    },
+    {
+     "id": 3,
+     "name": "Badminton Court 2",
+     "location": "SPORTS - LG1",
+     "available": false,
+     "indoor": true,
+     "slots": null
+    },
+    {
+     "id": 4,
+     "name": "Badminton Court 3",
+     "location": "SPORTS - LG1",
+     "available": false,
+     "indoor": true,
+     "slots": null
+    },
+    {
+     "id": 5,
+     "name": "Badminton Court 4",
      "location": "SPORTS - LG1",
      "available": true,
      "indoor": true,
@@ -41,11 +65,11 @@
       },
       {
        "start": "14:00",
-       "available": true
+       "available": false
       },
       {
        "start": "15:00",
-       "available": false
+       "available": true
       },
       {
        "start": "16:00",
@@ -72,30 +96,6 @@
        "available": false
       }
      ]
-    },
-    {
-     "id": 3,
-     "name": "Badminton Court 2",
-     "location": "SPORTS - LG1",
-     "available": false,
-     "indoor": true,
-     "slots": null
-    },
-    {
-     "id": 4,
-     "name": "Badminton Court 3",
-     "location": "SPORTS - LG1",
-     "available": false,
-     "indoor": true,
-     "slots": null
-    },
-    {
-     "id": 5,
-     "name": "Badminton Court 4",
-     "location": "SPORTS - LG1",
-     "available": false,
-     "indoor": true,
-     "slots": null
     },
     {
      "id": 79,
