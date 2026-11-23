@@ -3,7 +3,7 @@
  "id": "3",
  "name": "羽毛球",
  "en": "Badminton",
- "fetched_at": "2026-11-23T16:15:06+08:00",
+ "fetched_at": "2026-11-23T17:15:15+08:00",
  "days": [
   {
    "date": "2026-11-23",
@@ -44,6 +44,22 @@
      "id": 79,
      "name": "Badminton Court 5 (singles only)",
      "location": "SPORTS - LG1",
+     "available": false,
+     "indoor": true,
+     "slots": null
+    },
+    {
+     "id": 80,
+     "name": "Badminton Court 6 (singles only)",
+     "location": "SPORTS - LG1",
+     "available": false,
+     "indoor": true,
+     "slots": null
+    },
+    {
+     "id": 100,
+     "name": "Badminton Court 1",
+     "location": "SPORTS - Seafront",
      "available": true,
      "indoor": true,
      "slots": [
@@ -89,11 +105,11 @@
       },
       {
        "start": "18:00",
-       "available": false
+       "available": true
       },
       {
        "start": "19:00",
-       "available": true
+       "available": false
       },
       {
        "start": "20:00",
@@ -104,22 +120,6 @@
        "available": false
       }
      ]
-    },
-    {
-     "id": 80,
-     "name": "Badminton Court 6 (singles only)",
-     "location": "SPORTS - LG1",
-     "available": false,
-     "indoor": true,
-     "slots": null
-    },
-    {
-     "id": 100,
-     "name": "Badminton Court 1",
-     "location": "SPORTS - Seafront",
-     "available": false,
-     "indoor": true,
-     "slots": null
     },
     {
      "id": 101,
@@ -151,11 +151,11 @@
       },
       {
        "start": "10:00",
-       "available": true
+       "available": false
       },
       {
        "start": "11:00",
-       "available": true
+       "available": false
       },
       {
        "start": "12:00",
@@ -472,15 +472,15 @@
       },
       {
        "start": "09:00",
-       "available": false
+       "available": true
       },
       {
        "start": "10:00",
-       "available": false
+       "available": true
       },
       {
        "start": "11:00",
-       "available": false
+       "available": true
       },
       {
        "start": "12:00",
@@ -672,7 +672,7 @@
       },
       {
        "start": "09:00",
-       "available": false
+       "available": true
       },
       {
        "start": "10:00",
@@ -680,7 +680,7 @@
       },
       {
        "start": "11:00",
-       "available": false
+       "available": true
       },
       {
        "start": "12:00",
@@ -741,7 +741,7 @@
       },
       {
        "start": "10:00",
-       "available": true
+       "available": false
       },
       {
        "start": "11:00",
@@ -761,7 +761,7 @@
       },
       {
        "start": "15:00",
-       "available": true
+       "available": false
       },
       {
        "start": "16:00",
@@ -802,11 +802,11 @@
       },
       {
        "start": "09:00",
-       "available": false
+       "available": true
       },
       {
        "start": "10:00",
-       "available": false
+       "available": true
       },
       {
        "start": "11:00",
@@ -867,15 +867,15 @@
       },
       {
        "start": "09:00",
-       "available": false
+       "available": true
       },
       {
        "start": "10:00",
-       "available": false
+       "available": true
       },
       {
        "start": "11:00",
-       "available": false
+       "available": true
       },
       {
        "start": "12:00",
@@ -932,15 +932,15 @@
       },
       {
        "start": "09:00",
-       "available": false
+       "available": true
       },
       {
        "start": "10:00",
-       "available": false
+       "available": true
       },
       {
        "start": "11:00",
-       "available": false
+       "available": true
       },
       {
        "start": "12:00",
@@ -997,15 +997,15 @@
       },
       {
        "start": "09:00",
-       "available": false
+       "available": true
       },
       {
        "start": "10:00",
-       "available": false
+       "available": true
       },
       {
        "start": "11:00",
-       "available": false
+       "available": true
       },
       {
        "start": "12:00",
@@ -1135,7 +1135,7 @@
       },
       {
        "start": "11:00",
-       "available": false
+       "available": true
       },
       {
        "start": "12:00",
@@ -1599,7 +1599,7 @@
       },
       {
        "start": "10:00",
-       "available": true
+       "available": false
       },
       {
        "start": "11:00",
@@ -2730,7 +2730,7 @@
       },
       {
        "start": "17:00",
-       "available": true
+       "available": false
       },
       {
        "start": "18:00",
