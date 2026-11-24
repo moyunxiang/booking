@@ -1,6 +1,6 @@
 {
  "date": "2026-11-24",
- "fetched_at": "2026-11-24T18:30:06+08:00",
+ "fetched_at": "2026-11-24T19:00:03+08:00",
  "areas": [
   {
    "date": "2026-11-24",
@@ -3153,6 +3153,18 @@
      "date": "2026-11-24",
      "area": 3,
      "area_name": "Group Study Rooms",
+     "room_id": 11,
+     "room": "1-352",
+     "start": "19:00",
+     "end": "20:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2296249
+    },
+    {
+     "date": "2026-11-24",
+     "area": 3,
+     "area_name": "Group Study Rooms",
      "room_id": 43,
      "room": "LG1-354",
      "start": "19:00",
@@ -3771,7 +3783,7 @@
      "end": "22:30",
      "type": "U",
      "status": "booked",
-     "entry_id": 2292743
+     "entry_id": 2296247
     },
     {
      "date": "2026-11-24",
@@ -6075,6 +6087,18 @@
      "date": "2026-11-24",
      "area": 8,
      "area_name": "LC Study Rooms",
+     "room_id": 60,
+     "room": "LC-04",
+     "start": "21:00",
+     "end": "23:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2296250
+    },
+    {
+     "date": "2026-11-24",
+     "area": 8,
+     "area_name": "LC Study Rooms",
      "room_id": 71,
      "room": "LC-15",
      "start": "21:00",
@@ -7212,6 +7236,18 @@
      "date": "2026-11-24",
      "area": 20,
      "area_name": "Study Pods",
+     "room_id": 112,
+     "room": "POD-01",
+     "start": "20:00",
+     "end": "20:30",
+     "type": "T",
+     "status": "booked",
+     "entry_id": 2296231
+    },
+    {
+     "date": "2026-11-24",
+     "area": 20,
+     "area_name": "Study Pods",
      "room_id": 114,
      "room": "POD-03",
      "start": "20:00",
@@ -7267,6 +7303,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2296132
+    },
+    {
+     "date": "2026-11-24",
+     "area": 20,
+     "area_name": "Study Pods",
+     "room_id": 116,
+     "room": "POD-05",
+     "start": "21:00",
+     "end": "22:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2296233
     },
     {
      "date": "2026-11-24",
