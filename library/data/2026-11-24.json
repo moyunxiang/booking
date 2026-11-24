@@ -1,6 +1,6 @@
 {
  "date": "2026-11-24",
- "fetched_at": "2026-11-24T15:30:03+08:00",
+ "fetched_at": "2026-11-24T16:00:03+08:00",
  "areas": [
   {
    "date": "2026-11-24",
@@ -2661,6 +2661,18 @@
      "date": "2026-11-24",
      "area": 3,
      "area_name": "Group Study Rooms",
+     "room_id": 131,
+     "room": "LG3-07",
+     "start": "17:00",
+     "end": "18:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2296125
+    },
+    {
+     "date": "2026-11-24",
+     "area": 3,
+     "area_name": "Group Study Rooms",
      "room_id": 15,
      "room": "LG3-17",
      "start": "17:00",
@@ -2680,18 +2692,6 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2292986
-    },
-    {
-     "date": "2026-11-24",
-     "area": 3,
-     "area_name": "Group Study Rooms",
-     "room_id": 31,
-     "room": "LG4-08",
-     "start": "17:00",
-     "end": "19:00",
-     "type": "T",
-     "status": "booked",
-     "entry_id": 2292229
     },
     {
      "date": "2026-11-24",
@@ -2740,6 +2740,18 @@
      "type": "T",
      "status": "booked",
      "entry_id": 2295714
+    },
+    {
+     "date": "2026-11-24",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 31,
+     "room": "LG4-08",
+     "start": "17:30",
+     "end": "19:00",
+     "type": "T",
+     "status": "booked",
+     "entry_id": 2296103
     },
     {
      "date": "2026-11-24",
@@ -3844,6 +3856,30 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2295655
+    },
+    {
+     "date": "2026-11-24",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 28,
+     "room": "1-351",
+     "start": "22:00",
+     "end": "22:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2296113
+    },
+    {
+     "date": "2026-11-24",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 169,
+     "room": "LG1-330",
+     "start": "22:00",
+     "end": "22:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2296110
     },
     {
      "date": "2026-11-24",
