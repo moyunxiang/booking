@@ -1,6 +1,6 @@
 {
  "date": "2026-11-27",
- "fetched_at": "2026-11-26T12:30:01+08:00",
+ "fetched_at": "2026-11-26T13:00:02+08:00",
  "areas": [
   {
    "date": "2026-11-27",
@@ -1437,6 +1437,18 @@
      "date": "2026-11-27",
      "area": 3,
      "area_name": "Group Study Rooms",
+     "room_id": 40,
+     "room": "LG4-05",
+     "start": "16:00",
+     "end": "17:00",
+     "type": "T",
+     "status": "booked",
+     "entry_id": 2297332
+    },
+    {
+     "date": "2026-11-27",
+     "area": 3,
+     "area_name": "Group Study Rooms",
      "room_id": 126,
      "room": "1-350",
      "start": "16:30",
@@ -1569,6 +1581,18 @@
      "date": "2026-11-27",
      "area": 3,
      "area_name": "Group Study Rooms",
+     "room_id": 95,
+     "room": "LG3-05",
+     "start": "17:00",
+     "end": "19:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2297327
+    },
+    {
+     "date": "2026-11-27",
+     "area": 3,
+     "area_name": "Group Study Rooms",
      "room_id": 131,
      "room": "LG3-07",
      "start": "17:00",
@@ -1689,18 +1713,6 @@
      "date": "2026-11-27",
      "area": 3,
      "area_name": "Group Study Rooms",
-     "room_id": 25,
-     "room": "LG3 Seminar",
-     "start": "17:30",
-     "end": "18:00",
-     "type": "U",
-     "status": "booked",
-     "entry_id": 2297031
-    },
-    {
-     "date": "2026-11-27",
-     "area": 3,
-     "area_name": "Group Study Rooms",
      "room_id": 132,
      "room": "LG3-09",
      "start": "17:30",
@@ -1756,6 +1768,18 @@
      "type": "T",
      "status": "booked",
      "entry_id": 2296667
+    },
+    {
+     "date": "2026-11-27",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 89,
+     "room": "LG1-361",
+     "start": "18:00",
+     "end": "19:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2297310
     },
     {
      "date": "2026-11-27",
@@ -1948,6 +1972,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2296684
+    },
+    {
+     "date": "2026-11-27",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 28,
+     "room": "1-351",
+     "start": "21:00",
+     "end": "22:30",
+     "type": "T",
+     "status": "booked",
+     "entry_id": 2297311
     },
     {
      "date": "2026-11-27",
