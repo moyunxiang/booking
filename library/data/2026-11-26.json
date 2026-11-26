@@ -1,6 +1,6 @@
 {
  "date": "2026-11-26",
- "fetched_at": "2026-11-26T09:00:01+08:00",
+ "fetched_at": "2026-11-26T09:30:01+08:00",
  "areas": [
   {
    "date": "2026-11-26",
@@ -3297,6 +3297,18 @@
      "date": "2026-11-26",
      "area": 3,
      "area_name": "Group Study Rooms",
+     "room_id": 94,
+     "room": "LG3-08",
+     "start": "21:30",
+     "end": "22:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2297223
+    },
+    {
+     "date": "2026-11-26",
+     "area": 3,
+     "area_name": "Group Study Rooms",
      "room_id": 127,
      "room": "LG5-01",
      "start": "21:30",
@@ -3939,6 +3951,18 @@
      "date": "2026-11-26",
      "area": 8,
      "area_name": "LC Study Rooms",
+     "room_id": 65,
+     "room": "LC-09",
+     "start": "09:30",
+     "end": "10:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2297217
+    },
+    {
+     "date": "2026-11-26",
+     "area": 8,
+     "area_name": "LC Study Rooms",
      "room_id": 66,
      "room": "LC-10",
      "start": "10:00",
@@ -4006,6 +4030,18 @@
      "type": "T",
      "status": "booked",
      "entry_id": 2296152
+    },
+    {
+     "date": "2026-11-26",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 57,
+     "room": "LC-01",
+     "start": "10:30",
+     "end": "11:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2297216
     },
     {
      "date": "2026-11-26",
@@ -5628,18 +5664,6 @@
      "date": "2026-11-26",
      "area": 20,
      "area_name": "Study Pods",
-     "room_id": 113,
-     "room": "POD-02",
-     "start": "10:30",
-     "end": "11:00",
-     "type": "U",
-     "status": "booked",
-     "entry_id": 2297108
-    },
-    {
-     "date": "2026-11-26",
-     "area": 20,
-     "area_name": "Study Pods",
      "room_id": 114,
      "room": "POD-03",
      "start": "10:30",
@@ -5827,6 +5851,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2297068
+    },
+    {
+     "date": "2026-11-26",
+     "area": 20,
+     "area_name": "Study Pods",
+     "room_id": 115,
+     "room": "POD-04",
+     "start": "13:00",
+     "end": "14:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2297218
     },
     {
      "date": "2026-11-26",
@@ -6091,6 +6127,18 @@
      "type": "U",
      "status": "booked",
      "entry_id": 2296151
+    },
+    {
+     "date": "2026-11-26",
+     "area": 20,
+     "area_name": "Study Pods",
+     "room_id": 117,
+     "room": "POD-06",
+     "start": "17:00",
+     "end": "18:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2297221
     },
     {
      "date": "2026-11-26",
