@@ -1,0 +1,853 @@
+{
+ "date": "2026-12-03",
+ "fetched_at": "2026-11-27T08:01:46+08:00",
+ "areas": [
+  {
+   "date": "2026-12-03",
+   "area": 3,
+   "area_name": "Group Study Rooms",
+   "resolution": 1800,
+   "open": "08:00",
+   "close": "22:30",
+   "rooms": [
+    {
+     "id": 126,
+     "name": "1-350",
+     "capacity": 8
+    },
+    {
+     "id": 28,
+     "name": "1-351",
+     "capacity": 5
+    },
+    {
+     "id": 11,
+     "name": "1-352",
+     "capacity": 8
+    },
+    {
+     "id": 90,
+     "name": "LG1-327",
+     "capacity": 5
+    },
+    {
+     "id": 167,
+     "name": "LG1-328",
+     "capacity": 8
+    },
+    {
+     "id": 168,
+     "name": "LG1- Media and Discussion",
+     "capacity": 10
+    },
+    {
+     "id": 169,
+     "name": "LG1-330",
+     "capacity": 8
+    },
+    {
+     "id": 91,
+     "name": "LG1-353",
+     "capacity": 4
+    },
+    {
+     "id": 43,
+     "name": "LG1-354",
+     "capacity": 5
+    },
+    {
+     "id": 37,
+     "name": "LG1-355",
+     "capacity": 5
+    },
+    {
+     "id": 89,
+     "name": "LG1-361",
+     "capacity": 8
+    },
+    {
+     "id": 29,
+     "name": "LG1-362",
+     "capacity": 6
+    },
+    {
+     "id": 12,
+     "name": "LG1-363",
+     "capacity": 6
+    },
+    {
+     "id": 25,
+     "name": "LG3 Seminar",
+     "capacity": 16
+    },
+    {
+     "id": 93,
+     "name": "LG3-04",
+     "capacity": 5
+    },
+    {
+     "id": 95,
+     "name": "LG3-05",
+     "capacity": 4
+    },
+    {
+     "id": 131,
+     "name": "LG3-07",
+     "capacity": 8
+    },
+    {
+     "id": 94,
+     "name": "LG3-08",
+     "capacity": 6
+    },
+    {
+     "id": 132,
+     "name": "LG3-09",
+     "capacity": 8
+    },
+    {
+     "id": 13,
+     "name": "LG3-15",
+     "capacity": 5
+    },
+    {
+     "id": 14,
+     "name": "LG3-16",
+     "capacity": 5
+    },
+    {
+     "id": 15,
+     "name": "LG3-17",
+     "capacity": 10
+    },
+    {
+     "id": 44,
+     "name": "LG3-27",
+     "capacity": 5
+    },
+    {
+     "id": 92,
+     "name": "LG4-02",
+     "capacity": 4
+    },
+    {
+     "id": 39,
+     "name": "LG4-04",
+     "capacity": 5
+    },
+    {
+     "id": 40,
+     "name": "LG4-05",
+     "capacity": 5
+    },
+    {
+     "id": 30,
+     "name": "LG4-07",
+     "capacity": 8
+    },
+    {
+     "id": 31,
+     "name": "LG4-08",
+     "capacity": 5
+    },
+    {
+     "id": 32,
+     "name": "LG4-09",
+     "capacity": 6
+    },
+    {
+     "id": 16,
+     "name": "LG4-14",
+     "capacity": 4
+    },
+    {
+     "id": 17,
+     "name": "LG4-15",
+     "capacity": 5
+    },
+    {
+     "id": 18,
+     "name": "LG4-16",
+     "capacity": 5
+    },
+    {
+     "id": 76,
+     "name": "LG4-17",
+     "capacity": 5
+    },
+    {
+     "id": 45,
+     "name": "LG4-27",
+     "capacity": 5
+    },
+    {
+     "id": 127,
+     "name": "LG5-01",
+     "capacity": 4
+    },
+    {
+     "id": 128,
+     "name": "LG5-02",
+     "capacity": 4
+    },
+    {
+     "id": 129,
+     "name": "LG5-03",
+     "capacity": 4
+    }
+   ],
+   "bookings": [
+    {
+     "date": "2026-12-03",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 127,
+     "room": "LG5-01",
+     "start": "08:00",
+     "end": "22:30",
+     "type": "H",
+     "status": "unbookable",
+     "entry_id": 2295401
+    },
+    {
+     "date": "2026-12-03",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 128,
+     "room": "LG5-02",
+     "start": "08:00",
+     "end": "22:30",
+     "type": "H",
+     "status": "unbookable",
+     "entry_id": 2295402
+    },
+    {
+     "date": "2026-12-03",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 129,
+     "room": "LG5-03",
+     "start": "08:00",
+     "end": "22:30",
+     "type": "H",
+     "status": "unbookable",
+     "entry_id": 2295403
+    },
+    {
+     "date": "2026-12-03",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 91,
+     "room": "LG1-353",
+     "start": "10:30",
+     "end": "12:30",
+     "type": "R",
+     "status": "booked",
+     "entry_id": 2297300
+    },
+    {
+     "date": "2026-12-03",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 25,
+     "room": "LG3 Seminar",
+     "start": "11:00",
+     "end": "13:00",
+     "type": "S",
+     "status": "booked",
+     "entry_id": 2295017
+    },
+    {
+     "date": "2026-12-03",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 14,
+     "room": "LG3-16",
+     "start": "12:00",
+     "end": "14:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2297334
+    },
+    {
+     "date": "2026-12-03",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 167,
+     "room": "LG1-328",
+     "start": "13:30",
+     "end": "15:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2297014
+    },
+    {
+     "date": "2026-12-03",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 90,
+     "room": "LG1-327",
+     "start": "14:00",
+     "end": "16:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2295360
+    },
+    {
+     "date": "2026-12-03",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 14,
+     "room": "LG3-16",
+     "start": "14:00",
+     "end": "16:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2297333
+    },
+    {
+     "date": "2026-12-03",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 45,
+     "room": "LG4-27",
+     "start": "14:00",
+     "end": "16:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2295849
+    },
+    {
+     "date": "2026-12-03",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 167,
+     "room": "LG1-328",
+     "start": "15:30",
+     "end": "17:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2297017
+    },
+    {
+     "date": "2026-12-03",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 90,
+     "room": "LG1-327",
+     "start": "16:00",
+     "end": "18:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2295362
+    },
+    {
+     "date": "2026-12-03",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 39,
+     "room": "LG4-04",
+     "start": "16:00",
+     "end": "18:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2297684
+    },
+    {
+     "date": "2026-12-03",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 168,
+     "room": "LG1- Media and Discussion",
+     "start": "17:00",
+     "end": "19:00",
+     "type": "S",
+     "status": "booked",
+     "entry_id": 2297077
+    },
+    {
+     "date": "2026-12-03",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 90,
+     "room": "LG1-327",
+     "start": "18:00",
+     "end": "20:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2295445
+    },
+    {
+     "date": "2026-12-03",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 168,
+     "room": "LG1- Media and Discussion",
+     "start": "19:00",
+     "end": "21:00",
+     "type": "T",
+     "status": "booked",
+     "entry_id": 2296970
+    },
+    {
+     "date": "2026-12-03",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 30,
+     "room": "LG4-07",
+     "start": "19:00",
+     "end": "20:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2297207
+    },
+    {
+     "date": "2026-12-03",
+     "area": 3,
+     "area_name": "Group Study Rooms",
+     "room_id": 18,
+     "room": "LG4-16",
+     "start": "20:00",
+     "end": "22:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2297723
+    }
+   ]
+  },
+  {
+   "date": "2026-12-03",
+   "area": 8,
+   "area_name": "LC Study Rooms",
+   "resolution": 1800,
+   "open": "00:00",
+   "close": "24:00",
+   "rooms": [
+    {
+     "id": 57,
+     "name": "LC-01",
+     "capacity": 7
+    },
+    {
+     "id": 58,
+     "name": "LC-02",
+     "capacity": 7
+    },
+    {
+     "id": 59,
+     "name": "LC-03",
+     "capacity": 7
+    },
+    {
+     "id": 60,
+     "name": "LC-04",
+     "capacity": 7
+    },
+    {
+     "id": 61,
+     "name": "LC-05",
+     "capacity": 7
+    },
+    {
+     "id": 62,
+     "name": "LC-06",
+     "capacity": 7
+    },
+    {
+     "id": 63,
+     "name": "LC-07",
+     "capacity": 7
+    },
+    {
+     "id": 64,
+     "name": "LC-08",
+     "capacity": 7
+    },
+    {
+     "id": 65,
+     "name": "LC-09",
+     "capacity": 7
+    },
+    {
+     "id": 66,
+     "name": "LC-10",
+     "capacity": 7
+    },
+    {
+     "id": 67,
+     "name": "LC-11",
+     "capacity": 7
+    },
+    {
+     "id": 68,
+     "name": "LC-12",
+     "capacity": 7
+    },
+    {
+     "id": 69,
+     "name": "LC-13",
+     "capacity": 7
+    },
+    {
+     "id": 70,
+     "name": "LC-14",
+     "capacity": 10
+    },
+    {
+     "id": 71,
+     "name": "LC-15",
+     "capacity": 10
+    },
+    {
+     "id": 72,
+     "name": "LC-16",
+     "capacity": 10
+    },
+    {
+     "id": 73,
+     "name": "LC-17",
+     "capacity": 10
+    },
+    {
+     "id": 108,
+     "name": "LC-18",
+     "capacity": 6
+    }
+   ],
+   "bookings": [
+    {
+     "date": "2026-12-03",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 69,
+     "room": "LC-13",
+     "start": "10:00",
+     "end": "12:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2297599
+    },
+    {
+     "date": "2026-12-03",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 72,
+     "room": "LC-16",
+     "start": "10:00",
+     "end": "12:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2297232
+    },
+    {
+     "date": "2026-12-03",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 73,
+     "room": "LC-17",
+     "start": "10:00",
+     "end": "12:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2295613
+    },
+    {
+     "date": "2026-12-03",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 71,
+     "room": "LC-15",
+     "start": "12:00",
+     "end": "14:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2295977
+    },
+    {
+     "date": "2026-12-03",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 72,
+     "room": "LC-16",
+     "start": "12:00",
+     "end": "14:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2297573
+    },
+    {
+     "date": "2026-12-03",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 73,
+     "room": "LC-17",
+     "start": "12:00",
+     "end": "14:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2295612
+    },
+    {
+     "date": "2026-12-03",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 70,
+     "room": "LC-14",
+     "start": "12:30",
+     "end": "14:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2295557
+    },
+    {
+     "date": "2026-12-03",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 67,
+     "room": "LC-11",
+     "start": "14:00",
+     "end": "16:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2297595
+    },
+    {
+     "date": "2026-12-03",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 71,
+     "room": "LC-15",
+     "start": "14:00",
+     "end": "16:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2295988
+    },
+    {
+     "date": "2026-12-03",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 72,
+     "room": "LC-16",
+     "start": "14:00",
+     "end": "16:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2296340
+    },
+    {
+     "date": "2026-12-03",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 73,
+     "room": "LC-17",
+     "start": "14:00",
+     "end": "16:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2295615
+    },
+    {
+     "date": "2026-12-03",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 70,
+     "room": "LC-14",
+     "start": "14:30",
+     "end": "16:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2295568
+    },
+    {
+     "date": "2026-12-03",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 61,
+     "room": "LC-05",
+     "start": "15:30",
+     "end": "17:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2294403
+    },
+    {
+     "date": "2026-12-03",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 72,
+     "room": "LC-16",
+     "start": "16:00",
+     "end": "18:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2295264
+    },
+    {
+     "date": "2026-12-03",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 73,
+     "room": "LC-17",
+     "start": "16:00",
+     "end": "18:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2295648
+    },
+    {
+     "date": "2026-12-03",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 70,
+     "room": "LC-14",
+     "start": "16:30",
+     "end": "18:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2297640
+    },
+    {
+     "date": "2026-12-03",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 72,
+     "room": "LC-16",
+     "start": "18:00",
+     "end": "20:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2295275
+    },
+    {
+     "date": "2026-12-03",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 70,
+     "room": "LC-14",
+     "start": "18:30",
+     "end": "20:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2297638
+    },
+    {
+     "date": "2026-12-03",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 71,
+     "room": "LC-15",
+     "start": "20:00",
+     "end": "22:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2295982
+    },
+    {
+     "date": "2026-12-03",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 72,
+     "room": "LC-16",
+     "start": "20:00",
+     "end": "22:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2296316
+    },
+    {
+     "date": "2026-12-03",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 70,
+     "room": "LC-14",
+     "start": "20:30",
+     "end": "22:30",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2297639
+    },
+    {
+     "date": "2026-12-03",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 71,
+     "room": "LC-15",
+     "start": "22:00",
+     "end": "24:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2297086
+    },
+    {
+     "date": "2026-12-03",
+     "area": 8,
+     "area_name": "LC Study Rooms",
+     "room_id": 70,
+     "room": "LC-14",
+     "start": "22:30",
+     "end": "24:00",
+     "type": "U",
+     "status": "booked",
+     "entry_id": 2297791
+    }
+   ]
+  },
+  {
+   "date": "2026-12-03",
+   "area": 20,
+   "area_name": "Study Pods",
+   "resolution": 1800,
+   "open": "08:00",
+   "close": "22:30",
+   "rooms": [
+    {
+     "id": 112,
+     "name": "POD-01",
+     "capacity": 4
+    },
+    {
+     "id": 113,
+     "name": "POD-02",
+     "capacity": 2
+    },
+    {
+     "id": 114,
+     "name": "POD-03",
+     "capacity": 2
+    },
+    {
+     "id": 115,
+     "name": "POD-04",
+     "capacity": 1
+    },
+    {
+     "id": 116,
+     "name": "POD-05",
+     "capacity": 1
+    },
+    {
+     "id": 117,
+     "name": "POD-06",
+     "capacity": 1
+    },
+    {
+     "id": 118,
+     "name": "POD-07",
+     "capacity": 2
+    },
+    {
+     "id": 119,
+     "name": "POD-08",
+     "capacity": 2
+    },
+    {
+     "id": 120,
+     "name": "POD-09",
+     "capacity": 4
+    }
+   ],
+   "bookings": []
+  }
+ ]
+}
