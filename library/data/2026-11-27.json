@@ -1,6 +1,6 @@
 {
  "date": "2026-11-27",
- "fetched_at": "2026-11-27T19:30:05+08:00",
+ "fetched_at": "2026-11-27T20:00:01+08:00",
  "areas": [
   {
    "date": "2026-11-27",
@@ -6199,6 +6199,18 @@
      "type": "T",
      "status": "booked",
      "entry_id": 2298141
+    },
+    {
+     "date": "2026-11-27",
+     "area": 20,
+     "area_name": "Study Pods",
+     "room_id": 116,
+     "room": "POD-05",
+     "start": "20:00",
+     "end": "22:00",
+     "type": "T",
+     "status": "booked",
+     "entry_id": 2298146
     }
    ]
   }
